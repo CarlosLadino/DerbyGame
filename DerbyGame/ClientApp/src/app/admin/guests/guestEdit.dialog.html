@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>{{dialogTitle}}</h1>
+<div mat-dialog-content>
+  <p>Enter the Guest information</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="guest.name" placeholder="Guest Name">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="guest.avatarName" placeholder="Avatar Name">
+  </mat-form-field>
+  <mat-checkbox [(ngModel)]="guest.isActive">Is Active</mat-checkbox>
+
+</div>
+<div mat-dialog-actions >
+  <button mat-button (click)="onCancelClick()">Cancel</button>
+  <button mat-button cdkFocusInitial (click)="onSaveClick()">Save</button>
+</div>

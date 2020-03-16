@@ -1,0 +1,48 @@
+<h1>Events</h1>
+<div class="pull-right">
+  <button mat-button mat-icon-button="primary" (click)="onEditClick(0)"><mat-icon aria-hidden="false" aria-label="New" color="primary" matTooltip="Create a new Event">add_circle</mat-icon></button>
+</div>
+
+<table mat-table [dataSource]="datasource" class="mat-elevation-z8">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> Id. </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name. </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+  <ng-container matColumnDef="eventDate">
+    <th mat-header-cell *matHeaderCellDef> Date. </th>
+    <td mat-cell *matCellDef="let element"> {{element.eventDate | date }} </td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions. </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-button mat-icon-button="primary" (click)="onEditClick(element.id)"><mat-icon aria-hidden="false" aria-label="Edit" color="primary" matTooltip="Edit Event Info">edit</mat-icon></button>
+      <button mat-button mat-icon-button color="primary" (click)="onDeleteClick(element.id)"><mat-icon aria-hidden="false" aria-label="Delete" matTooltip="Delete Event">delete_forever</mat-icon></button>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="races">
+    <th mat-header-cell *matHeaderCellDef> Races. </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-button mat-icon-button="primary" (click)="onRacesClick(element.id)"><mat-icon aria-hidden="false" aria-label="Races" color="accent" matTooltip="Modify Races List">list</mat-icon></button>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="active">
+    <th mat-header-cell *matHeaderCellDef> Active</th>
+    <td mat-cell *matCellDef="let element">
+      <button *ngIf="element.active" mat-button mat-icon-button><mat-icon aria-hidden="false" aria-label="Active" color="accent" matTooltip="Event is Active">check_box</mat-icon></button>
+      <button *ngIf="!element.active" mat-button mat-icon-button (click)="onActivateClick(element.id, true)"><mat-icon aria-hidden="false" aria-label="NotActive" matTooltip="Event is not Active">indeterminate_check_box</mat-icon></button>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="totals">
+    <th mat-header-cell *matHeaderCellDef> Totals</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-button mat-icon-button [routerLink]="['/eventTotals', element.id]"><mat-icon aria-hidden="false" aria-label="Active" color="accent" matTooltip="Event is Active">work</mat-icon></button>      
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+

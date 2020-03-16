@@ -1,0 +1,189 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <IsPackable>false</IsPackable>
+    <SpaRoot>ClientApp\</SpaRoot>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+
+    <!-- Set this to true if you enable server-side prerendering -->
+    <BuildServerSideRenderer>false</BuildServerSideRenderer>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Content Remove="$(SpaRoot)**" />
+    <None Remove="$(SpaRoot)**" />
+    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\src\app\admin\eventList.component.ts" />
+    <None Remove="ClientApp\src\app\admin\events\eventEdit.dialog.ts" />
+    <None Remove="ClientApp\src\app\admin\events\eventRaceSelect.dialog.ts" />
+    <None Remove="ClientApp\src\app\admin\events\eventTotals.component.ts" />
+    <None Remove="ClientApp\src\app\admin\guestList.component.ts" />
+    <None Remove="ClientApp\src\app\admin\guests\guestEdit.dialog.ts" />
+    <None Remove="ClientApp\src\app\admin\raceList.component.ts" />
+    <None Remove="ClientApp\src\app\admin\races\raceEdit.dialog.ts" />
+    <None Remove="ClientApp\src\app\common\CustomComponents\ConfirmationDialog\confirm.dialog.ts" />
+    <None Remove="ClientApp\src\app\common\CustomComponents\ConfirmationDialog\confirmDialog.model.ts" />
+    <None Remove="ClientApp\src\app\common\CustomComponents\guest.component.ts" />
+    <None Remove="ClientApp\src\app\common\CustomComponents\guesTotal.component.ts" />
+    <None Remove="ClientApp\src\app\common\CustomComponents\raceGuest.component.ts" />
+    <None Remove="ClientApp\src\app\common\enumerations.ts" />
+    <None Remove="ClientApp\src\app\common\Models\event.model.ts" />
+    <None Remove="ClientApp\src\app\common\Models\eventRace.model.ts" />
+    <None Remove="ClientApp\src\app\common\Models\eventRaceGuest.model.ts" />
+    <None Remove="ClientApp\src\app\common\Models\guest.model.ts" />
+    <None Remove="ClientApp\src\app\common\Models\helperObjects.model.ts" />
+    <None Remove="ClientApp\src\app\common\Models\race.model.ts" />
+    <None Remove="ClientApp\src\app\common\Models\raceInstance.model.ts" />
+    <None Remove="ClientApp\src\app\common\Models\raceResult.model.ts" />
+    <None Remove="ClientApp\src\app\common\Services\deactivateGuardService.ts" />
+    <None Remove="ClientApp\src\app\common\Services\event.service.ts" />
+    <None Remove="ClientApp\src\app\common\Services\eventRace.service.ts" />
+    <None Remove="ClientApp\src\app\common\Services\eventRaceGuest.service.ts" />
+    <None Remove="ClientApp\src\app\common\Services\guest.service.ts" />
+    <None Remove="ClientApp\src\app\common\Services\race.service.ts" />
+    <None Remove="ClientApp\src\app\common\Services\raceResult.service.ts" />
+    <None Remove="ClientApp\src\app\common\Services\utility.service.ts" />
+    <None Remove="ClientApp\src\app\home\activateGuests.dialog.ts" />
+    <None Remove="ClientApp\src\app\home\addRaceToEvent.dialog.ts" />
+    <None Remove="ClientApp\src\app\home\selectHorse.dialog.ts" />
+    <None Remove="ClientApp\src\app\home\showWinners.dialog.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Content\horseHead.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BLL\BLL.csproj" />
+    <ProjectReference Include="..\DAL\DAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\admin\events\eventRaceSelect.dialog.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\admin\events\eventEdit.dialog.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\events\eventTotals.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\guests\guestEdit.dialog.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\admin\guests\guestList.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\admin\races\raceEdit.dialog.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\admin\races\raceList.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\admin\events\eventList.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\CustomComponents\ConfirmationDialog\confirm.dialog.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\CustomComponents\ConfirmationDialog\confirmDialog.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\CustomComponents\guesTotal.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\common\CustomComponents\raceGuest.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\common\CustomComponents\guest.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\enumerations.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\Models\eventRace.model.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\common\Models\eventRaceGuest.model.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\common\Models\helperObjects.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\Models\raceInstance.model.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\common\Models\raceResult.model.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\common\Models\race.model.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\common\Models\guest.model.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\common\Models\event.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\Services\deactivateGuardService.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\Services\eventRaceGuest.service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\common\Services\utility.service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\common\Services\eventRace.service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\common\Services\raceResult.service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\common\Services\race.service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\common\Services\guest.service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\common\Services\event.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\home\addRaceToEvent.dialog.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\home\showWinners.dialog.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\home\activateGuests.dialog.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\home\selectHorse.dialog.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+  </ItemGroup>
+
+  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+    <!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+  </Target>
+
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
+
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup>
+      <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
+      <DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+
+</Project>

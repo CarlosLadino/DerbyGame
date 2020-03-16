@@ -1,0 +1,30 @@
+<h1>Races</h1>
+<div class="pull-right">
+  <button mat-button mat-icon-button="primary" (click)="onEditClick(0)"><mat-icon aria-hidden="false" aria-label="New" color="primary" matTooltip="Create a new Race">add_circle</mat-icon></button>
+</div>
+
+<table mat-table [dataSource]="datasource" class="mat-elevation-z8">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> Id. </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name. </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+  <ng-container matColumnDef="numberOfHorses">
+    <th mat-header-cell *matHeaderCellDef> # of Horses. </th>
+    <td mat-cell *matCellDef="let element"> {{element.numberOfHorses }} </td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions. </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-button mat-icon-button="primary" (click)="onEditClick(element.id)"><mat-icon aria-hidden="false" aria-label="Edit" color="primary" matTooltip="Edit Race Info">edit</mat-icon></button>
+      <button mat-button mat-icon-button color="primary" (click)="onDeleteClick(element.id)"><mat-icon aria-hidden="false" aria-label="Delete" matTooltip="Delete Race">delete_forever</mat-icon></button>
+    </td>
+  </ng-container>
+  
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+

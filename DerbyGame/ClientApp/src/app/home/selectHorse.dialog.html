@@ -1,0 +1,14 @@
+<guest-component [avatarName]="guestAvatar" [guestName]="guestName"></guest-component>
+<h1 mat-dialog-title style="text-align:center">{{dialogTitle}}</h1>
+<div mat-dialog-content>
+  <div class="row">
+    <div class="col text-center">
+      <span *ngIf="showNumber" style=" height:200px !important; width:200px !important; font-size:200px !important;">{{horseNumber}}</span>
+      <img *ngIf="showHorse" src="/Content/gallop.gif" class="center-block" />
+      <button *ngIf="showButton" (click)="onSelect()" mat-button>
+        <mat-icon class="material-icons center-block" style=" height:300px !important; width:300px !important; font-size:300px !important;" color="accent">blur_on</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+

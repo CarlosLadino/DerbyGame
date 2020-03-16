@@ -1,0 +1,9 @@
+<h2>Winners</h2>
+<br />
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2" *ngFor="let guest of totals" style="padding: 3px;">
+      <guest-total-component [guestTotal]="guest"></guest-total-component>
+    </div>
+  </div>
+</div>

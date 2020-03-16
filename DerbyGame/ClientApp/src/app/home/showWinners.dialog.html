@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>{{dialogTitle}}</h1>
+<div mat-dialog-content>
+  <table id="winners">
+    <tr>
+      <th>Horse #</th>
+      <th>Place</th>
+      <th>Guest</th>
+      <th>Amount</th>
+    </tr>
+    <tr *ngFor="let guest of winnerData">
+      <td>{{guest.assignedHorseNumber}}</td>
+      <td>{{guest.placeId}}</td>
+      <td><guest-component [avatarName]="guest.guestAvatar" [guestName]="guest.guestName"></guest-component></td>
+      <td>{{guest.amount | currency}}</td>
+    </tr>
+  </table>
+
+</div>
+<div mat-dialog-actions >
+  <button mat-button (click)="onCancelClick()">Ok</button>
+</div>

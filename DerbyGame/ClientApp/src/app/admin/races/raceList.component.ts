@@ -1,0 +1,74 @@
+import { Component, OnInit } from '@angular/core';
+import { RaceService } from '../../Common/Services/race.service';
+import { Races } from '../../Common/Models/race.model';
+import { MatDialog } from '@angular/material';
+import { RaceEditDialog } from './raceEdit.dialog';
+import { ConfirmDialog } from '../../common/CustomComponents/ConfirmationDialog/confirm.dialog';
+import { ConfirmDialogModel } from '../../common/CustomComponents/ConfirmationDialog/confirmDialog.model';
+
+
+
+@Component({
+    templateUrl: 'raceList.component.html'
+})
+
+export class RaceListComponent implements OnInit {
+    public datasource: Array<Races>;
+    public displayedColumns: string[] = ['name', 'numberOfHorses', 'actions'];
+
+    constructor(private raceService: RaceService, public dialog: MatDialog) {
+        this.raceService.getRaces().subscribe((data: Array<Races>) => {
+            this.datasource = data;
+        });
+    }
+
+    ngOnInit() {
+
+    }
+
+    onDeleteClick(id: number) {
+        const message = `Are you sure you want to delete this Race?`;
+
+        const dialogData = new ConfirmDialogModel("Confirm Delete", message);
+
+        const dialogRef = this.dialog.open(ConfirmDialog, {
+            maxWidth: "400px",
+            data: dialogData
+        });
+
+        dialogRef.afterClosed().subscribe(dialogResult => {
+            if (dialogResult == true) {
+                this.raceService.delete(id).subscribe(() => {
+                    this.loadData();
+                });
+            }
+        });
+
+    }
+
+    onEditClick(id: number) {
+        this.openDialog(id);
+    }
+
+
+    onRacesClick(id: number) {
+        alert("Select races");
+    }
+
+    openDialog(id: number): void {
+        const dialogRef = this.dialog.open(RaceEditDialog, {
+            width: '600px',
+            data: { id: id }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            this.loadData();
+        });
+    }
+
+    loadData(): void {
+        this.raceService.getRaces().subscribe((data: Array<Races>) => {
+            this.datasource = data;
+        });
+    }
+}

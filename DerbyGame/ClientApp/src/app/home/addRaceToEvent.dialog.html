@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>{{dialogTitle}}</h1>
+<div mat-dialog-content>
+  <p>Select the races you want to add to the Event</p>
+  <mat-selection-list [formControl]="selectedRaces">
+    <mat-list-option *ngFor="let race of races" [value]="race.raceId">{{race.raceName}}</mat-list-option>
+  </mat-selection-list>
+</div>
+<div mat-dialog-actions >
+  <button mat-button (click)="onCancelClick()">Cancel</button>
+  <button mat-button cdkFocusInitial (click)="onSaveClick()">Save</button>
+</div>

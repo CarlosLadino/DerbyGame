@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>{{dialogTitle}}</h1>
+<div mat-dialog-content>
+  <p>Enter the Event information</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="event.name" placeholder="Event Name">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="Choose a date"  [(ngModel)]="event.eventDate">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions >
+  <button mat-button (click)="onCancelClick()">Cancel</button>
+  <button mat-button cdkFocusInitial (click)="onSaveClick()">Save</button>
+</div>

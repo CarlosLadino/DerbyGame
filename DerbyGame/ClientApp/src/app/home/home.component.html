@@ -1,0 +1,181 @@
+<mat-horizontal-stepper #stepper linear>
+  <mat-step label="Betting" state="betting">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-3 ">
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Race Information
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <mat-form-field>
+                <mat-label>Select a Race</mat-label>
+                <mat-select name="race" [(value)]="selectedEventRaceId" (selectionChange)="onSelectionChange($event)">
+                  <mat-option *ngFor="let race of races" [value]="race.eventRaceId">
+                    {{race.raceName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div class="row" [hidden]="raceInstance.saved">
+                <div class="col-4">
+                  <mat-form-field>
+                    <input type="number" matInput [(ngModel)]="raceInstance.betAmount" placeholder="Bet Amount">
+                    <span matPrefix>$&nbsp;</span>
+                  </mat-form-field>
+                </div>
+                <div class="col-6">
+                  <mat-checkbox color="accent" [(ngModel)]="raceInstance.allowSecondGuest" (change)="onAllowSecondGuest($event)">Allow Second Bet</mat-checkbox>
+                  <div><button mat-raised-button color="warn" (click)="onReset()">Reset Race</button></div>
+                </div>
+                <div class="col-2">
+                  <button mat-button mat-icon-button (click)="onAddRaceToRoster()" class="pull-right"><mat-icon aria-hidden="false" aria-label="New" color="accent" matTooltip="Add Races to Event">add_circle</mat-icon></button>
+                </div>
+              </div>
+              <div class="row" [hidden]="!raceInstance.saved">
+                <button mat-button mat-icon-button (click)="onAddRaceToRoster()" class="pull-right"><mat-icon aria-hidden="false" aria-label="New" color="accent" matTooltip="Add Races to Event">add_circle</mat-icon></button>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+          <br />
+          <div>
+            <mat-card [hidden]="raceInstance.saved">
+              <mat-card-header>
+                <mat-card-title>Guest Information</mat-card-title>
+                <mat-card-subtitle>Select a Guest and Pick a random horse.</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <mat-form-field>
+                  <mat-label>Select a Guest</mat-label>
+                  <mat-select name="guest" [(value)]="selectedGuestId">
+                    <mat-option *ngFor="let guest of activeGuests" [value]="guest.id">
+                      {{guest.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-raised-button color="primary" (click)="onSelectHorse()" [disabled]="selectedGuestId == 0 || selectedEventRaceId == 0 || !horsesAreAvailable">Select a Horse</button>
+                <button mat-button mat-icon-button (click)="onActivateGuests()" class="pull-right"><mat-icon aria-hidden="false" aria-label="New" color="accent" matTooltip="Quick Active Guest">playlist_add_check</mat-icon></button>
+                <button mat-button mat-icon-button (click)="onNewGuests()" class="pull-right"><mat-icon aria-hidden="false" aria-label="New" color="accent" matTooltip="Create a new Guest">add_circle</mat-icon></button>
+              </mat-card-actions>
+            </mat-card>
+            <br />
+            <mat-card>
+              <mat-card-header>
+                <mat-card-title>Betting Information</mat-card-title>
+                <mat-card-subtitle>Running Totals and Race Prices.</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content *ngIf="!raceInstance.raceWasLoadedFromDB">
+                <div class="row">
+                  <div class="col-12">
+                    <h6>Collected Amount: <span>$&nbsp;{{raceInstance.totalCollected}}.00</span></h6>
+                  </div>
+                </div>
+                <mat-divider></mat-divider>
+                <br />
+                <div class="row">
+                  <div class="col-4">
+                    <mat-icon mat-card-avatar aria-hidden="false" aria-label="Horse" color="primary" style="font-size:40px;">work</mat-icon>
+                  </div>
+                  <div class="col-4">
+                    <mat-icon mat-card-avatar aria-hidden="false" aria-label="Horse" color="warn" style="font-size:40px;">work</mat-icon>
+                  </div>
+                  <div class="col-4" style="color:#797a80;">
+                    <mat-icon mat-card-avatar aria-hidden="false" aria-label="Horse" style="font-size:40px;">work</mat-icon>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-4">
+                    <h6>1st. Place <span>$&nbsp;{{raceInstance.firstPlaceAmount}}.00</span></h6>
+                  </div>
+                  <div class="col-4">
+                    <h6>2nd. Place <span>$&nbsp;{{raceInstance.secondPlaceAmount}}.00</span></h6>
+                  </div>
+                  <div class="col-4">
+                    <h6>3rd. Place <span>$&nbsp;{{raceInstance.thirdPlaceAmount}}.00</span></h6>
+                  </div>
+                </div>
+
+
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-raised-button color="primary" (click)="onLockRace()" [disabled]="horsesAreAvailable || raceInstance.saved">Lock Race</button>
+                <button mat-raised-button color="primary" (click)="onGotoRace()" [disabled]="!raceInstance.saved">Run Race</button>
+                <button mat-raised-button color="primary" (click)="onShowWinners()" [disabled]="!enableWinners">Winners</button>           
+              </mat-card-actions>
+            </mat-card>
+
+          </div>
+        </div>
+        <div class="col-8 offset-1">
+          <div class="row">
+            <div class="col-2" *ngFor="let horse of eventRaceGuests" style="padding: 3px;">
+              <mat-card [style.opacity]=" horse.placeId == 0 ? 0.2 : 1">
+                <mat-card-header>
+
+                  <div mat-card-avatar class="raceCard-header-image"></div>
+                  <mat-card-title>{{horse.assignedHorseNumber}}&nbsp;&nbsp;</mat-card-title>
+
+                </mat-card-header>
+
+                <mat-card-content>
+                  <div *ngIf="horse.guest1Id > 0">
+                    <mat-chip-list aria-label="Guests">
+                      <mat-chip color="accent" selected [removable]="removable" (removed)="onRemoveGuest(1, horse.guest1Id)">
+                        <guest-component [avatarName]="horse.guest1Avatar" [guestName]="horse.guest1Name"></guest-component>
+
+                        <mat-icon matChipRemove (click)="onRemoveGuest(1, horse.guest1Id)" [hidden]="raceInstance.saved">cancel</mat-icon>
+                      </mat-chip>
+                    </mat-chip-list>
+
+                  </div>
+                  <div *ngIf="horse.guest2Id > 0">
+                    <mat-chip-list aria-label="Guests">
+                      <mat-chip color="accent" selected [removable]="removable" (removed)="onRemoveGuest(2, horse.guest2Id)">
+                        <guest-component [avatarName]="horse.guest2Avatar" [guestName]="horse.guest2Name"></guest-component>
+                        <mat-icon matChipRemove (click)="onRemoveGuest(2, horse.guest2Id)" [hidden]="raceInstance.saved">cancel</mat-icon>
+                      </mat-chip>
+                    </mat-chip-list>
+                  </div>
+                </mat-card-content>
+                <mat-card-footer [hidden]="horse.wonAmount == 0 || !raceInstance.saved || horse.placeId <= 0" [ngClass]="{'raceWinner1': horse.placeId == 1, 'raceWinner2': horse.placeId == 2, 'raceWinner3': horse.placeId == 3}">
+                  <mat-icon aria-hidden="false" aria-label="Horse" class="pull-right" [hidden]="horse.placeId <= 0">work</mat-icon>
+                  <span>&nbsp;&nbsp;{{horse.wonAmount | currency}}</span>
+
+
+                </mat-card-footer>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-step>
+  <mat-step label="Race" state="race">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-3">
+          <div *ngFor="let horse of eventRaceGuests">
+              <race-guest-component [horse]="horse"></race-guest-component>
+          </div>         
+        </div>
+        <div class="col-9">
+          <video width="1024" height="576" controls="controls" preload="auto" #video>
+            <source type="video/mp4" />
+          </video>
+        </div>
+      </div>
+    </div>
+    
+  </mat-step>
+  <!-- Icon overrides. -->
+  <ng-template matStepperIcon="betting">
+    <mat-icon>attach_money</mat-icon>
+  </ng-template>
+  <ng-template matStepperIcon="race">
+    <mat-icon>timer</mat-icon>
+  </ng-template>
+</mat-horizontal-stepper>
+

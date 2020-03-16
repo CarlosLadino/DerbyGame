@@ -1,0 +1,14 @@
+  <mat-card>
+    <mat-card-header>
+      <img mat-card-avatar src="/Avatars/{{guestTotal.guestAvatar}}.png" style="width:60px;height:60px;border-radius:50%; object-fit:cover;" />
+      <mat-card-title>{{guestTotal.guestName}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>    
+    </mat-card-content>
+    <mat-card-footer  class="raceWinner2">
+      <mat-icon aria-hidden="false" aria-label="Total" class="pull-right" >work</mat-icon>
+      <span style="font-size:30px;">&nbsp;&nbsp;{{guestTotal.totalAmount | currency}}</span>
+
+
+    </mat-card-footer>
+  </mat-card>
