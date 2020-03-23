@@ -21,7 +21,7 @@
               <div class="row" [hidden]="raceInstance.saved">
                 <div class="col-4">
                   <mat-form-field>
-                    <input type="number" matInput [(ngModel)]="raceInstance.betAmount" placeholder="Bet Amount">
+                    <input type="number" matInput [(ngModel)]="raceInstance.betAmount" placeholder="Bet Amount" (change)="onRecalculateBetAmount()">
                     <span matPrefix>$&nbsp;</span>
                   </mat-form-field>
                 </div>
