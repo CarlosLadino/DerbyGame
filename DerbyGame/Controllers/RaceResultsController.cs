@@ -29,7 +29,7 @@ namespace DerbyGame.Controllers
         {
             if (raceId > 0)
             {
-                return this.Ok(this.raceResultsManager.AllByRaceId(raceId));
+                return this.Ok(this.raceResultsManager.AllByRaceId(raceId).OrderBy(r => r.PlaceId));
             }
             else
             {
