@@ -4,6 +4,7 @@ import { Races } from '../../Common/Models/race.model';
 import { RaceService } from '../../Common/Services/race.service';
 import { RaceResultService } from '../../common/Services/raceResult.service';
 import { RaceResults } from '../../common/Models/raceResult.model';
+import { RaceWithdrawnHorseDialog } from './raceWithdrawnHorse.dialog';
 
 @Component({
     selector: 'raceEditDialog',
@@ -17,6 +18,7 @@ export class RaceEditDialog implements OnInit {
         private raceService: RaceService,
         private raceResultService: RaceResultService,
         public dialogRef: MatDialogRef<RaceEditDialog>,
+        public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: Races) {
         
     }
@@ -50,4 +52,18 @@ export class RaceEditDialog implements OnInit {
         });
     }
 
+  onWithdrawnHorsesClick(id: number): void {
+    this.openDialog(id);
+  }
+
+  openDialog(id: number): void {
+    const dialogRef = this.dialog.open(RaceWithdrawnHorseDialog, {
+      width: '600px',
+      data: { id: id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      /*this.loadData();*/
+    });
+  }
 }

@@ -23,6 +23,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GuestComponent } from './common/CustomComponents/guest.component';
 import { RaceGuestComponent } from './common/CustomComponents/raceGuest.component';
 import { GuestTotalComponent } from './common/CustomComponents/guesTotal.component';
+import { RaceWithdrawnHorseDialog } from './admin/races/raceWithdrawnHorse.dialog';
 import {
     MatFormFieldModule,
     MatButtonModule,
@@ -51,6 +52,7 @@ import { UtilityService } from './common/Services/utility.service';
 import { DeactivateGuardService } from './common/Services/deactivateGuardService';
 import { ShowWinnersDialog } from './home/showWinners.dialog';
 import { AddRaceToEventDialog} from './home/addRaceToEvent.dialog';
+import { from } from 'rxjs';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,22 +60,23 @@ import { AddRaceToEventDialog} from './home/addRaceToEvent.dialog';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-        EventListComponent,
-        EventTotalsComponent,
-        RaceListComponent,
-        GuestListComponent,
-        EventEditDialog,
-        GuestEditDialog,
-        ConfirmDialog,
-        RaceEditDialog,
-        EventRaceSelectDialog,
-        SelectHorseDialog,
-        ActivateGuestsDialog,
-        ShowWinnersDialog,
-        AddRaceToEventDialog,
-        GuestComponent,
-        RaceGuestComponent,
-        GuestTotalComponent
+    EventListComponent,
+    EventTotalsComponent,
+    RaceListComponent,
+    GuestListComponent,
+    EventEditDialog,
+    GuestEditDialog,
+    ConfirmDialog,
+    RaceEditDialog,
+    EventRaceSelectDialog,
+    SelectHorseDialog,
+    ActivateGuestsDialog,
+    ShowWinnersDialog,
+    AddRaceToEventDialog,
+    GuestComponent,
+    RaceGuestComponent,
+    GuestTotalComponent,
+    RaceWithdrawnHorseDialog
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -116,15 +119,16 @@ import { AddRaceToEventDialog} from './home/addRaceToEvent.dialog';
         DeactivateGuardService
     ],
     entryComponents: [
-        EventEditDialog,
-        GuestEditDialog,
-        ConfirmDialog,
-        RaceEditDialog,
-        EventRaceSelectDialog,
-        SelectHorseDialog,
-        ActivateGuestsDialog,
-        ShowWinnersDialog,
-        AddRaceToEventDialog
+      EventEditDialog,
+      GuestEditDialog,
+      ConfirmDialog,
+      RaceEditDialog,
+      EventRaceSelectDialog,
+      SelectHorseDialog,
+      ActivateGuestsDialog,
+      ShowWinnersDialog,
+      AddRaceToEventDialog,
+      RaceWithdrawnHorseDialog
     ],
   bootstrap: [AppComponent]
 })

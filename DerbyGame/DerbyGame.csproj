@@ -38,6 +38,7 @@
     <None Remove="ClientApp\src\app\admin\guests\guestEdit.dialog.ts" />
     <None Remove="ClientApp\src\app\admin\raceList.component.ts" />
     <None Remove="ClientApp\src\app\admin\races\raceEdit.dialog.ts" />
+    <None Remove="ClientApp\src\app\admin\races\raceWithdrawnHorse.dialog.ts" />
     <None Remove="ClientApp\src\app\common\CustomComponents\ConfirmationDialog\confirm.dialog.ts" />
     <None Remove="ClientApp\src\app\common\CustomComponents\ConfirmationDialog\confirmDialog.model.ts" />
     <None Remove="ClientApp\src\app\common\CustomComponents\guest.component.ts" />
@@ -52,6 +53,7 @@
     <None Remove="ClientApp\src\app\common\Models\race.model.ts" />
     <None Remove="ClientApp\src\app\common\Models\raceInstance.model.ts" />
     <None Remove="ClientApp\src\app\common\Models\raceResult.model.ts" />
+    <None Remove="ClientApp\src\app\common\Models\raceWithdrawnHorse.model.ts" />
     <None Remove="ClientApp\src\app\common\Services\deactivateGuardService.ts" />
     <None Remove="ClientApp\src\app\common\Services\event.service.ts" />
     <None Remove="ClientApp\src\app\common\Services\eventRace.service.ts" />
@@ -59,6 +61,7 @@
     <None Remove="ClientApp\src\app\common\Services\guest.service.ts" />
     <None Remove="ClientApp\src\app\common\Services\race.service.ts" />
     <None Remove="ClientApp\src\app\common\Services\raceResult.service.ts" />
+    <None Remove="ClientApp\src\app\common\Services\raceWithdrawnHorse.service.ts" />
     <None Remove="ClientApp\src\app\common\Services\utility.service.ts" />
     <None Remove="ClientApp\src\app\home\activateGuests.dialog.ts" />
     <None Remove="ClientApp\src\app\home\addRaceToEvent.dialog.ts" />
@@ -94,6 +97,7 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\admin\events\eventList.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\races\raceWithdrawnHorse.dialog.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\CustomComponents\ConfirmationDialog\confirm.dialog.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\CustomComponents\ConfirmationDialog\confirmDialog.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\CustomComponents\guesTotal.component.ts">
@@ -114,6 +118,9 @@
     <TypeScriptCompile Include="ClientApp\src\app\common\Models\raceInstance.model.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\common\Models\raceWithdrawnHorse.model.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\common\Models\raceResult.model.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -126,6 +133,9 @@
     <TypeScriptCompile Include="ClientApp\src\app\common\Models\event.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\Services\deactivateGuardService.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\Services\eventRaceGuest.service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\common\Services\raceWithdrawnHorse.service.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\common\Services\utility.service.ts">

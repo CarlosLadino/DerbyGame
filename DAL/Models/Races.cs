@@ -40,5 +40,9 @@ namespace Data.Models
         [InverseProperty("Race")]
         [IgnoreDataMember]
         public virtual ICollection<RaceResults> RaceResultsRace { get; set; }
+
+        [InverseProperty("Race")]
+        [IgnoreDataMember]
+        public virtual ICollection<RaceWithdrawnHorses> RaceWithdrawnHorsesRace { get; set; }
     }
 }

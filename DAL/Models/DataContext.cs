@@ -25,6 +25,7 @@ namespace Data.Models
         public virtual DbSet<Guests> Guests { get; set; }
         public virtual DbSet<Places> Places { get; set; }
         public virtual DbSet<RaceResults> RaceResults { get; set; }
+        public virtual DbSet<RaceWithdrawnHorses> RaceWithdrawnHorses { get; set; }
         public virtual DbSet<Races> Races { get; set; }
 
 
