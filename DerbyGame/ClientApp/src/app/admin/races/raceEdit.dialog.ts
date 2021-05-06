@@ -52,14 +52,14 @@ export class RaceEditDialog implements OnInit {
         });
     }
 
-  onWithdrawnHorsesClick(id: number): void {
-    this.openDialog(id);
+  onWithdrawnHorsesClick(): void {
+    this.openDialog();
   }
 
-  openDialog(id: number): void {
+  openDialog(): void {
     const dialogRef = this.dialog.open(RaceWithdrawnHorseDialog, {
       width: '600px',
-      data: { id: id }
+      data: { id: this.race.id, numberOfHorses: this.race.numberOfHorses }
     });
 
     dialogRef.afterClosed().subscribe(result => {

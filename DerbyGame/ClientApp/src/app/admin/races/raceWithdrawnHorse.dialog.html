@@ -1,26 +1,37 @@
 <h1 mat-dialog-title>{{dialogTitle}}</h1>
 <div mat-dialog-content>
-  <p>Manage Withdrawn Horses</p>
-  <!--<mat-form-field>
-    <input matInput [(ngModel)]="race.name" placeholder="Race Name">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput type="url" [(ngModel)]="race.url" placeholder="Race Url">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput type="number" [(ngModel)]="race.numberOfHorses" placeholder="Number Of Horses">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput type="text" [(ngModel)]="race.videoName" placeholder="Video Name">
-  </mat-form-field>-->
+  <div>
+    <mat-form-field>
+      <mat-label>Select Horse Number</mat-label>
+      <mat-select name="horseNumber" [(value)]="selectedHorseNumber">
+        <mat-option *ngFor="let number of horseNumberList" [value]="number">
+          {{number}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-button mat-icon-button="primary" (click)="onAddNumberClick()"><mat-icon aria-hidden="false" aria-label="New" color="primary" matTooltip="Add a Horse Number">add_circle</mat-icon></button>
+  </div>
+
+  <table mat-table [dataSource]="raceWithdrawnHorses" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id. </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="horseNumber">
+      <th mat-header-cell *matHeaderCellDef> Horse Number. </th>
+      <td mat-cell *matCellDef="let element"> {{element.horseNumber}} </td>
+    </ng-container>   
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions. </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-button mat-icon-button color="primary" (click)="onDeleteClick(element.id)"><mat-icon aria-hidden="false" aria-label="Delete" matTooltip="Delete Horse">delete_forever</mat-icon></button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 </div>
-<!--<div *ngFor="let place of places">
-  <mat-form-field>
-    <input type="number" matInput [(ngModel)]="place.horseNumber" placeholder="Place #{{place.placeId}}">
-  </mat-form-field>
-</div>
-<mat-checkbox [(ngModel)]="race.archived">Archive</mat-checkbox>-->
 <div mat-dialog-actions>
-  <button mat-button (click)="onCancelClick()">Cancel</button>
-  <button mat-button cdkFocusInitial (click)="onSaveClick()">Save</button>
+  <button mat-button (click)="onCancelClick()">Close</button>
 </div>

@@ -1,1 +1,1 @@
-{"version":3,"file":"raceWithdrawnHorse.model.js","sourceRoot":"","sources":["raceWithdrawnHorse.model.ts"],"names":[],"mappings":""}
+{"version":3,"file":"raceWithdrawnHorse.model.js","sourceRoot":"","sources":["raceWithdrawnHorse.model.ts"],"names":[],"mappings":";;;AAMA;IAIE,6BAAY,EAAU,EAAE,MAAc,EAAE,WAAmB;QACzD,IAAI,CAAC,EAAE,GAAG,EAAE,CAAC;QACb,IAAI,CAAC,MAAM,GAAG,MAAM,CAAC;QACrB,IAAI,CAAC,WAAW,GAAG,WAAW,CAAC;IACjC,CAAC;IACH,0BAAC;AAAD,CAAC,AATD,IASC;AATY,kDAAmB"}

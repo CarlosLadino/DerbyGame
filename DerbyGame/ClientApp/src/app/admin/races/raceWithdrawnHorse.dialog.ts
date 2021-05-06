@@ -2,48 +2,63 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RaceWithdrawnHorseService } from '../../common/Services/raceWithdrawnHorse.service';
 import { RaceWithdrawnHorses } from '../../common/Models/raceWithdrawnHorse.model';
+import { Races } from '../../Common/Models/race.model';
 
 @Component({
   selector: 'raceWithdrawnHorse',
   templateUrl: 'raceWithdrawnHorse.dialog.html',
 })
 export class RaceWithdrawnHorseDialog implements OnInit {
+  private raceId: number;
+  public horseNumberList: number[] = [];
   public raceWithdrawnHorses: RaceWithdrawnHorses[];
   public dialogTitle: string;
+  public displayedColumns: string[] = ['horseNumber', 'actions'];
+  public selectedHorseNumber: number;
   constructor(
     private raceWithdrawnHorseService: RaceWithdrawnHorseService,
     public dialogRef: MatDialogRef<RaceWithdrawnHorseDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: RaceWithdrawnHorses[]) {
-
+    @Inject(MAT_DIALOG_DATA) public data: Races) {
   }
 
   ngOnInit() {
-    this.raceWithdrawnHorses = this.data;
-    this.dialogTitle = 'Edit Race Withdrawn Horses';
-    //this.raceService.getRace(this.data.id).subscribe((result: Races) => {
-    //  this.race = result;
-    //});
-    //this.raceResultService.getRaceResults(this.data.id).subscribe((result: RaceResults[]) => {
-    //  this.places = result;
-    //});
+    this.raceId = this.data.id;
+    this.dialogTitle = 'Manage Race Withdrawn Horses';
+
+    this.getWithdrawnHorses();   
   }
 
   onCancelClick(): void {
     this.dialogRef.close();
   }
 
-  onSaveClick(): void {
-    //var isNew = this.race.id == 0;
-    //this.raceService.save(this.race).subscribe((result: Races) => {
-    //  this.places.forEach((place: RaceResults) => {
-    //    if (isNew) {
-    //      place.RaceId = result.id
-    //    }
-    //    this.raceResultService.save(place).subscribe(() => {
-    //      this.dialogRef.close();
-    //    });
-    //  });
-    //});
+  onAddNumberClick(): void {
+    var rwh: RaceWithdrawnHorses = new RaceWithdrawnHorses(0, this.data.id, this.selectedHorseNumber);
+    this.raceWithdrawnHorseService.save(rwh).subscribe(() => {
+      this.getWithdrawnHorses();
+    });
   }
 
+  onDeleteClick(id: number) {
+    this.raceWithdrawnHorseService.delete(id).subscribe(() => {
+      this.getWithdrawnHorses();
+    });
+  }
+
+  private getWithdrawnHorses() {
+    this.raceWithdrawnHorseService.getRaceWithdrawnHorses(this.data.id).subscribe((result: RaceWithdrawnHorses[]) => {
+      this.raceWithdrawnHorses = result;
+      this.getHorseSelection();
+    });
+  }
+
+  private getHorseSelection() {
+    this.horseNumberList = [];
+    let i: number;
+    for (i = 0; i < this.data.numberOfHorses; i++) {
+      if (!this.raceWithdrawnHorses.some(item => item.horseNumber === i + 1)) {
+        this.horseNumberList.push(i + 1);
+      }     
+    }
+  }
 }
