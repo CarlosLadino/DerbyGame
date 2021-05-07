@@ -126,12 +126,12 @@
                       <mat-chip color="accent" selected [removable]="removable" (removed)="onRemoveGuest(1, horse.guest1Id)">
                         <guest-component [avatarName]="horse.guest1Avatar" [guestName]="horse.guest1Name"></guest-component>
 
-                        <mat-icon matChipRemove (click)="onRemoveGuest(1, horse.guest1Id)" [hidden]="raceInstance.saved">cancel</mat-icon>
+                        <mat-icon matChipRemove (click)="onRemoveGuest(1, horse.guest1Id)" [hidden]="raceInstance.saved || horse.guest1Id == 7003">cancel</mat-icon><!--7003 Withdrawn-->
                       </mat-chip>
                     </mat-chip-list>
 
                   </div>
-                  <div *ngIf="horse.guest2Id > 0">
+                  <div *ngIf="horse.guest2Id > 0 && horse.guest1Id != 7003"> <!--7003 Withdrawn-->
                     <mat-chip-list aria-label="Guests">
                       <mat-chip color="accent" selected [removable]="removable" (removed)="onRemoveGuest(2, horse.guest2Id)">
                         <guest-component [avatarName]="horse.guest2Avatar" [guestName]="horse.guest2Name"></guest-component>

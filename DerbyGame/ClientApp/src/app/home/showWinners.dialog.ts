@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { GuestService } from '../Common/Services/guest.service';
-import { Guests } from '../Common/Models/guest.model';
 import { FormControl } from '@angular/forms';
 import { MatSelectionList } from '@angular/material';
 import { RaceInstance } from '../common/Models/raceInstance.model';

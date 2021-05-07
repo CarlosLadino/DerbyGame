@@ -9,7 +9,7 @@ import { VwEventRace } from '../common/Models/eventRace.model';
 import { EventRaceGuests, VwEventRaceGuests } from '../common/Models/eventRaceGuest.model';
 import { MatTableDataSource, MatDialog, MatStepper } from '@angular/material';
 import { GuestService } from '../Common/Services/guest.service';
-import { Guests } from '../Common/Models/guest.model';
+import { IGuests } from '../Common/Models/guest.model';
 import { ConfirmDialogModel } from '../common/CustomComponents/ConfirmationDialog/confirmDialog.model';
 import { ConfirmDialog } from '../common/CustomComponents/ConfirmationDialog/confirm.dialog';
 import { SelectHorseDialog } from './selectHorse.dialog';
@@ -21,6 +21,8 @@ import { EventRaceGuestService } from '../common/Services/eventRaceGuest.service
 import { ShowWinnersDialog } from './showWinners.dialog';
 import { AddRaceToEventDialog } from './addRaceToEvent.dialog';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { RaceWithdrawnHorseService } from '../common/Services/raceWithdrawnHorse.service';
+import { IRaceWithdrawnHorses, RaceWithdrawnHorses } from '../common/Models/raceWithdrawnHorse.model';
 
 @Component({
   selector: 'app-home',
@@ -34,7 +36,7 @@ export class HomeComponent implements OnInit {
   public races: VwEventRace[];
   public raceInstance: RaceInstance = new RaceInstance();
   public eventRaceGuests: VwEventRaceGuests[];
-  public activeGuests: Guests[];
+  public activeGuests: IGuests[];
   private selectedGuestId: number = 0;
   private selectedEventRaceId: number = 0;
   public horsesAreAvailable: boolean = true;
@@ -52,7 +54,8 @@ export class HomeComponent implements OnInit {
     private guestService: GuestService,
     private eventRaceGuestService: EventRaceGuestService,
     public dialog: MatDialog,
-    public raceResultService: RaceResultService) {
+    public raceResultService: RaceResultService,
+    public raceWithdrawnHorseService: RaceWithdrawnHorseService) {
   }
 
   ngOnInit() {
@@ -63,7 +66,7 @@ export class HomeComponent implements OnInit {
       });
     });
 
-    this.guestService.getActiveGuests().subscribe((guests: Guests[]) => {
+    this.guestService.getActiveGuests().subscribe((guests: IGuests[]) => {
       this.activeGuests = guests;
     });
   }
@@ -235,7 +238,7 @@ export class HomeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.guestService.getActiveGuests().subscribe((guests: Guests[]) => {
+      this.guestService.getActiveGuests().subscribe((guests: IGuests[]) => {
         this.activeGuests = guests;
       });
     });
@@ -248,7 +251,7 @@ export class HomeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.guestService.getActiveGuests().subscribe((guests: Guests[]) => {
+      this.guestService.getActiveGuests().subscribe((guests: IGuests[]) => {
         this.activeGuests = guests;
       });
     });
@@ -338,6 +341,7 @@ export class HomeComponent implements OnInit {
 
 
   private generateRoster(eventRaceId: number) {
+    var raceWithdrawnHorses: IRaceWithdrawnHorses[];
     var selectedRace: VwEventRace = this.races.find(x => x.eventRaceId == eventRaceId);
     this.raceInstance.numberOfHorses = selectedRace.numberOfHorses;
     this.raceInstance.raceUrl = selectedRace.raceUrl;
@@ -347,55 +351,71 @@ export class HomeComponent implements OnInit {
 
     this.raceInstance.raceId = selectedRace.raceId;
     this.enableWinners = false;
+    
     this.eventRaceGuestService.getEventRaceGuestsByEventRaceId(eventRaceId).subscribe((data: VwEventRaceGuests[]) => {
       if (data.length > 0) {
         this.eventRaceGuests = data;
         this.raceInstance.saved = true;
         this.raceInstance.raceWasLoadedFromDB = true;
+        this.setAvailableHorsesFlag();
       }
       else {
-        var eventRacesG: Array<VwEventRaceGuests> = [];
-        for (var index = 0; index < this.raceInstance.numberOfHorses; index++) {
-          var item = new VwEventRaceGuests(selectedRace.eventRaceId, index + 1);
-          eventRacesG.push(item);
-        }
-        this.eventRaceGuests = eventRacesG;
-        this.raceInstance.saved = false;
-        this.raceInstance.raceWasLoadedFromDB = false;
+        this.raceWithdrawnHorseService.getRaceWithdrawnHorses(selectedRace.raceId).subscribe((data: IRaceWithdrawnHorses[]) => {
+          raceWithdrawnHorses = data;
+          var eventRacesG: Array<VwEventRaceGuests> = [];
+          for (var index = 0; index < this.raceInstance.numberOfHorses; index++) {
+            var item = new VwEventRaceGuests(selectedRace.eventRaceId, index + 1);
+            eventRacesG.push(item);
+          }
+          this.eventRaceGuests = eventRacesG;
+          // Block withdrawn horses by assigning them first
+          if (raceWithdrawnHorses.length > 0) {
+            raceWithdrawnHorses.forEach((horse: IRaceWithdrawnHorses) => {
+              var eventGuestObject = this.eventRaceGuests.find(e => e.assignedHorseNumber == horse.horseNumber);
+              this.populateEventGuestObj(eventGuestObject, 1, this.utilityService.WithdrawnGuest);
+              this.populateEventGuestObj(eventGuestObject, 2, this.utilityService.WithdrawnGuest);
+            });            
+          }
+          this.raceInstance.saved = false;
+          this.raceInstance.raceWasLoadedFromDB = false;
+          this.setAvailableHorsesFlag();
+        });        
       }
-
-      this.setAvailableHorsesFlag();
     });
-
   }
 
-  private assignGuestToRoster(eventGuestObj: VwEventRaceGuests, guestNumberToBeAssigned: number, selectedGuestObj: Guests) {
+  private assignGuestToRoster(eventGuestObj: VwEventRaceGuests, guestNumberToBeAssigned: number, selectedGuestObj: IGuests) {
     const dialogRef = this.dialog.open(SelectHorseDialog, {
       width: '640px',
       data: { horseNumber: eventGuestObj.assignedHorseNumber, guestAvatar: selectedGuestObj.avatarName, guestName: selectedGuestObj['name'] }
     });
-
+    
     dialogRef.afterClosed().subscribe(result => {
-      if (guestNumberToBeAssigned == 1) {
-        eventGuestObj.guest1Id = selectedGuestObj['id'];
-        eventGuestObj.guest1Name = selectedGuestObj['name'];
-        if (selectedGuestObj.avatarName) {
-          eventGuestObj.guest1Avatar = selectedGuestObj.avatarName;
-        }
-      }
-      else {
-        eventGuestObj.guest2Id = selectedGuestObj['id'];
-        eventGuestObj.guest2Name = selectedGuestObj['name'];
-        if (selectedGuestObj.avatarName) {
-          eventGuestObj.guest2Avatar = selectedGuestObj.avatarName;
-        }
-      }
+      this.populateEventGuestObj(eventGuestObj, guestNumberToBeAssigned, selectedGuestObj);
       this.setAvailableHorsesFlag();
     });
 
     this.raceInstance.totalCollected = this.raceInstance.totalCollected + this.raceInstance.betAmount;
     this.calculatePrices();
   }
+
+  private populateEventGuestObj(eventGuestObj: VwEventRaceGuests, guestNumberToBeAssigned: number, selectedGuestObj: IGuests) {
+    if (guestNumberToBeAssigned == 1) {
+      eventGuestObj.guest1Id = selectedGuestObj['id'];
+      eventGuestObj.guest1Name = selectedGuestObj['name'];
+      if (selectedGuestObj.avatarName) {
+        eventGuestObj.guest1Avatar = selectedGuestObj.avatarName;
+      }
+    }
+    else {
+      eventGuestObj.guest2Id = selectedGuestObj['id'];
+      eventGuestObj.guest2Name = selectedGuestObj['name'];
+      if (selectedGuestObj.avatarName) {
+        eventGuestObj.guest2Avatar = selectedGuestObj.avatarName;
+      }
+    }
+  }
+
 
   private getRandomUnassignedHorse(guestNumber: number): VwEventRaceGuests {
     var unassignedHorse = this.eventRaceGuests.filter((item: VwEventRaceGuests) => {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GuestService } from '../../Common/Services/guest.service';
-import { Guests } from '../../Common/Models/guest.model';
+import { IGuests } from '../../Common/Models/guest.model';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { GuestEditDialog } from './guestEdit.dialog';
 import { ConfirmDialog } from '../../common/CustomComponents/ConfirmationDialog/confirm.dialog';
@@ -11,13 +11,13 @@ import { ConfirmDialogModel } from '../../common/CustomComponents/ConfirmationDi
 })
 
 export class GuestListComponent implements OnInit {
-    public datasource: MatTableDataSource<Guests> = new MatTableDataSource<Guests>();
+    public datasource: MatTableDataSource<IGuests> = new MatTableDataSource<IGuests>();
     public displayedColumns: string[] = ['avatar','name', 'isActive', 'actions'];
     public filter: string;
 
     constructor(private guestService: GuestService, public dialog: MatDialog) {
-        this.guestService.getGuests().subscribe((data: Array<Guests>) => {
-            this.datasource = new MatTableDataSource<Guests>(data);
+        this.guestService.getGuests().subscribe((data: Array<IGuests>) => {
+            this.datasource = new MatTableDataSource<IGuests>(data);
         });
     }
 
@@ -60,7 +60,7 @@ export class GuestListComponent implements OnInit {
     }
 
     loadData(): void {
-        this.guestService.getGuests().subscribe((data: Array<Guests>) => {
+        this.guestService.getGuests().subscribe((data: Array<IGuests>) => {
             this.datasource = new MatTableDataSource(data);
         });
     }

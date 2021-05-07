@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Guests } from '../Models/guest.model';
+import { IGuests } from '../Models/guest.model';
 
 @Injectable({
     providedIn: 'root',
@@ -28,7 +28,7 @@ export class GuestService {
         return this.httpClient.get(`${this.apiController}GetGuest/${id}`);
     }
 
-    public save(record: Guests) {
+    public save(record: IGuests) {
         return this.httpClient.post(`${this.apiController}Save`, record);
     }
 

@@ -38,7 +38,7 @@ namespace Data.Models
         // Stored Procedures
         public void ResetAllGuestToNotActive()
         {
-            this.Database.ExecuteSqlRaw("Update Guests set IsActive = 0");
+            this.Database.ExecuteSqlRaw("Update Guests set IsActive = 0 Where IsSystem = 0");
         }
 
         public bool SaveEventRacesList(int eventId, string racesList)

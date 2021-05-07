@@ -19,7 +19,7 @@ namespace BLL
         { 
             get 
             {
-                return this._context.Guests;  
+                return this._context.Guests.Where(g => g.IsSystem == false);  
             }
         }
 
@@ -27,7 +27,7 @@ namespace BLL
         {
             get
             {
-                return this._context.Guests.Where( g => g.IsActive == true).OrderBy(g => g.Name);
+                return this._context.Guests.Where( g => g.IsActive == true && g.IsSystem == false).OrderBy(g => g.Name);
             }
         }
 
@@ -35,7 +35,7 @@ namespace BLL
         {
             get
             {
-                return this._context.Guests.Where(g => g.IsActive == false).OrderBy(g => g.Name);
+                return this._context.Guests.Where(g => g.IsActive == false && g.IsSystem == false).OrderBy(g => g.Name);
             }
         }
 

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { GuestService } from '../Common/Services/guest.service';
-import { Guests } from '../Common/Models/guest.model';
+import { IGuests } from '../Common/Models/guest.model';
 import { FormControl } from '@angular/forms';
 import { MatSelectionList } from '@angular/material';
 
@@ -11,7 +11,7 @@ import { MatSelectionList } from '@angular/material';
 })
 export class ActivateGuestsDialog implements OnInit, AfterViewInit  {
     public dialogTitle: string;
-    public guests: Guests[];
+    public guests: IGuests[];
     public selectedGuests = new FormControl();
     @ViewChild(MatSelectionList, { static: false })
     private selectionList: MatSelectionList;
@@ -24,7 +24,7 @@ export class ActivateGuestsDialog implements OnInit, AfterViewInit  {
 
     ngOnInit() {
         this.dialogTitle = 'Active Guests';
-        this.guestService.getNotActiveGuests().subscribe((guests: Guests[]) => {
+        this.guestService.getNotActiveGuests().subscribe((guests: IGuests[]) => {
             this.guests = guests;
         });
     }

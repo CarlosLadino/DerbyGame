@@ -26,6 +26,9 @@ namespace Data.Models
         [StringLength(50)]
         public string AvatarName { get; set; }
 
+        [Required]
+        public bool IsSystem { get; set; }
+
         [InverseProperty("Guest1")]
         [IgnoreDataMember]
         public virtual ICollection<EventRaceGuests> EventRaceGuestsGuest1 { get; set; }
