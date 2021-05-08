@@ -19,8 +19,8 @@ export class GuestEditDialog implements OnInit, AfterViewInit  {
 
     ngOnInit() {
         this.guest = this.data;
-        this.dialogTitle = this.data.Id > 0 ? 'Edit Guest' : 'Enter New Guest';
-        this.guestService.getGuest(this.data.Id).subscribe((result: IGuests) => {
+        this.dialogTitle = this.data.id > 0 ? 'Edit Guest' : 'Enter New Guest';
+        this.guestService.getGuest(this.data.id).subscribe((result: IGuests) => {
             this.guest = result;
         });
     }

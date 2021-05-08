@@ -112,11 +112,11 @@
         <div class="col-8 offset-1">
           <div class="row">
             <div class="col-2" *ngFor="let horse of eventRaceGuests" style="padding: 3px;">
-              <mat-card [style.opacity]=" horse.placeId == 0 ? 0.2 : 1">
+              <mat-card [style.opacity]=" horse.placeId == 0 ? 0.2 : 1" [style.background-color]="horse.guest1Id == 7003 ? '#343a40' : '#3f51b5'">
                 <mat-card-header>
-
+                  <mat-card-title style="color:white; font-size: 23px;">{{horse.assignedHorseNumber}}&nbsp;&nbsp;</mat-card-title>
                   <div mat-card-avatar class="raceCard-header-image"></div>
-                  <mat-card-title>{{horse.assignedHorseNumber}}&nbsp;&nbsp;</mat-card-title>
+                  
 
                 </mat-card-header>
 
