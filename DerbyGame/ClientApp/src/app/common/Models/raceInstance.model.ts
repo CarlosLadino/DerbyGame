@@ -98,10 +98,10 @@ export class RaceInstance implements IRaceInstance {
     var total: number = 0;
     this.eventRaceGuests.forEach((e) => {
       if (e.guest1Id > 0 && e.guest2Id !== 7003) {
-        total = + this.betAmount;  
+        total = total + this.betAmount;  
       }
       if (e.guest2Id > 0 && e.guest2Id !== 7003)
-        total = + this.betAmount;
+        total = total = total + this.betAmount;
     });
 
     return total;
