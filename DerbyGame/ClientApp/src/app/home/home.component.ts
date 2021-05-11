@@ -285,6 +285,11 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  onVideoEnded() {
+    alert("here");
+    this.enableWinners = true;
+  }
+
   private generateRoster(eventRaceId: number) {
     var raceWithdrawnHorses: IRaceWithdrawnHorses[];
     var selectedRace: VwEventRace = this.races.find(x => x.eventRaceId == eventRaceId);
@@ -322,11 +327,6 @@ export class HomeComponent implements OnInit {
         });        
       }
     });
-  }
-
-  onVideoEnded() {
-    alert("here");
-    this.enableWinners = true;
   }
 
   private assignGuestToRoster(selectedGuestObj: IGuests) {
