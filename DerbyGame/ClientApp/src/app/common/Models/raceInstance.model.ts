@@ -121,9 +121,7 @@ export class RaceInstance implements IRaceInstance {
     }
   }
 
-  public assignGuestToRoaster(guest: IGuests): number {
-    var horse = this.getRandomUnassignedHorse();
-
+  public assignGuestToRoaster(horse: VwEventRaceGuests, guest: IGuests): number {
     if (horse.guest1Id == 0) {
       horse.guest1Id = guest.id;
       horse.guest1Name = guest.name;
@@ -161,7 +159,7 @@ export class RaceInstance implements IRaceInstance {
     this.calculatePrices();
   }
 
-  private getRandomUnassignedHorse(): VwEventRaceGuests {
+  public getRandomUnassignedHorse(): VwEventRaceGuests {
     var unassignedHorses: VwEventRaceGuests[]; 
     unassignedHorses = this.eventRaceGuests.filter((item: VwEventRaceGuests) => {
       return item.guest1Id == 0;
