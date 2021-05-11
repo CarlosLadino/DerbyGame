@@ -12,7 +12,7 @@
               </mat-expansion-panel-header>
               <mat-form-field>
                 <mat-label>Select a Race</mat-label>
-                <mat-select name="race" [(value)]="selectedEventRaceId" (selectionChange)="onSelectionChange($event)">
+                <mat-select name="race" [(value)]="selectedEventRaceId" (selectionChange)="onRaceSelectionChange($event)" [disabled]="raceInstance.totalCollected > 0">
                   <mat-option *ngFor="let race of races" [value]="race.eventRaceId">
                     {{race.raceName}}
                   </mat-option>
@@ -40,7 +40,7 @@
           </mat-accordion>
           <br />
           <div>
-            <mat-card [hidden]="raceInstance.saved">
+            <mat-card [hidden]="!raceInstance.allowHorseSelection">
               <mat-card-header>
                 <mat-card-title>Guest Information</mat-card-title>
                 <mat-card-subtitle>Select a Guest and Pick a random horse.</mat-card-subtitle>
@@ -56,7 +56,7 @@
                 </mat-form-field>
               </mat-card-content>
               <mat-card-actions>
-                <button mat-raised-button color="primary" (click)="onSelectHorse()" [disabled]="selectedGuestId == 0 || selectedEventRaceId == 0 || !horsesAreAvailable">Select a Horse</button>
+                <button mat-raised-button color="primary" (click)="onSelectHorse()" [disabled]="selectedGuestId == 0 || !raceInstance.allowHorseSelection">Select a Horse</button>
                 <button mat-button mat-icon-button (click)="onActivateGuests()" class="pull-right"><mat-icon aria-hidden="false" aria-label="New" color="accent" matTooltip="Quick Active Guest">playlist_add_check</mat-icon></button>
                 <button mat-button mat-icon-button (click)="onNewGuests()" class="pull-right"><mat-icon aria-hidden="false" aria-label="New" color="accent" matTooltip="Create a new Guest">add_circle</mat-icon></button>
               </mat-card-actions>
@@ -111,7 +111,7 @@
         </div>
         <div class="col-8 offset-1">
           <div class="row">
-            <div class="col-2" *ngFor="let horse of eventRaceGuests" style="padding: 3px;">
+            <div class="col-2" *ngFor="let horse of raceInstance.eventRaceGuests" style="padding: 3px;">
               <mat-card [style.opacity]=" horse.placeId == 0 ? 0.2 : 1" [style.background-color]="horse.guest1Id == 7003 ? '#343a40' : '#3f51b5'">
                 <mat-card-header>
                   <mat-card-title style="color:white; font-size: 23px;">{{horse.assignedHorseNumber}}&nbsp;&nbsp;</mat-card-title>
@@ -157,12 +157,12 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-3">
-          <div *ngFor="let horse of eventRaceGuests">
-              <race-guest-component [horse]="horse"></race-guest-component>
+          <div *ngFor="let horse of raceInstance.eventRaceGuests">
+            <race-guest-component [horse]="horse"></race-guest-component>
           </div>         
         </div>
         <div class="col-9">
-          <video width="1024" height="576" controls="controls" preload="auto" #video>
+          <video width="1024" height="576" controls="controls" preload="auto" #video (ended)="onVideoEnded()">
             <source type="video/mp4" />
           </video>
         </div>

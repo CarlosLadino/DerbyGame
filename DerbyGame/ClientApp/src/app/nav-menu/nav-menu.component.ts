@@ -9,14 +9,16 @@ import { Events } from '../Common/Models/event.model';
 })
 export class NavMenuComponent implements OnInit {
     isExpanded = false;
-    public eventName: string;
+  public eventName: string;
+  public eventId: number;
     constructor(private eventService: EventService) {
 
     }
 
     ngOnInit() {
         this.eventService.getActive().subscribe((data: Events) => {
-            this.eventName = data.name;
+          this.eventName = data.name;
+          this.eventId = data.id;
         });
     }
   collapse() {

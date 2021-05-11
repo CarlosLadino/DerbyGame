@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
   }
 
   canDeactivate() {
-    if (this.raceInstance.totalCollected > 0) {
+    if (this.raceInstance.getTotalCollected > 0 && !this.raceInstance.raceWasLoadedFromDB) {
       const message = `If you navigate out of this page all data will be lost. Are you sure you want to do that?`;
       const dialogData = new ConfirmDialogModel("Confirm Leaving Race", message);
       const dialogRef = this.dialog.open(ConfirmDialog, {
@@ -88,8 +88,8 @@ export class HomeComponent implements OnInit {
 
   }
 
-  onSelectionChange(eventRace) {
-    if (this.raceInstance.totalCollected > 0) {
+  onRaceSelectionChange(eventRace) {
+    if (this.raceInstance.getTotalCollected > 0 && !this.raceInstance.raceWasLoadedFromDB) {
       const message = `Betting is in progress. Are you sure you want to reset this race?`;
 
       const dialogData = new ConfirmDialogModel("Confirm Reset", message);
@@ -125,7 +125,7 @@ export class HomeComponent implements OnInit {
 
   onAllowSecondGuest(item) {
     this.raceInstance.allowSecondGuest = item.checked;
-    this.setAvailableHorsesFlag();
+    //////this.setAvailableHorsesFlag();
   }
 
   onReset() {
@@ -148,57 +148,26 @@ export class HomeComponent implements OnInit {
   }
 
   onSelectHorse() {
-    var eventGuestObj: VwEventRaceGuests;
-    var guestNumberToBeAssigned: number;
     var selectedGuestObj = this.activeGuests.find(guest => guest['id'] === this.selectedGuestId);
-    var horseWasAvailable: boolean = true;
+    if (this.raceInstance.allowHorseSelection) {
+      if (this.raceInstance.guestHasBeenAssigned(this.selectedGuestId)) {
+        const message = `Guest has already place a bet. Are you sure you want to continue?`;
 
-    // add validation to UI so they cannot select a GUEST until the race has been selected and also a guest.
+        const dialogData = new ConfirmDialogModel("Double Betting", message);
 
-    // See if there are available horses for guest 1
-    if (this.thereAreAvailableHorses(1)) {
-      eventGuestObj = this.getRandomUnassignedHorse(1);
-      guestNumberToBeAssigned = 1;
-    }
-    else {
-      if (this.raceInstance.allowSecondGuest) {
-        if (this.thereAreAvailableHorses(2)) {
-          eventGuestObj = this.getRandomUnassignedHorse(2);
-          guestNumberToBeAssigned = 2;
-        }
-        else {
-          horseWasAvailable = false;
-        }
+        const dialogRef = this.dialog.open(ConfirmDialog, {
+          maxWidth: "400px",
+          data: dialogData
+        });
+
+        dialogRef.afterClosed().subscribe(dialogResult => {
+          if (dialogResult == true) {
+            this.assignGuestToRoster(selectedGuestObj);           
+          }
+        });
       }
       else {
-        horseWasAvailable = false;
-      }
-
-    }
-
-    if (this.guestHasBeenAssigned()) {
-      const message = `Guest has already place a bet. Are you sure you want to continue?`;
-
-      const dialogData = new ConfirmDialogModel("Double Betting", message);
-
-      const dialogRef = this.dialog.open(ConfirmDialog, {
-        maxWidth: "400px",
-        data: dialogData
-      });
-
-      dialogRef.afterClosed().subscribe(dialogResult => {
-        if (dialogResult == true) {
-          if (horseWasAvailable) {
-            this.assignGuestToRoster(eventGuestObj, guestNumberToBeAssigned, selectedGuestObj);
-            this.setAvailableHorsesFlag();
-          }
-        }
-      });
-    }
-    else {
-      if (horseWasAvailable) {
-        this.assignGuestToRoster(eventGuestObj, guestNumberToBeAssigned, selectedGuestObj);
-        this.setAvailableHorsesFlag();
+          this.assignGuestToRoster(selectedGuestObj);        
       }
     }
   }
@@ -215,18 +184,20 @@ export class HomeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult == true) {
-        if (guestNumber == 1) {
-          var eventGuestObj = this.eventRaceGuests.find(e => e.guest1Id == guestId);
-          eventGuestObj.guest1Id = 0;
-          eventGuestObj.guest1Name = '';
-        }
-        else {
-          var eventGuestObj = this.eventRaceGuests.find(e => e.guest2Id == guestId);
-          eventGuestObj.guest2Id = 0;
-          eventGuestObj.guest2Name = '';
-        }
+        this.raceInstance.deleteGuestFromRoaster(guestNumber, guestId);
+        //////if (guestNumber == 1) {
+          
+          ////////var eventGuestObj = this.eventRaceGuests.find(e => e.guest1Id == guestId);
+          ////////eventGuestObj.guest1Id = 0;
+          ////////eventGuestObj.guest1Name = '';
+        //////}
+        //////else {
+        //////  var eventGuestObj = this.eventRaceGuests.find(e => e.guest2Id == guestId);
+        //////  eventGuestObj.guest2Id = 0;
+        //////  eventGuestObj.guest2Name = '';
+        //////}
 
-        this.setAvailableHorsesFlag();
+        //////this.setAvailableHorsesFlag();
       }
     });
   }
@@ -280,7 +251,7 @@ export class HomeComponent implements OnInit {
 
   onLockRace() {
     var records: EventRaceGuests[] = [];
-    this.eventRaceGuests.forEach((verg: VwEventRaceGuests) => {
+    this.raceInstance.eventRaceGuests.forEach((verg: VwEventRaceGuests) => {
       if (verg.id == 0 && verg.guest1Id > 0) {
         var erg = new EventRaceGuests(verg.eventRaceId, verg.assignedHorseNumber);
         erg.guest1Id = verg.guest1Id;
@@ -328,16 +299,16 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  onRecalculateBetAmount() {
-    var tempTotalAmount: number = 0;
-    this.eventRaceGuests.forEach((erg: VwEventRaceGuests) => {
-      tempTotalAmount == (erg.guest1Id > 0 ? tempTotalAmount = tempTotalAmount + this.raceInstance.betAmount : tempTotalAmount); 
-      tempTotalAmount == (erg.guest2Id > 0 ? tempTotalAmount = tempTotalAmount + this.raceInstance.betAmount : tempTotalAmount);
-    });
+  //////onRecalculateBetAmount() {
+  //////  var tempTotalAmount: number = 0;
+  //////  this.eventRaceGuests.forEach((erg: VwEventRaceGuests) => {
+  //////    tempTotalAmount == (erg.guest1Id > 0 ? tempTotalAmount = tempTotalAmount + this.raceInstance.betAmount : tempTotalAmount); 
+  //////    tempTotalAmount == (erg.guest2Id > 0 ? tempTotalAmount = tempTotalAmount + this.raceInstance.betAmount : tempTotalAmount);
+  //////  });
 
-    this.raceInstance.totalCollected = tempTotalAmount;
-    this.calculatePrices();
-  }
+  //////  ////////this.raceInstance.totalCollected = tempTotalAmount;
+  //////  ////////this.calculatePrices();
+  //////}
 
 
   private generateRoster(eventRaceId: number) {
@@ -350,14 +321,12 @@ export class HomeComponent implements OnInit {
     this.video.nativeElement.load();
 
     this.raceInstance.raceId = selectedRace.raceId;
-    this.enableWinners = false;
     
     this.eventRaceGuestService.getEventRaceGuestsByEventRaceId(eventRaceId).subscribe((data: VwEventRaceGuests[]) => {
       if (data.length > 0) {
-        this.eventRaceGuests = data;
+        this.raceInstance.setEventRaceGuests = data;
         this.raceInstance.saved = true;
         this.raceInstance.raceWasLoadedFromDB = true;
-        this.setAvailableHorsesFlag();
       }
       else {
         this.raceWithdrawnHorseService.getRaceWithdrawnHorses(selectedRace.raceId).subscribe((data: IRaceWithdrawnHorses[]) => {
@@ -367,187 +336,186 @@ export class HomeComponent implements OnInit {
             var item = new VwEventRaceGuests(selectedRace.eventRaceId, index + 1);
             eventRacesG.push(item);
           }
-          this.eventRaceGuests = eventRacesG;
+          this.raceInstance.setEventRaceGuests = eventRacesG;
           // Block withdrawn horses by assigning them first
           if (raceWithdrawnHorses.length > 0) {
             raceWithdrawnHorses.forEach((horse: IRaceWithdrawnHorses) => {
-              var eventGuestObject = this.eventRaceGuests.find(e => e.assignedHorseNumber == horse.horseNumber);
-              this.populateEventGuestObj(eventGuestObject, 1, this.utilityService.WithdrawnGuest);
-              this.populateEventGuestObj(eventGuestObject, 2, this.utilityService.WithdrawnGuest);
+              this.raceInstance.assignWithdrawnHorseToRoaster(horse.horseNumber, this.utilityService.WithdrawnGuest);              
             });            
           }
           this.raceInstance.saved = false;
-          this.raceInstance.raceWasLoadedFromDB = false;
-          this.setAvailableHorsesFlag();
+          this.raceInstance.raceWasLoadedFromDB = false;          
         });        
       }
     });
   }
 
-  private assignGuestToRoster(eventGuestObj: VwEventRaceGuests, guestNumberToBeAssigned: number, selectedGuestObj: IGuests) {
+  onVideoEnded() {
+    alert("here");
+    this.enableWinners = true;
+  }
+
+  private assignGuestToRoster(selectedGuestObj: IGuests) {
+    var assignedHorseNumber = this.raceInstance.assignGuestToRoaster(selectedGuestObj);
     const dialogRef = this.dialog.open(SelectHorseDialog, {
       width: '640px',
-      data: { horseNumber: eventGuestObj.assignedHorseNumber, guestAvatar: selectedGuestObj.avatarName, guestName: selectedGuestObj['name'] }
+      data: { horseNumber: assignedHorseNumber, guestAvatar: selectedGuestObj.avatarName, guestName: selectedGuestObj['name'] }
     });
     
     dialogRef.afterClosed().subscribe(result => {
-      this.populateEventGuestObj(eventGuestObj, guestNumberToBeAssigned, selectedGuestObj);
-      this.setAvailableHorsesFlag();
+      
     });
-
-    this.raceInstance.totalCollected = this.raceInstance.totalCollected + this.raceInstance.betAmount;
-    this.calculatePrices();
   }
 
-  private populateEventGuestObj(eventGuestObj: VwEventRaceGuests, guestNumberToBeAssigned: number, selectedGuestObj: IGuests) {
-    if (guestNumberToBeAssigned == 1) {
-      eventGuestObj.guest1Id = selectedGuestObj['id'];
-      eventGuestObj.guest1Name = selectedGuestObj['name'];
-      if (selectedGuestObj.avatarName) {
-        eventGuestObj.guest1Avatar = selectedGuestObj.avatarName;
-      }
-    }
-    else {
-      eventGuestObj.guest2Id = selectedGuestObj['id'];
-      eventGuestObj.guest2Name = selectedGuestObj['name'];
-      if (selectedGuestObj.avatarName) {
-        eventGuestObj.guest2Avatar = selectedGuestObj.avatarName;
-      }
-    }
-  }
+  //////private populateEventGuestObj(eventGuestObj: VwEventRaceGuests, guestNumberToBeAssigned: number, selectedGuestObj: IGuests) {
+  //////  if (guestNumberToBeAssigned == 1) {
+  //////    eventGuestObj.guest1Id = selectedGuestObj['id'];
+  //////    eventGuestObj.guest1Name = selectedGuestObj['name'];
+  //////    if (selectedGuestObj.avatarName) {
+  //////      eventGuestObj.guest1Avatar = selectedGuestObj.avatarName;
+  //////    }
+  //////  }
+  //////  else {
+  //////    eventGuestObj.guest2Id = selectedGuestObj['id'];
+  //////    eventGuestObj.guest2Name = selectedGuestObj['name'];
+  //////    if (selectedGuestObj.avatarName) {
+  //////      eventGuestObj.guest2Avatar = selectedGuestObj.avatarName;
+  //////    }
+  //////  }
+  //////}
 
 
-  private getRandomUnassignedHorse(guestNumber: number): VwEventRaceGuests {
-    var unassignedHorse = this.eventRaceGuests.filter((item: VwEventRaceGuests) => {
-      return guestNumber == 1 ? item.guest1Id == 0 : item.guest2Id == 0;
-    });
+  //////private getRandomUnassignedHorse(guestNumber: number): VwEventRaceGuests {
+  //////  var unassignedHorse = this.eventRaceGuests.filter((item: VwEventRaceGuests) => {
+  //////    return guestNumber == 1 ? item.guest1Id == 0 : item.guest2Id == 0;
+  //////  });
 
-    var selectedIndex = Math.floor(Math.random() * (unassignedHorse.length));
+  //////  var selectedIndex = Math.floor(Math.random() * (unassignedHorse.length));
 
-    var selectedHorseObj = unassignedHorse[selectedIndex];
-    var eventObj = this.eventRaceGuests.find(e => e.assignedHorseNumber === selectedHorseObj.assignedHorseNumber);
-    return eventObj;
-  }
+  //////  var selectedHorseObj = unassignedHorse[selectedIndex];
+  //////  var eventObj = this.eventRaceGuests.find(e => e.assignedHorseNumber === selectedHorseObj.assignedHorseNumber);
+  //////  return eventObj;
+  //////}
 
-  private thereAreAvailableHorses(guestNumber: number) {
-    var availableHorses: VwEventRaceGuests[];
-    if (guestNumber === 1) {
-      availableHorses = this.eventRaceGuests.filter(a => a.guest1Id == 0);
-    }
-    else {
-      availableHorses = this.eventRaceGuests.filter(a => a.guest2Id == 0);
-    }
+  //////private thereAreAvailableHorses(guestNumber: number) {
+  //////  var availableHorses: VwEventRaceGuests[];
+  //////  if (guestNumber === 1) {
+  //////    availableHorses = this.eventRaceGuests.filter(a => a.guest1Id == 0);
+  //////  }
+  //////  else {
+  //////    availableHorses = this.eventRaceGuests.filter(a => a.guest2Id == 0);
+  //////  }
 
-    return availableHorses.length > 0;
-  }
+  //////  return availableHorses.length > 0;
+  //////}
 
-  private setAvailableHorsesFlag() {
-    var availableHorses: VwEventRaceGuests[];
-    if (this.raceInstance.allowSecondGuest) {
-      this.horsesAreAvailable = (this.eventRaceGuests.filter(a => a.guest1Id == 0).length > 0) || (this.eventRaceGuests.filter(a => a.guest2Id == 0).length > 0);
-    }
-    else {
-      this.horsesAreAvailable = (this.eventRaceGuests.filter(a => a.guest1Id == 0).length > 0);
-    }
-  }
+  ////////private setAvailableHorsesFlag() {
+  ////////  var availableHorses: VwEventRaceGuests[];
+  ////////  if (this.raceInstance.allowSecondGuest) {
+  ////////    this.horsesAreAvailable = (this.eventRaceGuests.filter(a => a.guest1Id == 0).length > 0) || (this.eventRaceGuests.filter(a => a.guest2Id == 0).length > 0);
+  ////////  }
+  ////////  else {
+  ////////    this.horsesAreAvailable = (this.eventRaceGuests.filter(a => a.guest1Id == 0).length > 0);
+  ////////  }
+  ////////}
 
-  private guestHasBeenAssigned() {
-    var guest = this.eventRaceGuests.find(e => e.guest1Id === this.selectedGuestId || e.guest2Id === this.selectedGuestId);
-    return guest != null;
-  }
+  //private guestHasBeenAssigned() {
+  //  var guest = this.eventRaceGuests.find(e => e.guest1Id === this.selectedGuestId || e.guest2Id === this.selectedGuestId);
+  //  return guest != null;
+  //}
 
-  private calculatePrices() {
-    var tempFirstPlace = this.calculatePercentage(.6);
-    var tempSecondPlace = this.calculatePercentage(.3);
-    var tempThirdPlace = this.calculatePercentage(.1);
-    var initaialAssignedMoney = tempFirstPlace + tempSecondPlace + tempThirdPlace;
-    var delta = this.raceInstance.totalCollected - initaialAssignedMoney;
+  ////////private calculatePrices() {
+  ////////  var tempFirstPlace = this.calculatePercentage(.6);
+  ////////  var tempSecondPlace = this.calculatePercentage(.3);
+  ////////  var tempThirdPlace = this.calculatePercentage(.1);
+  ////////  var initaialAssignedMoney = tempFirstPlace + tempSecondPlace + tempThirdPlace;
+  ////////  var delta = this.raceInstance.totalCollected - initaialAssignedMoney;
 
-    if (delta > 0) {
-      if (this.raceInstance.allowSecondGuest) {
-        if (tempFirstPlace == 0 && delta >= 2) {
-          tempFirstPlace = tempFirstPlace + 2;
-          delta = delta - 2;
-        }
-        if (tempSecondPlace == 0 && delta >= 2) {
-          tempSecondPlace = tempSecondPlace + 2;
-          delta = delta - 2;
-        }
-        if (tempThirdPlace == 0 && delta >= 2) {
-          tempThirdPlace = tempThirdPlace + 2;
-          delta = delta - 2;
-        }
-      }
-      else {
-        if (tempFirstPlace == 0 && delta >= 1) {
-          tempFirstPlace = tempFirstPlace + 1;
-          delta = delta - 1;
-        }
-        if (tempSecondPlace == 0 && delta >= 1) {
-          tempSecondPlace = tempSecondPlace + 1;
-          delta = delta - 1;
-        }
-        if (tempThirdPlace == 0 && delta >= 1) {
-          tempThirdPlace = tempThirdPlace + 1;
-          delta = delta - 1;
-        }
-      }
+  ////////  if (delta > 0) {
+  ////////    if (this.raceInstance.allowSecondGuest) {
+  ////////      if (tempFirstPlace == 0 && delta >= 2) {
+  ////////        tempFirstPlace = tempFirstPlace + 2;
+  ////////        delta = delta - 2;
+  ////////      }
+  ////////      if (tempSecondPlace == 0 && delta >= 2) {
+  ////////        tempSecondPlace = tempSecondPlace + 2;
+  ////////        delta = delta - 2;
+  ////////      }
+  ////////      if (tempThirdPlace == 0 && delta >= 2) {
+  ////////        tempThirdPlace = tempThirdPlace + 2;
+  ////////        delta = delta - 2;
+  ////////      }
+  ////////    }
+  ////////    else {
+  ////////      if (tempFirstPlace == 0 && delta >= 1) {
+  ////////        tempFirstPlace = tempFirstPlace + 1;
+  ////////        delta = delta - 1;
+  ////////      }
+  ////////      if (tempSecondPlace == 0 && delta >= 1) {
+  ////////        tempSecondPlace = tempSecondPlace + 1;
+  ////////        delta = delta - 1;
+  ////////      }
+  ////////      if (tempThirdPlace == 0 && delta >= 1) {
+  ////////        tempThirdPlace = tempThirdPlace + 1;
+  ////////        delta = delta - 1;
+  ////////      }
+  ////////    }
 
-      do {
-        if (this.raceInstance.allowSecondGuest) {
-          if (delta >= 2) {
-            tempFirstPlace = tempFirstPlace + 2;
-            delta = delta - 2;
-          }
-          if (delta >= 2) {
-            tempSecondPlace = tempSecondPlace + 2;
-            delta = delta - 2;
-          }
-          if (delta >= 2) {
-            tempThirdPlace = tempThirdPlace + 2;
-            delta = delta - 2;
-          }
-          // avoid staying in an infinite loop
-          if (delta == 1) { delta = 0; }
-        }
-        else {
-          if (delta >= 1) {
-            tempFirstPlace = tempFirstPlace + 1;
-            delta = delta - 1;
-          }
-          if (delta >= 1) {
-            tempSecondPlace = tempSecondPlace + 1;
-            delta = delta - 2;
-          }
-          if (delta >= 1) {
-            tempThirdPlace = tempThirdPlace + 1;
-            delta = delta - 1;
-          }
-        }
-      } while (delta > 0);
+  ////////    do {
+  ////////      if (this.raceInstance.allowSecondGuest) {
+  ////////        if (delta >= 2) {
+  ////////          tempFirstPlace = tempFirstPlace + 2;
+  ////////          delta = delta - 2;
+  ////////        }
+  ////////        if (delta >= 2) {
+  ////////          tempSecondPlace = tempSecondPlace + 2;
+  ////////          delta = delta - 2;
+  ////////        }
+  ////////        if (delta >= 2) {
+  ////////          tempThirdPlace = tempThirdPlace + 2;
+  ////////          delta = delta - 2;
+  ////////        }
+  ////////        // avoid staying in an infinite loop
+  ////////        if (delta == 1) { delta = 0; }
+  ////////      }
+  ////////      else {
+  ////////        if (delta >= 1) {
+  ////////          tempFirstPlace = tempFirstPlace + 1;
+  ////////          delta = delta - 1;
+  ////////        }
+  ////////        if (delta >= 1) {
+  ////////          tempSecondPlace = tempSecondPlace + 1;
+  ////////          delta = delta - 2;
+  ////////        }
+  ////////        if (delta >= 1) {
+  ////////          tempThirdPlace = tempThirdPlace + 1;
+  ////////          delta = delta - 1;
+  ////////        }
+  ////////      }
+  ////////    } while (delta > 0);
 
-    }
+  ////////  }
 
 
-    this.raceInstance.firstPlaceAmount = tempFirstPlace;
-    this.raceInstance.secondPlaceAmount = tempSecondPlace;
-    this.raceInstance.thirdPlaceAmount = tempThirdPlace;
-  }
+  ////////  this.raceInstance.firstPlaceAmount = tempFirstPlace;
+  ////////  this.raceInstance.secondPlaceAmount = tempSecondPlace;
+  ////////  this.raceInstance.thirdPlaceAmount = tempThirdPlace;
+  ////////}
 
-  private calculatePercentage(percentage: number) {
-    if (this.raceInstance.totalCollected > 0) {
-      if (this.raceInstance.allowSecondGuest) {
-        var temp = Math.floor(this.raceInstance.totalCollected * percentage);
-        if (temp % 2 == 1) {
-          temp--;
-        }
-        return temp;
-      }
-      else {
-        return Math.floor(this.raceInstance.totalCollected * percentage);
-      }
-    }
-  }
+  ////////private calculatePercentage(percentage: number) {
+  ////////  if (this.raceInstance.totalCollected > 0) {
+  ////////    if (this.raceInstance.allowSecondGuest) {
+  ////////      var temp = Math.floor(this.raceInstance.totalCollected * percentage);
+  ////////      if (temp % 2 == 1) {
+  ////////        temp--;
+  ////////      }
+  ////////      return temp;
+  ////////    }
+  ////////    else {
+  ////////      return Math.floor(this.raceInstance.totalCollected * percentage);
+  ////////    }
+  ////////  }
+  ////////}
 
   private resetRace(eventRaceId: number) {
     this.raceInstance.eventRaceId = eventRaceId
@@ -555,11 +523,10 @@ export class HomeComponent implements OnInit {
     this.raceInstance.firstPlaceAmount = 0;
     this.raceInstance.secondPlaceAmount = 0;
     this.raceInstance.thirdPlaceAmount = 0;
-    this.raceInstance.totalCollected = 0;
-    //this.setAvailableHorsesFlag();
+    //////this.raceInstance.totalCollected = 0;
     this.raceResultService.getRaceResultByRaceId(this.raceInstance.raceId).subscribe((data: RaceResults[]) => {
       this.raceResults = data;
     });
-    this.raceInstance.saved = this.races.find(race => race.eventRaceId == eventRaceId).saved
+  /*  *//*this.raceInstance.saved = this.races.find(race => race.eventRaceId == eventRaceId).saved*/
   }
 }
