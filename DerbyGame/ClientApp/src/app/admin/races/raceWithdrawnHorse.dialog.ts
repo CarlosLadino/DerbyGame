@@ -23,7 +23,7 @@ export class RaceWithdrawnHorseDialog implements OnInit {
 
   ngOnInit() {
     this.raceId = this.data.id;
-    this.dialogTitle = 'Manage Race Withdrawn Horses';
+    this.dialogTitle = 'Manage Race Scratched Horses';
 
     this.getWithdrawnHorses();   
   }
