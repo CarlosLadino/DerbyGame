@@ -7,7 +7,7 @@ import { Races } from '../Common/Models/race.model';
 import { RaceInstance } from '../common/Models/raceInstance.model';
 import { VwEventRace } from '../common/Models/eventRace.model';
 import { EventRaceGuests, VwEventRaceGuests } from '../common/Models/eventRaceGuest.model';
-import { MatTableDataSource, MatDialog, MatStepper } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatStepper, MatHorizontalStepper } from '@angular/material';
 import { GuestService } from '../Common/Services/guest.service';
 import { IGuests } from '../Common/Models/guest.model';
 import { ConfirmDialogModel } from '../common/CustomComponents/ConfirmationDialog/confirmDialog.model';
@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit {
   }
 
   onRaceSelectionChange(eventRace) {
-    if (this.raceInstance.getTotalCollected > 0 && !this.raceInstance.raceWasLoadedFromDB) {
+    if (this.raceInstance.getTotalCollected > 0 && !this.raceInstance.raceWasLoadedFromDB && !this.raceInstance.allowToStartNewRace) {
       const message = `Betting is in progress. Are you sure you want to reset this race?`;
 
       const dialogData = new ConfirmDialogModel("Confirm Reset", message);
@@ -111,16 +111,8 @@ export class HomeComponent implements OnInit {
   }
 
   onGotoRace() {
-    if (this.raceInstance.raceVideoName) {
-      this.myStepper.next();
-    }
-    else {
-      window.open(this.raceInstance.raceUrl, '_blank');
-    }
-
-    if (!this.raceInstance.raceWasLoadedFromDB) {
-      this.enableWinners = true;
-    }
+    window.open(this.raceInstance.raceUrl, '_blank');
+    this.setRaceWiners();
   }
 
   onAllowSecondGuest(item) {
@@ -215,15 +207,7 @@ export class HomeComponent implements OnInit {
   }
 
   onShowWinners() {
-    this.eventRaceGuests.forEach((item: VwEventRaceGuests) => {
-      item.placeId = 0;
-    });
-    this.raceInstance.winners = [];
-    this.raceResults.forEach((result: RaceResults) => {
-      var winners = this.eventRaceGuests.find(e => e.assignedHorseNumber == result['horseNumber']);
-      this.raceInstance.winners.push(winners);
-      winners.placeId = result['placeId'];
-    });
+    this.setRaceWiners();
 
     setTimeout(() => {
       const dialogRef = this.dialog.open(ShowWinnersDialog, {
@@ -268,8 +252,11 @@ export class HomeComponent implements OnInit {
       }
     });
 
-    this.eventRaceGuestService.saveRace(records).subscribe();
-    this.raceInstance.saved = true;
+    this.eventRaceGuestService.saveRace(records).subscribe(() => {
+      this.raceInstance.saved = true;
+      this.myStepper.selected.completed = true;
+      this.myStepper.next();
+    });
   }
 
   onAddRaceToRoster() {
@@ -286,8 +273,8 @@ export class HomeComponent implements OnInit {
   }
 
   onVideoEnded() {
-    alert("here");
-    this.enableWinners = true;
+    this.setRaceWiners();
+    this.myStepper.previous();
   }
 
   private generateRoster(eventRaceId: number) {
@@ -306,6 +293,7 @@ export class HomeComponent implements OnInit {
         this.raceInstance.setEventRaceGuests = data;
         this.raceInstance.saved = true;
         this.raceInstance.raceWasLoadedFromDB = true;
+        this.myStepper.selected.completed = true;
       }
       else {
         this.raceWithdrawnHorseService.getRaceWithdrawnHorses(selectedRace.raceId).subscribe((data: IRaceWithdrawnHorses[]) => {
@@ -342,13 +330,28 @@ export class HomeComponent implements OnInit {
   }
 
   private resetRace(eventRaceId: number) {
-    this.raceInstance.eventRaceId = eventRaceId
-    this.generateRoster(this.raceInstance.eventRaceId);
+    this.myStepper.selected.completed = false;
     this.raceInstance.firstPlaceAmount = 0;
     this.raceInstance.secondPlaceAmount = 0;
     this.raceInstance.thirdPlaceAmount = 0;
+    this.raceInstance.betAmount = 0;
+    this.raceInstance.saved = false;
+    this.raceInstance.eventRaceId = eventRaceId
+    this.generateRoster(this.raceInstance.eventRaceId);   
     this.raceResultService.getRaceResultByRaceId(this.raceInstance.raceId).subscribe((data: RaceResults[]) => {
       this.raceResults = data;
     });  
+  }
+
+  private setRaceWiners() {
+    this.raceInstance.eventRaceGuests.forEach((item: VwEventRaceGuests) => {
+      item.placeId = 0;
+    });
+    this.raceInstance.winners = [];
+    this.raceResults.forEach((result: RaceResults) => {
+      var winners = this.raceInstance.eventRaceGuests.find(e => e.assignedHorseNumber == result['horseNumber']);
+      this.raceInstance.winners.push(winners);
+      winners.placeId = result['placeId'];
+    });
   }
 }

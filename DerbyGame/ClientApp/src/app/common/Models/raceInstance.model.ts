@@ -38,7 +38,7 @@ export class RaceInstance implements IRaceInstance {
   raceResults: RaceResults[];
     constructor() {
         this.eventRaceId = 0;
-        this.betAmount = 2;
+        this.betAmount = 0;
         this.allowSecondGuest = false;
         this.firstPlaceAmount = 0;
         this.secondPlaceAmount = 0;
@@ -79,7 +79,7 @@ export class RaceInstance implements IRaceInstance {
     });
   }
 
-  public get allowGuessSelection(): boolean {
+  public get allowGuestSelection(): boolean {
     return this.eventRaceId > 0
       && this.betAmount > 0
       && this.saved == false;
@@ -87,11 +87,15 @@ export class RaceInstance implements IRaceInstance {
 
   public get allowHorseSelection(): boolean {
     if (this.allowSecondGuest) {
-      return (this.eventRaceGuests.filter(a => a.guest1Id == 0).length > 0) || (this.eventRaceGuests.filter(a => a.guest2Id == 0).length > 0);
+      return !this.saved && (this.eventRaceGuests.filter(a => a.guest1Id == 0).length > 0) || (this.eventRaceGuests.filter(a => a.guest2Id == 0).length > 0);
     }
     else {
-      return (this.eventRaceGuests.filter(a => a.guest1Id == 0).length > 0);
+      return !this.saved && (this.eventRaceGuests.filter(a => a.guest1Id == 0).length > 0);
     }
+  }
+
+  public get allowToStartNewRace(): boolean {
+    return this.saved && this.eventRaceGuests.filter(a => a.placeId > 0).length > 0
   }
 
   public get getTotalCollected(): number{
@@ -105,6 +109,10 @@ export class RaceInstance implements IRaceInstance {
     });
 
     return total;
+  }
+
+  public get allowRaceViewing(): boolean {
+    return this.raceWasLoadedFromDB || this.saved
   }
 
   public guestHasBeenAssigned(selectedGuestId: number): boolean {

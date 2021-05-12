@@ -1,5 +1,5 @@
 <mat-horizontal-stepper #stepper linear>
-  <mat-step label="Betting" state="betting">
+  <mat-step label="Betting" state="betting" >
     <div class="container-fluid">
       <div class="row">
         <div class="col-3 ">
@@ -12,7 +12,7 @@
               </mat-expansion-panel-header>
               <mat-form-field>
                 <mat-label>Select a Race</mat-label>
-                <mat-select name="race" [(value)]="selectedEventRaceId" (selectionChange)="onRaceSelectionChange($event)" [disabled]="raceInstance.totalCollected > 0">
+                <mat-select name="race" [(value)]="selectedEventRaceId" (selectionChange)="onRaceSelectionChange($event)" [disabled]="raceInstance.getTotalCollected > 0 && !raceInstance.allowToStartNewRace">
                   <mat-option *ngFor="let race of races" [value]="race.eventRaceId">
                     {{race.raceName}}
                   </mat-option>
@@ -21,7 +21,7 @@
               <div class="row" [hidden]="raceInstance.saved">
                 <div class="col-4">
                   <mat-form-field>
-                    <input type="number" matInput [(ngModel)]="raceInstance.betAmount" placeholder="Bet Amount" (change)="onRecalculateBetAmount()">
+                    <input type="number" matInput [(ngModel)]="raceInstance.betAmount" placeholder="Bet Amount" [disabled]="raceInstance.getTotalCollected > 0">
                     <span matPrefix>$&nbsp;</span>
                   </mat-form-field>
                 </div>
@@ -40,7 +40,7 @@
           </mat-accordion>
           <br />
           <div>
-            <mat-card [hidden]="!raceInstance.allowHorseSelection">
+            <mat-card [hidden]="!raceInstance.allowGuestSelection">
               <mat-card-header>
                 <mat-card-title>Guest Information</mat-card-title>
                 <mat-card-subtitle>Select a Guest and Pick a random horse.</mat-card-subtitle>
@@ -62,7 +62,7 @@
               </mat-card-actions>
             </mat-card>
             <br />
-            <mat-card>
+            <mat-card [hidden]="raceInstance.raceWasLoadedFromDB">
               <mat-card-header>
                 <mat-card-title>Betting Information</mat-card-title>
                 <mat-card-subtitle>Running Totals and Race Prices.</mat-card-subtitle>
@@ -97,16 +97,11 @@
                     <h6>3rd. Place <span>$&nbsp;{{raceInstance.thirdPlaceAmount}}.00</span></h6>
                   </div>
                 </div>
-
-
               </mat-card-content>
               <mat-card-actions>
-                <button mat-raised-button color="primary" (click)="onLockRace()" [disabled]="horsesAreAvailable || raceInstance.saved">Lock Race</button>
-                <button mat-raised-button color="primary" (click)="onGotoRace()" [disabled]="!raceInstance.saved">Run Race</button>
-                <button mat-raised-button color="primary" (click)="onShowWinners()" [disabled]="!enableWinners">Winners</button>           
+                <button mat-raised-button color="primary" (click)="onLockRace()" [disabled]="raceInstance.allowHorseSelection" [hidden]="raceInstance.eventRaceId == 0 || raceInstance.saved == true">Lock Race</button>                                           
               </mat-card-actions>
             </mat-card>
-
           </div>
         </div>
         <div class="col-8 offset-1">
@@ -115,21 +110,16 @@
               <mat-card [style.opacity]=" horse.placeId == 0 ? 0.2 : 1" [style.background-color]="horse.guest1Id == 7003 ? '#343a40' : '#3f51b5'">
                 <mat-card-header>
                   <mat-card-title style="color:white; font-size: 23px;">{{horse.assignedHorseNumber}}&nbsp;&nbsp;</mat-card-title>
-                  <div mat-card-avatar class="raceCard-header-image"></div>
-                  
-
+                  <div mat-card-avatar class="raceCard-header-image"></div>                  
                 </mat-card-header>
-
                 <mat-card-content>
                   <div *ngIf="horse.guest1Id > 0">
                     <mat-chip-list aria-label="Guests">
                       <mat-chip color="accent" selected [removable]="removable" (removed)="onRemoveGuest(1, horse.guest1Id)">
                         <guest-component [avatarName]="horse.guest1Avatar" [guestName]="horse.guest1Name"></guest-component>
-
                         <mat-icon matChipRemove (click)="onRemoveGuest(1, horse.guest1Id)" [hidden]="raceInstance.saved || horse.guest1Id == 7003">cancel</mat-icon><!--7003 Withdrawn-->
                       </mat-chip>
                     </mat-chip-list>
-
                   </div>
                   <div *ngIf="horse.guest2Id > 0 && horse.guest1Id != 7003"> <!--7003 Withdrawn-->
                     <mat-chip-list aria-label="Guests">
@@ -143,8 +133,6 @@
                 <mat-card-footer [hidden]="horse.wonAmount == 0 || !raceInstance.saved || horse.placeId <= 0" [ngClass]="{'raceWinner1': horse.placeId == 1, 'raceWinner2': horse.placeId == 2, 'raceWinner3': horse.placeId == 3}">
                   <mat-icon aria-hidden="false" aria-label="Horse" class="pull-right" [hidden]="horse.placeId <= 0">work</mat-icon>
                   <span>&nbsp;&nbsp;{{horse.wonAmount | currency}}</span>
-
-
                 </mat-card-footer>
               </mat-card>
             </div>
@@ -164,11 +152,11 @@
         <div class="col-9">
           <video width="1024" height="576" controls="controls" preload="auto" #video (ended)="onVideoEnded()">
             <source type="video/mp4" />
-          </video>
+          </video><br />
+          <button mat-raised-button color="primary" (click)="onGotoRace()">Run Race on YouTube</button>
         </div>
       </div>
-    </div>
-    
+    </div>    
   </mat-step>
   <!-- Icon overrides. -->
   <ng-template matStepperIcon="betting">
