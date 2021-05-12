@@ -111,8 +111,8 @@ export class HomeComponent implements OnInit {
   }
 
   onGotoRace() {
-    window.open(this.raceInstance.raceUrl, '_blank');
     this.setRaceWiners();
+    window.open(this.raceInstance.raceUrl, '_blank');
   }
 
   onAllowSecondGuest(item) {
