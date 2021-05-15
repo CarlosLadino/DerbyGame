@@ -37,8 +37,8 @@ export class HomeComponent implements OnInit {
   public raceInstance: RaceInstance = new RaceInstance();
   public eventRaceGuests: VwEventRaceGuests[];
   public activeGuests: IGuests[];
-  private selectedGuestId: number = 0;
-  private selectedEventRaceId: number = 0;
+  public selectedGuestId: number = 0;
+  public selectedEventRaceId: number = 0;
   public horsesAreAvailable: boolean = true;
   private raceResults: RaceResults[];
   private enableWinners: boolean = false;
