@@ -9,7 +9,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-button mat-icon-button="primary" (click)="onAddNumberClick()"><mat-icon aria-hidden="false" aria-label="New" color="primary" matTooltip="Add a Horse Number">add_circle</mat-icon></button>
+    <button mat-button mat-icon-button="primary" (click)="onAddNumberClick()" [disabled]="!selectedHorseNumber"><mat-icon aria-hidden="false" aria-label="New" color="primary" matTooltip="Add a Horse Number">add_circle</mat-icon></button>
   </div>
 
   <table mat-table [dataSource]="raceWithdrawnHorses" class="mat-elevation-z8">

@@ -1,7 +1,7 @@
 <span style="font-size:12px;">
   <b style="font-size:18px;">{{horse.assignedHorseNumber  | number:'2.0'}}</b>&nbsp;
   <img src="/Content/Horse.jpg" style="width:40px;height:30px;border-radius:50%; object-fit:cover;" /> &nbsp;
-  <img src="/Avatars/{{horse.guest1Avatar}}.png" style="width:30px;height:30px;border-radius:50%; object-fit:cover;" />
-  <img *ngIf="horse.guest2Name && horse.guest1Id != 7003" src="/Avatars/{{horse.guest2Avatar}}.png" style="width:30px;height:30px;border-radius:50%; object-fit:cover;" />
+  <img src="/Avatars/{{horse.guest1Avatar}}" style="width:30px;height:30px;border-radius:50%; object-fit:cover;" />
+  <img *ngIf="horse.guest2Name && horse.guest1Id != 7003" src="/Avatars/{{horse.guest2Avatar}}" style="width:30px;height:30px;border-radius:50%; object-fit:cover;" />
   &nbsp;{{horse.guest1Name}}<span *ngIf="horse.guest2Name && horse.guest1Id != 7003">&nbsp;and&nbsp;{{horse.guest2Name}}</span>
 </span>

@@ -25,9 +25,9 @@ namespace DerbyGame.Controllers
         // GET: api/Guests/GetGuests
         [HttpGet]
         [ActionName("GetGuests")]
-        public ActionResult<IEnumerable<Guests>> GetGuests()
+        public ActionResult<IEnumerable<VW_Guests>> GetGuests()
         {
-            return this.Ok(this.guestsManager.All);
+            return this.Ok(this.guestsManager.VwAll);
         }
 
         [HttpGet]

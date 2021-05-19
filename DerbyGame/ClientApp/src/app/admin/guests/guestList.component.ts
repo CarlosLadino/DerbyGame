@@ -51,7 +51,7 @@ export class GuestListComponent implements OnInit {
     openDialog(id: number): void {
         const dialogRef = this.dialog.open(GuestEditDialog, {
             width: '350px',
-            data: { Id: id }
+            data: { id: id }
         });
 
         dialogRef.afterClosed().subscribe(result => {

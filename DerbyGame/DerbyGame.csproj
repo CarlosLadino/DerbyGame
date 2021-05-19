@@ -39,6 +39,7 @@
     <None Remove="ClientApp\src\app\admin\guests\guestEdit.dialog.ts" />
     <None Remove="ClientApp\src\app\admin\raceList.component.ts" />
     <None Remove="ClientApp\src\app\admin\races\raceEdit.dialog.ts" />
+    <None Remove="ClientApp\src\app\admin\races\raceViewer.dialog.ts" />
     <None Remove="ClientApp\src\app\admin\races\raceWithdrawnHorse.dialog.ts" />
     <None Remove="ClientApp\src\app\common\CustomComponents\ConfirmationDialog\confirm.dialog.ts" />
     <None Remove="ClientApp\src\app\common\CustomComponents\ConfirmationDialog\confirmDialog.model.ts" />
@@ -98,6 +99,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\admin\events\eventList.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\races\raceViewer.dialog.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\admin\races\raceWithdrawnHorse.dialog.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\CustomComponents\ConfirmationDialog\confirm.dialog.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\CustomComponents\ConfirmationDialog\confirmDialog.model.ts" />

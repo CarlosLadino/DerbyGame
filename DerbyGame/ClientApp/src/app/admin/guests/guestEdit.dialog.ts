@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, AfterViewInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { IGuests } from '../../Common/Models/guest.model';
+import { IGuests, IVWGuests } from '../../Common/Models/guest.model';
 import { GuestService } from '../../Common/Services/guest.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class GuestEditDialog implements OnInit, AfterViewInit  {
     ngOnInit() {
         this.guest = this.data;
         this.dialogTitle = this.data.id > 0 ? 'Edit Guest' : 'Enter New Guest';
-        this.guestService.getGuest(this.data.id).subscribe((result: IGuests) => {
+        this.guestService.getGuest(this.data.id).subscribe((result: IVWGuests) => {
             this.guest = result;
         });
     }

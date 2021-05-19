@@ -23,6 +23,14 @@ namespace BLL
             }
         }
 
+        public IEnumerable<VW_Races> VwAll
+        {
+            get
+            {
+                return this._context.VW_Races;
+            }
+        }
+
         public IEnumerable<Races> AllNotArchived
         {
             get

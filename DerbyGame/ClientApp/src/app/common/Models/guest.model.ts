@@ -25,3 +25,13 @@ export class Guest implements IGuests {
   }
 }
 
+export interface IVWGuests {
+  id: number;
+  name: string;
+  isActive: boolean;
+  avatarName: string;
+  selected: boolean;
+  isSystem: boolean;
+  canDelete: boolean;
+}
+

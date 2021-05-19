@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>{{dialogTitle}}</h1>
+<div mat-dialog-content>
+  <video width="880" height="495" controls="controls" preload="auto" #video (ended)="onVideoEnded()">
+    <source type="video/mp4" />
+  </video>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancelClick()">Close</button>
+</div>

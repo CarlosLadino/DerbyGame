@@ -33,10 +33,12 @@ export class RaceWithdrawnHorseDialog implements OnInit {
   }
 
   onAddNumberClick(): void {
-    var rwh: RaceWithdrawnHorses = new RaceWithdrawnHorses(0, this.data.id, this.selectedHorseNumber);
-    this.raceWithdrawnHorseService.save(rwh).subscribe(() => {
-      this.getWithdrawnHorses();
-    });
+    if (this.selectedHorseNumber > 0) {
+      var rwh: RaceWithdrawnHorses = new RaceWithdrawnHorses(0, this.data.id, this.selectedHorseNumber);
+      this.raceWithdrawnHorseService.save(rwh).subscribe(() => {
+        this.getWithdrawnHorses();
+      });
+    }    
   }
 
   onDeleteClick(id: number) {

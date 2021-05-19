@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { RaceService } from '../../Common/Services/race.service';
-import { Races } from '../../Common/Models/race.model';
+import { IVWRaces, Races } from '../../Common/Models/race.model';
 import { MatDialog } from '@angular/material';
 import { RaceEditDialog } from './raceEdit.dialog';
 import { ConfirmDialog } from '../../common/CustomComponents/ConfirmationDialog/confirm.dialog';
 import { ConfirmDialogModel } from '../../common/CustomComponents/ConfirmationDialog/confirmDialog.model';
+import { RaceViewerDialog } from './raceViewer.dialog';
 
 
 
@@ -14,10 +15,10 @@ import { ConfirmDialogModel } from '../../common/CustomComponents/ConfirmationDi
 
 export class RaceListComponent implements OnInit {
     public datasource: Array<Races>;
-    public displayedColumns: string[] = ['name', 'numberOfHorses', 'actions'];
+    public displayedColumns: string[] = ['name', 'numberOfHorses', 'actions','videoViewer'];
 
     constructor(private raceService: RaceService, public dialog: MatDialog) {
-        this.raceService.getRaces().subscribe((data: Array<Races>) => {
+        this.raceService.getRaces().subscribe((data: Array<IVWRaces>) => {
             this.datasource = data;
         });
     }
@@ -65,6 +66,13 @@ export class RaceListComponent implements OnInit {
             this.loadData();
         });
     }
+
+  onViewClick(videoName: string) {
+    const dialogRef = this.dialog.open(RaceViewerDialog, {
+      width: '1024px',
+      data: { videoName: videoName }
+    });
+  }
 
     loadData(): void {
         this.raceService.getRaces().subscribe((data: Array<Races>) => {

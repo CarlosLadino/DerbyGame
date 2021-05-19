@@ -23,6 +23,14 @@ namespace BLL
             }
         }
 
+        public IEnumerable<VW_Guests> VwAll
+        {
+            get
+            {
+                return this._context.VW_Guests.Where(g => g.IsSystem == false);
+            }
+        }
+
         public IEnumerable<Guests> AllActive
         {
             get

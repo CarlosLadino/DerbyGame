@@ -25,9 +25,9 @@ namespace DerbyGame.Controllers
         // GET: api/Races/GetRaces
         [HttpGet]
         [ActionName("GetRaces")]
-        public ActionResult<IEnumerable<Races>> GetRaces()
+        public ActionResult<IEnumerable<VW_Races>> GetRaces()
         {
-            return this.Ok(this.racesManager.All);
+            return this.Ok(this.racesManager.VwAll);
         }
 
         // GET: api/Races/5
