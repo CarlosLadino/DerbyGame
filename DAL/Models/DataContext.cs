@@ -36,6 +36,7 @@ namespace Data.Models
         public virtual DbSet<VW_EventGuestTotals> VW_EventGuestTotals { get; set; }
         public virtual DbSet<VW_Guests> VW_Guests { get; set; }
         public virtual DbSet<VW_Races> VW_Races { get; set; }
+        public virtual DbSet<VW_Events> VW_Events { get; set; }
 
         // Stored Procedures
         public void ResetAllGuestToNotActive()

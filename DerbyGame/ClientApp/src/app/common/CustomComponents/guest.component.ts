@@ -25,7 +25,7 @@ export class GuestComponent {
 
     ngOnInit() {
         if (!this.avatarName) {
-            this.avatarFileName = 'person';
+            this.avatarFileName = 'person.png';
         }
         else {
             this.avatarFileName = this.avatarName;

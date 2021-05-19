@@ -25,9 +25,9 @@ namespace DerbyGame.Controllers
         // GET: api/Events/GetEvents
         [HttpGet]
         [ActionName("GetEvents")]
-        public ActionResult<IEnumerable<Events>> GetEvents()
+        public ActionResult<IEnumerable<VW_Events>> GetEvents()
         {
-            return this.Ok(this.eventsManager.All);
+            return this.Ok(this.eventsManager.VwAll);
         }
 
         [HttpGet]

@@ -23,6 +23,14 @@ namespace BLL
             }
         }
 
+        public IEnumerable<VW_Events> VwAll
+        {
+            get
+            {
+                return this._context.VW_Events;
+            }
+        }
+
         public Events GetActive
         {
             get

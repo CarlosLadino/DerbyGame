@@ -94,7 +94,7 @@ export class winnerRow {
         this.eventRaceId = eventRaceId;
         this.guestId = 0;
         this.guestName = "";
-        this.guestAvatar = "person";
+        this.guestAvatar = "person.png";
         this.amount = 0;
         this.placeId = 0;
         this.assignedHorseNumber = assignedHorseNumber;

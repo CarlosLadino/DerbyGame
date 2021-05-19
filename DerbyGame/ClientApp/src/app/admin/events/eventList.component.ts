@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../../Common/Services/event.service';
-import { Events } from '../../Common/Models/event.model';
+import { Events, IVWEvents } from '../../Common/Models/event.model';
 import { MatDialog } from '@angular/material';
 import { EventEditDialog } from './eventEdit.dialog';
 import { ConfirmDialog } from '../../common/CustomComponents/ConfirmationDialog/confirm.dialog';
@@ -16,7 +16,7 @@ export class EventListComponent implements OnInit {
     public displayedColumns: string[] = ['name', 'eventDate', 'actions','races', 'active', 'totals'];
 
     constructor(private eventService: EventService, public dialog: MatDialog) {
-        this.eventService.getEvents().subscribe((data: Array<Events>) => {
+        this.eventService.getEvents().subscribe((data: Array<IVWEvents>) => {
             this.datasource = data;
         });
     }
@@ -56,7 +56,8 @@ export class EventListComponent implements OnInit {
             data: { id: id }
         });
 
-        dialogRef.afterClosed().subscribe(result => {
+      dialogRef.afterClosed().subscribe(result => {
+        this.loadData();
         });
     }
 

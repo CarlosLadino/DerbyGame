@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.VwEventRaceGuests = exports.EventRaceGuests = void 0;
 var EventRaceGuests = /** @class */ (function () {
     function EventRaceGuests(eventRaceId, assignedHorseNumber) {
         this.id = 0;
@@ -22,8 +23,8 @@ var VwEventRaceGuests = /** @class */ (function () {
         this.guest2Id = 0;
         this.guest1Name = '';
         this.guest2Name = '';
-        this.guest1Avatar = 'person';
-        this.guest2Avatar = 'person';
+        this.guest1Avatar = 'person.png';
+        this.guest2Avatar = 'person.png';
         this.placeId = -1;
         this.wonAmount = 0;
     }

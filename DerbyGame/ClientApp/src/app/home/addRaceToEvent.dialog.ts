@@ -24,7 +24,7 @@ export class AddRaceToEventDialog implements OnInit, AfterViewInit  {
     }
 
     ngOnInit() {
-        this.dialogTitle = 'Active Guests';
+        this.dialogTitle = 'Add Race to Event';
         this.eventRaceService.getNonSelecteRacesByEventId(this.data.id).subscribe((result: VwEventRace[]) => {
             this.races = result;
         });

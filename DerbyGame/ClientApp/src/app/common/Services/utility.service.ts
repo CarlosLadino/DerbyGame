@@ -25,6 +25,6 @@ export class UtilityService {
     }
 
   public get WithdrawnGuest() {
-    return new Guest(7003, "Scratched", true, "Scratched", true, true);
+    return new Guest(7003, "Scratched", true, "Scratched.png", true, true);
   }
 }
