@@ -24,9 +24,19 @@ export class RaceViewerDialog implements OnInit {
   ngAfterViewInit() {
     this.video.nativeElement.src = this.data.videoName ? "Races/" + this.data.videoName : "";
     this.video.nativeElement.load();
+    if (this.data.videoName == "DerbyCallToPost.mp4") {
+      if (this.video.nativeElement.webkitRequestFullscreen) {
+        this.video.nativeElement.webkitRequestFullscreen();
+      }
+      this.video.nativeElement.play();
+    }
   } 
 
   onVideoEnded() {
+    if (this.video.nativeElement.webkitExitFullscreen) {
+      this.video.nativeElement.webkitExitFullscreen();
+    }
+    
     this.dialogRef.close();
   }
 

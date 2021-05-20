@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../Common/Services/event.service';
 import { Events } from '../Common/Models/event.model';
+import { RaceViewerDialog } from '../admin/races/raceViewer.dialog';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-nav-menu',
@@ -11,7 +13,7 @@ export class NavMenuComponent implements OnInit {
     isExpanded = false;
   public eventName: string;
   public eventId: number;
-    constructor(private eventService: EventService) {
+  constructor(private eventService: EventService, public dialog: MatDialog) {
 
     }
 
@@ -28,4 +30,12 @@ export class NavMenuComponent implements OnInit {
   toggle() {
     this.isExpanded = !this.isExpanded;
   }
+
+  onLogoClick() {
+    const dialogRef = this.dialog.open(RaceViewerDialog, {
+      width: '1024px',
+      data: { videoName: "DerbyCallToPost.mp4" }
+    });
+  }
+
 }

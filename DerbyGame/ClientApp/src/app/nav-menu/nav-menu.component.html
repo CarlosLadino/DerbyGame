@@ -3,7 +3,7 @@
     class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
   >
     <div class="container-fluid">
-      <img src="Content/horseHead.png" style="max-height:35px;" />&nbsp;&nbsp;
+      <img src="Content/horseHead.png" style="max-height:35px;" (click)="onLogoClick()" />&nbsp;&nbsp;
       <a class="navbar-brand" [routerLink]="['/']">Derby Game</a>&nbsp;&nbsp;
       <button mat-button mat-icon-button [routerLink]="['/eventTotals', eventId]" style="margin-top:-10px;"><mat-icon aria-hidden="false" aria-label="Total" color="accent" matTooltip="Event runnin total">work</mat-icon></button>
       <h4 class="navbar-brand" style="margin-left: 10px;">{{eventName}}</h4>

@@ -1,5 +1,5 @@
 <mat-horizontal-stepper #stepper linear>
-  <mat-step label="Betting" state="betting" >
+  <mat-step label="Betting" state="betting">
     <div class="container-fluid">
       <div class="row">
         <div class="col-3 ">
@@ -38,12 +38,12 @@
               </div>
             </mat-expansion-panel>
           </mat-accordion>
-          <br />
+          <br />      
           <div>
             <mat-card [hidden]="!raceInstance.allowGuestSelection">
               <mat-card-header>
                 <mat-card-title>Guest Information</mat-card-title>
-                <mat-card-subtitle>Select a Guest and Pick a random horse.</mat-card-subtitle>
+
               </mat-card-header>
               <mat-card-content>
                 <mat-form-field>
@@ -65,7 +65,7 @@
             <mat-card [hidden]="raceInstance.raceWasLoadedFromDB">
               <mat-card-header>
                 <mat-card-title>Betting Information</mat-card-title>
-                <mat-card-subtitle>Running Totals and Race Prices.</mat-card-subtitle>
+              
               </mat-card-header>
               <mat-card-content *ngIf="!raceInstance.raceWasLoadedFromDB">
                 <div class="row">
@@ -77,13 +77,13 @@
                 <br />
                 <div class="row">
                   <div class="col-4">
-                    <mat-icon mat-card-avatar aria-hidden="false" aria-label="Horse" color="accent" style="font-size:40px;">work</mat-icon>
+                    <mat-icon mat-card-avatar aria-hidden="false" aria-label="Horse" color="accent" style="font-size:35px;">work</mat-icon>
                   </div>
                   <div class="col-4">
-                    <mat-icon mat-card-avatar aria-hidden="false" aria-label="Horse" color="warn" style="font-size:40px;">work</mat-icon>
+                    <mat-icon mat-card-avatar aria-hidden="false" aria-label="Horse" color="warn" style="font-size:35px;">work</mat-icon>
                   </div>
                   <div class="col-4" style="color:#797a80;">
-                    <mat-icon mat-card-avatar aria-hidden="false" aria-label="Horse" style="font-size:40px;">work</mat-icon>
+                    <mat-icon mat-card-avatar aria-hidden="false" aria-label="Horse" style="font-size:35px;">work</mat-icon>
                   </div>
                 </div>
                 <div class="row">
@@ -99,7 +99,7 @@
                 </div>
               </mat-card-content>
               <mat-card-actions>
-                <button mat-raised-button color="primary" (click)="onLockRace()" [disabled]="raceInstance.allowHorseSelection" [hidden]="raceInstance.eventRaceId == 0 || raceInstance.saved == true">Lock Race</button>                                           
+                <button mat-raised-button color="primary" (click)="onLockRace()" [disabled]="raceInstance.allowHorseSelection" [hidden]="raceInstance.eventRaceId == 0 || raceInstance.saved == true">Lock Race</button>
               </mat-card-actions>
             </mat-card>
           </div>
@@ -107,10 +107,10 @@
         <div class="col-8 offset-1">
           <div class="row">
             <div class="col-2" *ngFor="let horse of raceInstance.eventRaceGuests" style="padding: 3px;">
-              <mat-card [style.opacity]=" horse.placeId == 0 ? 0.2 : 1" [style.background-color]="horse.guest1Id == 7003 ? '#343a40' : '#3f51b5'">
+              <mat-card [style.opacity]=" horse.placeId == 0 ? 0.2 : 1" [style.background-color]="horse.guest1Id == 7003 ? '#343a40' : '#3f51b5'" style="margin-left:-3px;">
                 <mat-card-header>
                   <mat-card-title style="color:white; font-size: 23px;">{{horse.assignedHorseNumber}}&nbsp;&nbsp;</mat-card-title>
-                  <div mat-card-avatar class="raceCard-header-image"></div>                  
+                  <div mat-card-avatar class="raceCard-header-image"></div>
                 </mat-card-header>
                 <mat-card-content>
                   <div *ngIf="horse.guest1Id > 0">
@@ -121,7 +121,8 @@
                       </mat-chip>
                     </mat-chip-list>
                   </div>
-                  <div *ngIf="horse.guest2Id > 0 && horse.guest1Id != 7003"> <!--7003 Withdrawn-->
+                  <div *ngIf="horse.guest2Id > 0 && horse.guest1Id != 7003">
+                    <!--7003 Withdrawn-->
                     <mat-chip-list aria-label="Guests">
                       <mat-chip color="accent" selected [removable]="removable" (removed)="onRemoveGuest(2, horse.guest2Id)">
                         <guest-component [avatarName]="horse.guest2Avatar" [guestName]="horse.guest2Name"></guest-component>
@@ -147,7 +148,7 @@
         <div class="col-3">
           <div *ngFor="let horse of raceInstance.eventRaceGuests">
             <race-guest-component [horse]="horse"></race-guest-component>
-          </div>         
+          </div>
         </div>
         <div class="col-9">
           <video width="1024" height="576" controls="controls" preload="auto" #video (ended)="onVideoEnded()">
@@ -156,7 +157,7 @@
           <button mat-raised-button color="primary" (click)="onGotoRace()">Run Race on YouTube</button>
         </div>
       </div>
-    </div>    
+    </div>
   </mat-step>
   <!-- Icon overrides. -->
   <ng-template matStepperIcon="betting">

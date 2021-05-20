@@ -72,38 +72,48 @@ export class HomeComponent implements OnInit {
   }
 
   canDeactivate() {
-    if (this.raceInstance.getTotalCollected > 0 && !this.raceInstance.raceWasLoadedFromDB) {
-      const message = `If you navigate out of this page all data will be lost. Are you sure you want to do that?`;
-      const dialogData = new ConfirmDialogModel("Confirm Leaving Race", message);
-      const dialogRef = this.dialog.open(ConfirmDialog, {
-        maxWidth: "400px",
-        data: dialogData
-      });
+    if (!this.raceInstance.raceWasLoadedFromDB && !this.raceInstance.allowToStartNewRace) {
+      if (this.raceInstance.getTotalCollected > 0) {
+        const message = `If you navigate out of this page all data will be lost. Are you sure you want to do that?`;
+        const dialogData = new ConfirmDialogModel("Confirm Leaving Race", message);
+        const dialogRef = this.dialog.open(ConfirmDialog, {
+          maxWidth: "400px",
+          data: dialogData
+        });
 
-      return dialogRef.afterClosed()
+        return dialogRef.afterClosed()
+      }
+      else {
+        return true;
+      }
     }
     else {
       return true;
     }
-
   }
 
   onRaceSelectionChange(eventRace) {
-    if (this.raceInstance.getTotalCollected > 0 && !this.raceInstance.raceWasLoadedFromDB && !this.raceInstance.allowToStartNewRace) {
-      const message = `Betting is in progress. Are you sure you want to reset this race?`;
+    if (!this.raceInstance.raceWasLoadedFromDB && !this.raceInstance.allowToStartNewRace) {
+      if (this.raceInstance.getTotalCollected > 0) {
+        const message = `Betting is in progress. Are you sure you want to reset this race?`;
 
-      const dialogData = new ConfirmDialogModel("Confirm Reset", message);
+        const dialogData = new ConfirmDialogModel("Confirm Reset", message);
 
-      const dialogRef = this.dialog.open(ConfirmDialog, {
-        maxWidth: "400px",
-        data: dialogData
-      });
+        const dialogRef = this.dialog.open(ConfirmDialog, {
+          maxWidth: "400px",
+          data: dialogData
+        });
 
-      dialogRef.afterClosed().subscribe(dialogResult => {
-        if (dialogResult == true) {
-          this.resetRace(eventRace.value);
-        }
-      });
+        dialogRef.afterClosed().subscribe(dialogResult => {
+          if (dialogResult == true) {
+            this.resetRace(eventRace.value);
+          }
+        });
+      }
+      else {
+        this.resetRace(eventRace.value);
+      }
+     
     }
     else {
       this.resetRace(eventRace.value);
@@ -273,6 +283,10 @@ export class HomeComponent implements OnInit {
   }
 
   onVideoEnded() {
+    if (this.video.nativeElement.webkitExitFullscreen) {
+      this.video.nativeElement.webkitExitFullscreen();
+    }
+    
     this.setRaceWiners();
     this.myStepper.previous();
   }
