@@ -1,14 +1,4 @@
-﻿
-
-
-
-
-
-
-
-
-
-CREATE View [dbo].[VW_EventRaces] AS
+﻿CREATE View [dbo].[VW_EventRaces] AS
 
 With WithdrawnHorsesCTE (RaceId, WHNumber) AS
 (

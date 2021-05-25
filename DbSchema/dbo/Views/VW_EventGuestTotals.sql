@@ -1,6 +1,4 @@
-﻿
-
-CREATE View [dbo].[VW_EventGuestTotals]
+﻿CREATE View [dbo].[VW_EventGuestTotals]
 AS
 
 With Guest1 (EventId, Id, GuestName, GuestAvatar, WonAmount)

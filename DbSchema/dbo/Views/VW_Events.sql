@@ -1,4 +1,4 @@
-﻿  Create View dbo.VW_Events
+﻿Create View dbo.VW_Events
   AS
 SELECT Distinct e.[Id] 
       ,e.[Name]

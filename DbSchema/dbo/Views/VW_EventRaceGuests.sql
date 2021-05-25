@@ -1,11 +1,4 @@
-﻿
-
-
-
-
-
-
-CREATE View [dbo].[VW_EventRaceGuests] AS
+﻿CREATE View [dbo].[VW_EventRaceGuests] AS
 
 Select
 	erg.Id,
