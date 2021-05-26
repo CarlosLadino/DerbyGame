@@ -13,7 +13,7 @@
               <mat-form-field>
                 <mat-label>Select a Race</mat-label>
                 <mat-select name="race" [(value)]="selectedEventRaceId" (selectionChange)="onRaceSelectionChange($event)" [disabled]="raceInstance.getTotalCollected > 0 && !raceInstance.allowToStartNewRace">
-                  <mat-option *ngFor="let race of races" [value]="race.eventRaceId">
+                  <mat-option *ngFor="let race of races" [value]="race.eventRaceId" [style.background-color]="race.saved ? '#ff4081' : '#ffffff'">
                     {{race.raceName}}
                   </mat-option>
                 </mat-select>

@@ -60,10 +60,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.eventService.getActive().subscribe((event: Events) => {
-      this.eventRaceService.getSelecteRacesByEventId(event.id).subscribe((data: VwEventRace[]) => {
-        this.eventId = event.id;
-        this.races = data;
-      });
+      this.eventId = event.id;
+      this.loadRaces();
     });
 
     this.guestService.getActiveGuests().subscribe((guests: IGuests[]) => {
@@ -123,6 +121,7 @@ export class HomeComponent implements OnInit {
   onGotoRace() {
     this.setRaceWiners();
     window.open(this.raceInstance.raceUrl, '_blank');
+    this.myStepper.selected.completed = true;
   }
 
   onAllowSecondGuest(item) {
@@ -266,6 +265,7 @@ export class HomeComponent implements OnInit {
       this.raceInstance.saved = true;
       this.myStepper.selected.completed = true;
       this.myStepper.next();
+      this.loadRaces();
     });
   }
 
@@ -276,9 +276,7 @@ export class HomeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.eventRaceService.getSelecteRacesByEventId(this.eventId).subscribe((data: VwEventRace[]) => {
-        this.races = data;
-      });
+      this.loadRaces();
     });
   }
 
@@ -358,14 +356,22 @@ export class HomeComponent implements OnInit {
   }
 
   private setRaceWiners() {
-    this.raceInstance.eventRaceGuests.forEach((item: VwEventRaceGuests) => {
-      item.placeId = 0;
-    });
-    this.raceInstance.winners = [];
-    this.raceResults.forEach((result: RaceResults) => {
-      var winners = this.raceInstance.eventRaceGuests.find(e => e.assignedHorseNumber == result['horseNumber']);
-      this.raceInstance.winners.push(winners);
-      winners.placeId = result['placeId'];
+    if (!(this.raceInstance.winners.length > 0)) {
+      this.raceInstance.eventRaceGuests.forEach((item: VwEventRaceGuests) => {
+        item.placeId = 0;
+      });
+      this.raceInstance.winners = [];
+      this.raceResults.forEach((result: RaceResults) => {
+        var winners = this.raceInstance.eventRaceGuests.find(e => e.assignedHorseNumber == result['horseNumber']);
+        this.raceInstance.winners.push(winners);
+        winners.placeId = result['placeId'];
+      });
+    } 
+  }
+
+  private loadRaces() {
+    this.eventRaceService.getSelecteRacesByEventId(this.eventId).subscribe((data: VwEventRace[]) => {
+      this.races = data;
     });
   }
 }
