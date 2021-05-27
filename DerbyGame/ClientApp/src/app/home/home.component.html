@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-3 ">
           <mat-accordion>
-            <mat-expansion-panel>
+            <mat-expansion-panel expanded>
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   Race Information
@@ -38,71 +38,68 @@
               </div>
             </mat-expansion-panel>
           </mat-accordion>
-          <br />      
-          <div>
-            <mat-card [hidden]="!raceInstance.allowGuestSelection">
-              <mat-card-header>
-                <mat-card-title>Guest Information</mat-card-title>
-
-              </mat-card-header>
-              <mat-card-content>
-                <mat-form-field>
-                  <mat-label>Select a Guest</mat-label>
-                  <mat-select name="guest" [(value)]="selectedGuestId">
-                    <mat-option *ngFor="let guest of activeGuests" [value]="guest.id">
-                      {{guest.name}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </mat-card-content>
-              <mat-card-actions>
-                <button mat-raised-button color="primary" (click)="onSelectHorse()" [disabled]="selectedGuestId == 0 || !raceInstance.allowHorseSelection">Select a Horse</button>
-                <button mat-button mat-icon-button (click)="onActivateGuests()" class="pull-right"><mat-icon aria-hidden="false" aria-label="New" color="accent" matTooltip="Quick Active Guest">playlist_add_check</mat-icon></button>
-                <button mat-button mat-icon-button (click)="onNewGuests()" class="pull-right"><mat-icon aria-hidden="false" aria-label="New" color="accent" matTooltip="Create a new Guest">add_circle</mat-icon></button>
-              </mat-card-actions>
-            </mat-card>
-            <br />
-            <mat-card [hidden]="raceInstance.raceWasLoadedFromDB">
-              <mat-card-header>
-                <mat-card-title>Betting Information</mat-card-title>
-              
-              </mat-card-header>
-              <mat-card-content *ngIf="!raceInstance.raceWasLoadedFromDB">
-                <div class="row">
-                  <div class="col-12">
-                    <h6>Collected Amount: <span>$&nbsp;{{raceInstance.getTotalCollected}}.00</span></h6>
-                  </div>
+          <br />
+          <mat-accordion>
+            <mat-expansion-panel expanded>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Guest Information
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <mat-form-field>
+                <mat-label>Select a Guest</mat-label>
+                <mat-select name="guest" [(value)]="selectedGuestId">
+                  <mat-option *ngFor="let guest of activeGuests" [value]="guest.id">
+                    {{guest.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <br />
+              <button mat-raised-button color="primary" (click)="onSelectHorse()" [disabled]="selectedGuestId == 0 || !raceInstance.allowHorseSelection">Select a Horse</button>
+              <button mat-button mat-icon-button (click)="onActivateGuests()" class="pull-right"><mat-icon aria-hidden="false" aria-label="New" color="accent" matTooltip="Quick Active Guest">playlist_add_check</mat-icon></button>
+              <button mat-button mat-icon-button (click)="onNewGuests()" class="pull-right"><mat-icon aria-hidden="false" aria-label="New" color="accent" matTooltip="Create a new Guest">add_circle</mat-icon></button>
+            </mat-expansion-panel>
+          </mat-accordion>
+          <br />
+          <mat-accordion [hidden]="raceInstance.raceWasLoadedFromDB">
+            <mat-expansion-panel expanded>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Betting Information
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="row">
+                <div class="col-12">
+                  <h6>Collected Amount: <span>$&nbsp;{{raceInstance.getTotalCollected}}.00</span></h6>
                 </div>
-                <mat-divider></mat-divider>
-                <br />
-                <div class="row">
-                  <div class="col-4">
-                    <mat-icon mat-card-avatar aria-hidden="false" aria-label="Horse" color="accent" style="font-size:35px;">work</mat-icon>
-                  </div>
-                  <div class="col-4">
-                    <mat-icon mat-card-avatar aria-hidden="false" aria-label="Horse" color="warn" style="font-size:35px;">work</mat-icon>
-                  </div>
-                  <div class="col-4" style="color:#797a80;">
-                    <mat-icon mat-card-avatar aria-hidden="false" aria-label="Horse" style="font-size:35px;">work</mat-icon>
-                  </div>
+              </div>
+              <mat-divider></mat-divider>
+              <br />
+              <div class="row">
+                <div class="col-4">
+                  <mat-icon mat-card-avatar aria-hidden="false" aria-label="Horse" color="accent" style="font-size:35px;">work</mat-icon>
                 </div>
-                <div class="row">
-                  <div class="col-4">
-                    <h6>1st. Place <span>$&nbsp;{{raceInstance.firstPlaceAmount}}.00</span></h6>
-                  </div>
-                  <div class="col-4">
-                    <h6>2nd. Place <span>$&nbsp;{{raceInstance.secondPlaceAmount}}.00</span></h6>
-                  </div>
-                  <div class="col-4">
-                    <h6>3rd. Place <span>$&nbsp;{{raceInstance.thirdPlaceAmount}}.00</span></h6>
-                  </div>
+                <div class="col-4">
+                  <mat-icon mat-card-avatar aria-hidden="false" aria-label="Horse" color="warn" style="font-size:35px;">work</mat-icon>
                 </div>
-              </mat-card-content>
-              <mat-card-actions>
-                <button mat-raised-button color="primary" (click)="onLockRace()" [disabled]="raceInstance.allowHorseSelection" [hidden]="raceInstance.eventRaceId == 0 || raceInstance.saved == true">Lock Race</button>
-              </mat-card-actions>
-            </mat-card>
-          </div>
+                <div class="col-4" style="color:#797a80;">
+                  <mat-icon mat-card-avatar aria-hidden="false" aria-label="Horse" style="font-size:35px;">work</mat-icon>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <h6>1st. Place <span>$&nbsp;{{raceInstance.firstPlaceAmount}}.00</span></h6>
+                </div>
+                <div class="col-4">
+                  <h6>2nd. Place <span>$&nbsp;{{raceInstance.secondPlaceAmount}}.00</span></h6>
+                </div>
+                <div class="col-4">
+                  <h6>3rd. Place <span>$&nbsp;{{raceInstance.thirdPlaceAmount}}.00</span></h6>
+                </div>
+              </div>
+              <button mat-raised-button color="primary" (click)="onLockRace()" [disabled]="raceInstance.allowHorseSelection" [hidden]="raceInstance.eventRaceId == 0 || raceInstance.saved == true">Lock Race</button>
+            </mat-expansion-panel>
+          </mat-accordion>        
         </div>
         <div class="col-8 offset-1">
           <div class="row">
