@@ -39,7 +39,7 @@
             </mat-expansion-panel>
           </mat-accordion>
           <br />
-          <mat-accordion>
+          <mat-accordion [hidden]="!raceInstance.allowGuestSelection">
             <mat-expansion-panel expanded>
               <mat-expansion-panel-header>
                 <mat-panel-title>
