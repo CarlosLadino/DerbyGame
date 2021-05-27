@@ -88,13 +88,13 @@
               </div>
               <div class="row">
                 <div class="col-4">
-                  <h6>1st. Place <span>$&nbsp;{{raceInstance.firstPlaceAmount}}.00</span></h6>
+                  <h6>1st. <span>$&nbsp;{{raceInstance.firstPlaceAmount}}.00</span></h6>
                 </div>
                 <div class="col-4">
-                  <h6>2nd. Place <span>$&nbsp;{{raceInstance.secondPlaceAmount}}.00</span></h6>
+                  <h6>2nd. <span>$&nbsp;{{raceInstance.secondPlaceAmount}}.00</span></h6>
                 </div>
                 <div class="col-4">
-                  <h6>3rd. Place <span>$&nbsp;{{raceInstance.thirdPlaceAmount}}.00</span></h6>
+                  <h6>3rd. <span>$&nbsp;{{raceInstance.thirdPlaceAmount}}.00</span></h6>
                 </div>
               </div>
               <button mat-raised-button color="primary" (click)="onLockRace()" [disabled]="raceInstance.allowHorseSelection" [hidden]="raceInstance.eventRaceId == 0 || raceInstance.saved == true">Lock Race</button>

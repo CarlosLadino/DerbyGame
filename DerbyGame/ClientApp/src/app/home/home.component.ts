@@ -47,6 +47,7 @@ export class HomeComponent implements OnInit {
   public video: ElementRef;
   @ViewChild('stepper', { static: false })
   private myStepper: MatStepper;
+  private tada = new Audio();
 
   constructor(private eventService: EventService,
     private utilityService: UtilityService,
@@ -56,6 +57,7 @@ export class HomeComponent implements OnInit {
     public dialog: MatDialog,
     public raceResultService: RaceResultService,
     public raceWithdrawnHorseService: RaceWithdrawnHorseService) {
+    this.tada.src = "Content/tada.wav";
   }
 
   ngOnInit() {
@@ -287,6 +289,7 @@ export class HomeComponent implements OnInit {
     
     this.setRaceWiners();
     this.myStepper.previous();
+    this.tada.play();
   }
 
   private generateRoster(eventRaceId: number) {

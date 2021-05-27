@@ -15,9 +15,15 @@ export class SelectHorseDialog implements OnInit {
   public guestAvatar: string;
   private currentState: number = 1;
   private interval;
+  private gallop = new Audio();
+  private tada = new Audio();
+
   constructor(private renderer: Renderer2,
     public dialogRef: MatDialogRef<SelectHorseDialog>,
     @Inject(MAT_DIALOG_DATA) public data) {
+    this.gallop.src = "Content/Gallop.m4a";
+    this.gallop.currentTime = 1;
+    this.tada.src = "Content/tada.wav";
   }
 
   ngOnInit() {
@@ -32,16 +38,21 @@ export class SelectHorseDialog implements OnInit {
   }
 
   onSelect() {
+    this.gallop.load();
+    this.gallop.play();
     this.showButton = false;
     this.showHorse = true;
     this.showNumber = false;
 
     this.interval = setInterval(() => {
+      this.gallop.pause();
+      this.gallop.currentTime = 0;
+      this.tada.play();
       this.showButton = false;
       this.showHorse = false;
       this.showNumber = true;
 
-      if (this.currentState == 2) {
+      if (this.currentState == 2) {      
         this.dialogRef.close();
         clearInterval(this.interval);
       }
