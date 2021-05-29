@@ -21,7 +21,7 @@ export class SelectHorseDialog implements OnInit {
   constructor(private renderer: Renderer2,
     public dialogRef: MatDialogRef<SelectHorseDialog>,
     @Inject(MAT_DIALOG_DATA) public data) {
-    this.gallop.src = "Content/Gallop.m4a";
+    this.gallop.src = "Content/Gallop.wav";
     this.gallop.currentTime = 1;
     this.tada.src = "Content/tada.wav";
   }
