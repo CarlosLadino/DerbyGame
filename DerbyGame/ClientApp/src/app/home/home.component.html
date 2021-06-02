@@ -118,8 +118,7 @@
                       </mat-chip>
                     </mat-chip-list>
                   </div>
-                  <div *ngIf="horse.guest2Id > 0 && horse.guest1Id != 7003">
-                    <!--7003 Withdrawn-->
+                  <div *ngIf="horse.guest2Id > 0 && horse.guest1Id != 7003"><!--7003 Withdrawn-->
                     <mat-chip-list aria-label="Guests">
                       <mat-chip color="accent" selected [removable]="removable" (removed)="onRemoveGuest(2, horse.guest2Id)">
                         <guest-component [avatarName]="horse.guest2Avatar" [guestName]="horse.guest2Name"></guest-component>

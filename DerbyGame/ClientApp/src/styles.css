@@ -47,7 +47,7 @@ mat-sidenav {
   background-color: aqua;
 }
 
-.mat-card-content > :first-child, .mat-card > :first-child {
+.mat-card-content > .mat-card {
   margin-left: -4px;
 }
   .container {
