@@ -31,6 +31,7 @@ export class RaceInstance implements IRaceInstance {
     raceUrl: string;
     raceId: number;
     raceVideoName: string;
+    finishLineTime: number;
     saved: boolean;
     eventRaceGuests: VwEventRaceGuests[];
     winners: VwEventRaceGuests[];
@@ -47,6 +48,7 @@ export class RaceInstance implements IRaceInstance {
         this.raceUrl = "";
         this.raceId = 0;
         this.raceVideoName = "";
+        this.finishLineTime = 0;
         this.saved = false;
         this.eventRaceGuests = [];
         this.winners = [];

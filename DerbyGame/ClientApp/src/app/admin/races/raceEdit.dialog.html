@@ -13,6 +13,9 @@
   <mat-form-field>
     <input matInput type="text" [(ngModel)]="race.videoName" placeholder="Video Name">
   </mat-form-field>
+  <mat-form-field>
+    <input matInput type="number" [(ngModel)]="race.finishLineTime" placeholder="Finish Line time in seconds">
+  </mat-form-field>
 </div>
 <div *ngFor="let place of places">
   <mat-form-field>

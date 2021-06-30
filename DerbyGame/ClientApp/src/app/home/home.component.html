@@ -142,12 +142,12 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-3">
-          <div *ngFor="let horse of raceInstance.eventRaceGuests">
+          <div *ngFor="let horse of raceInstance.eventRaceGuests" [style.opacity]=" horse.placeId == 0 ? 0.2 : 1" [style.background-color]="horse.guest1Id == 7003 ? '#343a40' : '#3f51b5'" style="color:white;">
             <race-guest-component [horse]="horse"></race-guest-component>
           </div>
         </div>
         <div class="col-9">
-          <video width="1024" height="576" controls="controls" preload="auto" #video (ended)="onVideoEnded()">
+          <video width="1024" height="576" controls="controls" preload="auto" #video (ended)="onVideoEnded()" (timeupdate)="onTimeUpdate()">
             <source type="video/mp4" />
           </video><br />
           <button mat-raised-button color="primary" (click)="onGotoRace()">Run Race on YouTube</button>

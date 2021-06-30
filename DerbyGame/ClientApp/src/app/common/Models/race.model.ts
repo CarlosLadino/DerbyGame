@@ -5,6 +5,7 @@ export interface Races {
     numberOfHorses: number;
     archived: boolean;
     videoName: string;
+    finishLineTime: number;
 }
 
 export interface IVWRaces {
@@ -14,6 +15,7 @@ export interface IVWRaces {
   numberOfHorses: number;
   archived: boolean;
   videoName: string;
+  finishLineTime: number;
   canDelete: boolean;
   scratchedHorses: number;
 }

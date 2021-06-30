@@ -3,7 +3,7 @@
 With WithdrawnHorsesCTE (RaceId, WHNumber) AS
 (
 	Select RaceId, COUNT('x') As WithdrawnHorses From RaceWithdrawnHorses Group By RaceId
-), RacesCTE (RaceId,RaceName,NumberOfHorses,RaceUrl,VideoName, Archived) AS
+), RacesCTE (RaceId,RaceName,NumberOfHorses,RaceUrl,VideoName, FinishLineTime, Archived) AS
 (
 select Distinct
 	r.Id as RaceId, 
@@ -11,7 +11,8 @@ select Distinct
 	r.NumberOfHorses,
 	r.Url AS RaceUrl,
 	r.VideoName,
-	r.Archived
+	r.FinishLineTime,
+	r.Archived	
 	from Races r
 	left Join  WithdrawnHorsesCTE wh On r.Id = wh.RaceId
 )
@@ -23,6 +24,7 @@ Select
 	TableJoin.NumberOfHorses,
 	TableJoin.RaceUrl,
 	TableJoin.VideoName,
+	TableJoin.FinishLineTime,
 	TableJoin.Archived,
 	isnull(Selected.Id,0) AS EventRaceId,
 CAST(case when Selected.RaceId is null Then 0 Else 1 End AS bit) AS Selected,  
@@ -34,6 +36,7 @@ from
 	NumberOfHorses,
 	RaceUrl,
 	VideoName,
+	FinishLineTime,
 	Archived,
 	e.Id as EventId 
 	from RacesCTE

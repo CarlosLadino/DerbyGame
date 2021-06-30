@@ -33,6 +33,9 @@ namespace Data.Models
 
         public string VideoName { get; set; }
 
+        [Required]
+        public int FinishLineTime { get; set; }
+
         [InverseProperty("Race")]
         [IgnoreDataMember]
         public virtual ICollection<EventRaces> EventRacesRace { get; set; }

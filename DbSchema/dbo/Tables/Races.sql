@@ -5,6 +5,7 @@
     [NumberOfHorses] INT            NOT NULL,
     [Archived]       BIT            CONSTRAINT [DF_Races_Archive] DEFAULT ((0)) NOT NULL,
     [VideoName]      NVARCHAR (100) NULL,
+    [FinishLineTime] INT NOT NULL DEFAULT 0, 
     CONSTRAINT [PK_Races] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 

@@ -11,6 +11,7 @@
     ,r.[NumberOfHorses]
     ,r.[Archived]
 	,r.VideoName
+	,r.FinishLineTime
 	,IsNull(wh.WHNumber,0) As ScratchedHorses
 	,Cast(Case when er.Id Is Null then 1 Else 0 End As bit) As CanDelete
   FROM [dbo].[Races] r

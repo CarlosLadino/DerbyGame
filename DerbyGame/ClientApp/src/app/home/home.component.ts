@@ -292,12 +292,24 @@ export class HomeComponent implements OnInit {
     this.tada.play();
   }
 
+  onTimeUpdate() {
+    if (this.raceInstance.finishLineTime > 0 && this.raceInstance.raceVideoName.length > 0) {
+      if (this.video.nativeElement.currentTime >= this.raceInstance.finishLineTime && this.video.nativeElement.currentTime <= this.raceInstance.finishLineTime + 1) {
+        if (this.video.nativeElement.webkitExitFullscreen) {
+          this.video.nativeElement.webkitExitFullscreen();
+        }
+        this.setRaceWiners();
+      }
+    }
+  }
+
   private generateRoster(eventRaceId: number) {
     var raceWithdrawnHorses: IRaceWithdrawnHorses[];
     var selectedRace: VwEventRace = this.races.find(x => x.eventRaceId == eventRaceId);
     this.raceInstance.numberOfHorses = selectedRace.numberOfHorses;
     this.raceInstance.raceUrl = selectedRace.raceUrl;
     this.raceInstance.raceVideoName = selectedRace.videoName;
+    this.raceInstance.finishLineTime = selectedRace.finishLineTime;
     this.video.nativeElement.src = selectedRace.videoName ? "Races/" + selectedRace.videoName : "";
     this.video.nativeElement.load();
 

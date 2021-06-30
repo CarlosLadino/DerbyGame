@@ -23,6 +23,8 @@ namespace Data.Models
 
         public string VideoName { get; set; }
 
+        public int FinishLineTime { get; set; }
+
         public int NumberOfHorses { get; set; }
 
         public int EventRaceId { get; set; }

@@ -11,6 +11,7 @@ export interface VwEventRace {
     raceName: string;
     raceUrl: string;
     videoName: string;
+    finishLineTime: number;
     numberOfHorses: number;
     eventRaceId: number;
     selected: boolean;

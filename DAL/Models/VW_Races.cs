@@ -20,6 +20,8 @@ namespace Data.Models
 
         public string VideoName { get; set; }
 
+        public int FinishLineTime { get; set; }
+
         public bool CanDelete { get; set; }
 
         public int ScratchedHorses { get; set; }
