@@ -77,24 +77,32 @@
               <br />
               <div class="row">
                 <div class="col-4">
-                  <mat-icon mat-card-avatar aria-hidden="false" aria-label="Horse" color="accent" style="font-size:35px;">work</mat-icon>
+                  <div style="width: 44px;">
+                    <place-component [place]="'1'"></place-component>
+                  </div>
+                 
                 </div>
                 <div class="col-4">
-                  <mat-icon mat-card-avatar aria-hidden="false" aria-label="Horse" color="warn" style="font-size:35px;">work</mat-icon>
+                  <div style="width: 44px;">
+                    <place-component [place]="'2'"></place-component>
+                  </div>
                 </div>
-                <div class="col-4" style="color:#797a80;">
-                  <mat-icon mat-card-avatar aria-hidden="false" aria-label="Horse" style="font-size:35px;">work</mat-icon>
+                <div class="col-4">
+                  <div style="width: 44px;">
+                    <place-component [place]="'3'"></place-component>
+                  </div>
+                 
                 </div>
               </div>
               <div class="row">
                 <div class="col-4">
-                  <h6>1st. <span>$&nbsp;{{raceInstance.firstPlaceAmount}}.00</span></h6>
+                  <h6><span>$&nbsp;{{raceInstance.firstPlaceAmount}}.00</span></h6>
                 </div>
                 <div class="col-4">
-                  <h6>2nd. <span>$&nbsp;{{raceInstance.secondPlaceAmount}}.00</span></h6>
+                  <h6><span>$&nbsp;{{raceInstance.secondPlaceAmount}}.00</span></h6>
                 </div>
                 <div class="col-4">
-                  <h6>3rd. <span>$&nbsp;{{raceInstance.thirdPlaceAmount}}.00</span></h6>
+                  <h6><span>$&nbsp;{{raceInstance.thirdPlaceAmount}}.00</span></h6>
                 </div>
               </div>
               <button mat-raised-button color="primary" (click)="onLockRace()" [disabled]="raceInstance.allowHorseSelection" [hidden]="raceInstance.eventRaceId == 0 || raceInstance.saved == true">Lock Race</button>

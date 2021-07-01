@@ -21,6 +21,7 @@ import { SelectHorseDialog } from './home/selectHorse.dialog';
 import { ActivateGuestsDialog } from './home/activateGuests.dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GuestComponent } from './common/CustomComponents/guest.component';
+import { PlaceComponent } from './common/CustomComponents/place.component';
 import { RaceGuestComponent } from './common/CustomComponents/raceGuest.component';
 import { GuestTotalComponent } from './common/CustomComponents/guesTotal.component';
 import { RaceWithdrawnHorseDialog } from './admin/races/raceWithdrawnHorse.dialog';
@@ -75,6 +76,7 @@ import { from } from 'rxjs';
     ShowWinnersDialog,
     AddRaceToEventDialog,
     GuestComponent,
+    PlaceComponent,
     RaceGuestComponent,
     GuestTotalComponent,
     RaceWithdrawnHorseDialog,
