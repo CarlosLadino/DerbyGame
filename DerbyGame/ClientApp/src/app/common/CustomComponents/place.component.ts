@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 
 export class PlaceComponent {
   @Input() place: string;
+  @Input() width: string;
   constructor() {
    
   }

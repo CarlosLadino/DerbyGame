@@ -77,19 +77,19 @@
               <br />
               <div class="row">
                 <div class="col-4">
-                  <div style="width: 44px;">
-                    <place-component [place]="'1'"></place-component>
+                  <div>
+                    <place-component [place]="'1'" [width]="'44px'"></place-component>
                   </div>
                  
                 </div>
                 <div class="col-4">
-                  <div style="width: 44px;">
-                    <place-component [place]="'2'"></place-component>
+                  <div>
+                    <place-component [place]="'2'" [width]="'44px'"></place-component>
                   </div>
                 </div>
                 <div class="col-4">
-                  <div style="width: 44px;">
-                    <place-component [place]="'3'"></place-component>
+                  <div>
+                    <place-component [place]="'3'" [width]="'44px'"></place-component>
                   </div>
                  
                 </div>
@@ -150,7 +150,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-3">
-          <div *ngFor="let horse of raceInstance.eventRaceGuests" [style.opacity]=" horse.placeId == 0 ? 0.2 : 1" [style.background-color]="horse.guest1Id == 7003 ? '#343a40' : '#3f51b5'" style="color:white;">
+          <div *ngFor="let horse of raceInstance.eventRaceGuests" [style.opacity]=" horse.placeId == 0 ? 0.2 : 1" [style.background-color]="horse.guest1Id == 7003 ? '#343a40' : '#3f51b5'" style="color: white; padding-left: 5px;">
             <race-guest-component [horse]="horse"></race-guest-component>
           </div>
         </div>
