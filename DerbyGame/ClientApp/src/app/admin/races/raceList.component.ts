@@ -6,6 +6,7 @@ import { RaceEditDialog } from './raceEdit.dialog';
 import { ConfirmDialog } from '../../common/CustomComponents/ConfirmationDialog/confirm.dialog';
 import { ConfirmDialogModel } from '../../common/CustomComponents/ConfirmationDialog/confirmDialog.model';
 import { RaceViewerDialog } from './raceViewer.dialog';
+import { RaceProgressDialog } from './raceProgress.dialog';
 
 
 
@@ -51,7 +52,9 @@ export class RaceListComponent implements OnInit {
         this.openDialog(id);
     }
 
-
+  onProgressClick(id: number) {
+    this.openProgressDialog(id);
+  }
     onRacesClick(id: number) {
         alert("Select races");
     }
@@ -65,7 +68,18 @@ export class RaceListComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
             this.loadData();
         });
-    }
+  }
+
+  openProgressDialog(id: number): void {
+    const dialogRef = this.dialog.open(RaceProgressDialog, {
+      width: '600px',
+      data: { id: id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadData();
+    });
+  }
 
   onViewClick(videoName: string) {
     const dialogRef = this.dialog.open(RaceViewerDialog, {

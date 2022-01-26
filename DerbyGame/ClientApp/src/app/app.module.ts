@@ -25,6 +25,7 @@ import { PlaceComponent } from './common/CustomComponents/place.component';
 import { RaceGuestComponent } from './common/CustomComponents/raceGuest.component';
 import { GuestTotalComponent } from './common/CustomComponents/guesTotal.component';
 import { RaceWithdrawnHorseDialog } from './admin/races/raceWithdrawnHorse.dialog';
+import { RaceProgressDialog } from './admin/races/raceProgress.dialog';
 import { RaceViewerDialog } from './admin/races/raceViewer.dialog';
 import {
     MatFormFieldModule,
@@ -80,7 +81,8 @@ import { from } from 'rxjs';
     RaceGuestComponent,
     GuestTotalComponent,
     RaceWithdrawnHorseDialog,
-    RaceViewerDialog
+    RaceViewerDialog,
+    RaceProgressDialog
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -133,7 +135,8 @@ import { from } from 'rxjs';
       ShowWinnersDialog,
       AddRaceToEventDialog,
       RaceWithdrawnHorseDialog,
-      RaceViewerDialog
+      RaceViewerDialog,
+      RaceProgressDialog
     ],
   bootstrap: [AppComponent]
 })

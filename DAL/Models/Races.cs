@@ -11,7 +11,9 @@ namespace Data.Models
         public Races()
         {
             EventRacesRace = new HashSet<EventRaces>();
+            RaceProgressRace = new HashSet<RaceProgress>();
             RaceResultsRace = new HashSet<RaceResults>();
+            RaceWithdrawnHorsesRace = new HashSet<RaceWithdrawnHorses>();
         }
 
         [Required]
@@ -31,6 +33,7 @@ namespace Data.Models
         [Required]
         public bool Archived { get; set; }
 
+        [StringLength(100)]
         public string VideoName { get; set; }
 
         [Required]
@@ -39,6 +42,10 @@ namespace Data.Models
         [InverseProperty("Race")]
         [IgnoreDataMember]
         public virtual ICollection<EventRaces> EventRacesRace { get; set; }
+
+        [InverseProperty("Race")]
+        [IgnoreDataMember]
+        public virtual ICollection<RaceProgress> RaceProgressRace { get; set; }
 
         [InverseProperty("Race")]
         [IgnoreDataMember]

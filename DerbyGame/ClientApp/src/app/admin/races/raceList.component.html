@@ -20,6 +20,7 @@
     <th mat-header-cell *matHeaderCellDef> Actions. </th>
     <td mat-cell *matCellDef="let element">
       <button mat-button mat-icon-button="primary" (click)="onEditClick(element.id)"><mat-icon aria-hidden="false" aria-label="Edit" color="primary" matTooltip="Edit Race Info">edit</mat-icon></button>
+      <button mat-button mat-icon-button="primary" (click)="onProgressClick(element.id)"><mat-icon aria-hidden="false" aria-label="Progress" color="primary" matTooltip="Progress Race Info">history</mat-icon></button>
       <button *ngIf="element.canDelete" mat-button mat-icon-button color="primary" (click)="onDeleteClick(element.id)"><mat-icon aria-hidden="false" aria-label="Delete" matTooltip="Delete Race">delete_forever</mat-icon></button>
     </td>
   </ng-container>

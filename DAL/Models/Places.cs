@@ -11,6 +11,7 @@ namespace Data.Models
         public Places()
         {
             EventRaceGuestsPlace = new HashSet<EventRaceGuests>();
+            RaceProgressPlace = new HashSet<RaceProgress>();
             RaceResultsPlace = new HashSet<RaceResults>();
         }
 
@@ -25,6 +26,10 @@ namespace Data.Models
         [InverseProperty("Place")]
         [IgnoreDataMember]
         public virtual ICollection<EventRaceGuests> EventRaceGuestsPlace { get; set; }
+
+        [InverseProperty("Place")]
+        [IgnoreDataMember]
+        public virtual ICollection<RaceProgress> RaceProgressPlace { get; set; }
 
         [InverseProperty("Place")]
         [IgnoreDataMember]

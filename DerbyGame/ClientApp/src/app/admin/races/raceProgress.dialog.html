@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>{{dialogTitle}}</h1>
+<div mat-dialog-content>
+  <p>Enter the Progress information</p>
+  <!--<mat-form-field>
+    <input matInput [(ngModel)]="race.name" placeholder="Race Name">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="url" [(ngModel)]="race.url" placeholder="Race Url">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="number" [(ngModel)]="race.numberOfHorses" placeholder="Number Of Horses">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" [(ngModel)]="race.videoName" placeholder="Video Name">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="number" [(ngModel)]="race.finishLineTime" placeholder="Finish Line time in seconds">
+  </mat-form-field>
+</div>
+<div *ngFor="let place of places">
+  <mat-form-field>
+    <input type="number" matInput [(ngModel)]="place.horseNumber" placeholder="Place #{{place.placeId}}">
+  </mat-form-field>
+</div>
+<mat-checkbox [(ngModel)]="race.archived">Archive</mat-checkbox>-->
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancelClick()">Cancel</button>
+  <button mat-button cdkFocusInitial (click)="onSaveClick()">Save</button>
+</div>
