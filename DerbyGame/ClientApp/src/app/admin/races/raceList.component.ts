@@ -11,73 +11,73 @@ import { RaceProgressDialog } from './raceProgress.dialog';
 
 
 @Component({
-    templateUrl: 'raceList.component.html'
+  templateUrl: 'raceList.component.html'
 })
 
 export class RaceListComponent implements OnInit {
-    public datasource: Array<Races>;
-    public displayedColumns: string[] = ['name', 'numberOfHorses', 'actions','videoViewer'];
+  public datasource: Array<Races>;
+  public displayedColumns: string[] = ['name', 'numberOfHorses', 'actions', 'videoViewer'];
 
-    constructor(private raceService: RaceService, public dialog: MatDialog) {
-        this.raceService.getRaces().subscribe((data: Array<IVWRaces>) => {
-            this.datasource = data;
-        });
-    }
-
-    ngOnInit() {
-
-    }
-
-    onDeleteClick(id: number) {
-        const message = `Are you sure you want to delete this Race?`;
-
-        const dialogData = new ConfirmDialogModel("Confirm Delete", message);
-
-        const dialogRef = this.dialog.open(ConfirmDialog, {
-            maxWidth: "400px",
-            data: dialogData
-        });
-
-        dialogRef.afterClosed().subscribe(dialogResult => {
-            if (dialogResult == true) {
-                this.raceService.delete(id).subscribe(() => {
-                    this.loadData();
-                });
-            }
-        });
-
-    }
-
-    onEditClick(id: number) {
-        this.openDialog(id);
-    }
-
-  onProgressClick(id: number) {
-    this.openProgressDialog(id);
-  }
-    onRacesClick(id: number) {
-        alert("Select races");
-    }
-
-    openDialog(id: number): void {
-        const dialogRef = this.dialog.open(RaceEditDialog, {
-            width: '600px',
-            data: { id: id }
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            this.loadData();
-        });
+  constructor(private raceService: RaceService, public dialog: MatDialog) {
+    this.raceService.getRaces().subscribe((data: Array<IVWRaces>) => {
+      this.datasource = data;
+    });
   }
 
-  openProgressDialog(id: number): void {
-    const dialogRef = this.dialog.open(RaceProgressDialog, {
+  ngOnInit() {
+
+  }
+
+  onDeleteClick(id: number) {
+    const message = `Are you sure you want to delete this Race?`;
+
+    const dialogData = new ConfirmDialogModel("Confirm Delete", message);
+
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if (dialogResult == true) {
+        this.raceService.delete(id).subscribe(() => {
+          this.loadData();
+        });
+      }
+    });
+
+  }
+
+  onEditClick(id: number) {
+    this.openDialog(id);
+  }
+
+  onProgressClick(id: number, numberOfHorses: number) {
+    this.openProgressDialog(id, numberOfHorses);
+  }
+  onRacesClick(id: number) {
+    alert("Select races");
+  }
+
+  openDialog(id: number): void {
+    const dialogRef = this.dialog.open(RaceEditDialog, {
       width: '600px',
       data: { id: id }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       this.loadData();
+    });
+  }
+
+  openProgressDialog(id: number, numberOfHorses: number): void {
+    const dialogRef = this.dialog.open(RaceProgressDialog, {
+      width: '600px',
+      data: { id: id, numberOfHorses: numberOfHorses }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      /* this.loadData();*/
     });
   }
 
@@ -88,9 +88,9 @@ export class RaceListComponent implements OnInit {
     });
   }
 
-    loadData(): void {
-        this.raceService.getRaces().subscribe((data: Array<Races>) => {
-            this.datasource = data;
-        });
-    }
+  loadData(): void {
+    this.raceService.getRaces().subscribe((data: Array<Races>) => {
+      this.datasource = data;
+    });
+  }
 }

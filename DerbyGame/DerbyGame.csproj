@@ -56,6 +56,7 @@
     <None Remove="ClientApp\src\app\common\Models\helperObjects.model.ts" />
     <None Remove="ClientApp\src\app\common\Models\race.model.ts" />
     <None Remove="ClientApp\src\app\common\Models\raceInstance.model.ts" />
+    <None Remove="ClientApp\src\app\common\Models\raceProgress.model.ts" />
     <None Remove="ClientApp\src\app\common\Models\raceResult.model.ts" />
     <None Remove="ClientApp\src\app\common\Models\raceWithdrawnHorse.model.ts" />
     <None Remove="ClientApp\src\app\common\Services\deactivateGuardService.ts" />
@@ -64,6 +65,7 @@
     <None Remove="ClientApp\src\app\common\Services\eventRaceGuest.service.ts" />
     <None Remove="ClientApp\src\app\common\Services\guest.service.ts" />
     <None Remove="ClientApp\src\app\common\Services\race.service.ts" />
+    <None Remove="ClientApp\src\app\common\Services\raceProgress.service.ts" />
     <None Remove="ClientApp\src\app\common\Services\raceResult.service.ts" />
     <None Remove="ClientApp\src\app\common\Services\raceWithdrawnHorse.service.ts" />
     <None Remove="ClientApp\src\app\common\Services\utility.service.ts" />
@@ -129,6 +131,9 @@
     <TypeScriptCompile Include="ClientApp\src\app\common\Models\raceInstance.model.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\common\Models\raceProgress.model.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\common\Models\raceWithdrawnHorse.model.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -144,6 +149,9 @@
     <TypeScriptCompile Include="ClientApp\src\app\common\Models\event.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\Services\deactivateGuardService.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\Services\eventRaceGuest.service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\common\Services\raceProgress.service.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\common\Services\raceWithdrawnHorse.service.ts">

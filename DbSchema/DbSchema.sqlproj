@@ -80,6 +80,7 @@
     <Build Include="dbo\Views\VW_EventGuestTotals.sql" />
     <Build Include="dbo\Stored Procedures\SaveEventRaces.sql" />
     <Build Include="dbo\Tables\RaceProgress.sql" />
+    <Build Include="dbo\Views\VW_RaceProgress.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DbSchema.publish.xml" />

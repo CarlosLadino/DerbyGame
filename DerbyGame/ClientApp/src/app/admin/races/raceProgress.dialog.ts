@@ -1,53 +1,61 @@
 import { Component, Inject, OnInit} from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Races } from '../../Common/Models/race.model';
+import { IVWRaceProgress, VWRaceProgress } from '../../common/Models/raceProgress.model';
 import { RaceService } from '../../Common/Services/race.service';
-import { RaceResultService } from '../../common/Services/raceResult.service';
-/*import { RaceResults } from '../../common/Models/raceResult.model';*/
+import { RaceProgressService } from '../../common/Services/raceProgress.service';
 
 @Component({
     selector: 'raceProgressDialog',
     templateUrl: 'raceProgress.dialog.html',
 })
 export class RaceProgressDialog implements OnInit {
-    //public race: Races;
-    //public places: RaceResults[];
-    public dialogTitle: string;
+  public raceProgress: IVWRaceProgress[];
+  public horseNumberList: number[] = [];
+  public dialogTitle: string;
+  public currentRaceProgress: VWRaceProgress;
+  public displayedColumns: string[] = ['timeMarker','firstPlace','secondPlace','thirdPlace', 'actions'];
     constructor(
         private raceService: RaceService,
-        private raceResultService: RaceResultService,
+        private raceProgressService: RaceProgressService,
       public dialogRef: MatDialogRef<RaceProgressDialog>,
         public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: Races) {
-        
+
+      this.currentRaceProgress = new VWRaceProgress(data.id);
     }
 
     ngOnInit() {
-        //this.race = this.data;
-        //this.dialogTitle = this.data.id > 0 ? 'Edit Race' : 'Enter New Race';
-        //this.raceService.getRace(this.data.id).subscribe((result: Races) => {
-        //    this.race = result;           
-        //});
-        //this.raceResultService.getRaceResults(this.data.id).subscribe((result: RaceResults[]) => {
-        //    this.places = result;
-        //});
+      this.dialogTitle = 'Manage Race Progress';
+      this.getHorseSelection();
+      this.loadGrid();
+    
     }
 
     onCancelClick(): void {
         this.dialogRef.close();
     }
 
-    onSaveClick(): void {
-        //var isNew = this.race.id == 0;
-        //this.raceService.save(this.race).subscribe((result: Races) => {
-        //    this.places.forEach((place: RaceResults) => {
-        //        if (isNew) {
-        //            place.RaceId = result.id
-        //        }
-        //        this.raceResultService.save(place).subscribe(() => {
-        //            this.dialogRef.close();
-        //        });
-        //    });           
-        //});
+  onAddTimerMarkerClick(): void {
+    this.raceProgressService.save(this.currentRaceProgress).subscribe((result: boolean) => {
+      if (result) {
+        this.currentRaceProgress = new VWRaceProgress(this.data.id);
+        this.loadGrid();
+      }
+    });
+  }
+
+  private getHorseSelection() {
+    this.horseNumberList = [];
+    let i: number;
+    for (i = 0; i < this.data.numberOfHorses; i++) {
+        this.horseNumberList.push(i + 1);
     }
+  }
+
+  private loadGrid() {
+    this.raceProgressService.getRaceProgress(this.data.id).subscribe((result: IVWRaceProgress[]) => {
+      this.raceProgress = result;
+    });
+  }
 }
