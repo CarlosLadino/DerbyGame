@@ -46,10 +46,11 @@ namespace DerbyGame.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        public bool Delete(int id)
+        [HttpPost]
+        [ActionName("Delete")]
+        public bool Delete(VW_RaceProgress record)
         {
-            return this.raceProgressManager.Delete(id);
+            return this.raceProgressManager.DeleteProgress(record);
         }
     }
 }

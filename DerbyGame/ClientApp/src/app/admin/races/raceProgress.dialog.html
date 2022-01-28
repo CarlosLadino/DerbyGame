@@ -4,11 +4,11 @@
   <div>
     <mat-form-field>
       <mat-label>Time Marker</mat-label>
-      <input matInput [(ngModel)]="currentRaceProgress.timeMarker" type="number" placeholder="Time">
+      <input matInput [(ngModel)]="currentRaceProgress.timeMarker" type="number" placeholder="Time" required>
     </mat-form-field>
       <mat-form-field>
         <mat-label>First Place</mat-label>
-        <mat-select name="horseNumber" [(ngModel)]="currentRaceProgress.firstPlace">
+        <mat-select name="horseNumber" [(ngModel)]="currentRaceProgress.firstPlace" required>
           <mat-option *ngFor="let number of horseNumberList" [value]="number">
             {{number}}
           </mat-option>
@@ -16,7 +16,7 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Second Place</mat-label>
-        <mat-select name="horseNumber" [(ngModel)]="currentRaceProgress.secondPlace">
+        <mat-select name="horseNumber" [(ngModel)]="currentRaceProgress.secondPlace" required>
           <mat-option *ngFor="let number of horseNumberList" [value]="number">
             {{number}}
           </mat-option>
@@ -24,7 +24,7 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Third Place</mat-label>
-        <mat-select name="horseNumber" [(ngModel)]="currentRaceProgress.thirdPlace">
+        <mat-select name="horseNumber" [(ngModel)]="currentRaceProgress.thirdPlace" required>
           <mat-option *ngFor="let number of horseNumberList" [value]="number">
             {{number}}
           </mat-option>
