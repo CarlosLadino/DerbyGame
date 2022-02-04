@@ -48,7 +48,10 @@
     <None Remove="ClientApp\src\app\common\CustomComponents\guesTotal.component.ts" />
     <None Remove="ClientApp\src\app\common\CustomComponents\place.component.ts" />
     <None Remove="ClientApp\src\app\common\CustomComponents\raceGuest.component.ts" />
+    <None Remove="ClientApp\src\app\common\CustomComponents\raceProgress.component.ts" />
+    <None Remove="ClientApp\src\app\common\CustomComponents\raceProgressChipList.component.ts" />
     <None Remove="ClientApp\src\app\common\enumerations.ts" />
+    <None Remove="ClientApp\src\app\common\filters.ts" />
     <None Remove="ClientApp\src\app\common\Models\event.model.ts" />
     <None Remove="ClientApp\src\app\common\Models\eventRace.model.ts" />
     <None Remove="ClientApp\src\app\common\Models\eventRaceGuest.model.ts" />
@@ -120,7 +123,12 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\common\CustomComponents\guest.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\CustomComponents\raceProgressChipList.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\common\CustomComponents\raceProgress.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\enumerations.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\filters.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\Models\eventRace.model.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

@@ -39,7 +39,8 @@ export class VwEventRaceGuests {
     guest2Avatar: string;
     assignedHorseNumber: number;
     placeId: number;
-    wonAmount: number;
+  wonAmount: number;
+  isProtagonist: boolean;
     constructor(eventRaceId: number, assignedHorseNumber: number) {
         this.id = 0
         this.eventRaceId = eventRaceId;
@@ -51,6 +52,7 @@ export class VwEventRaceGuests {
         this.guest1Avatar = 'person.png';
         this.guest2Avatar = 'person.png';
         this.placeId = -1;
-        this.wonAmount = 0;
+      this.wonAmount = 0;
+      this.isProtagonist = false;
     }
 }

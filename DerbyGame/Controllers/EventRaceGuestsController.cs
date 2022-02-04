@@ -35,7 +35,8 @@ namespace DerbyGame.Controllers
         [ActionName("GetEventRaceGuestsByEventRaceId")]
         public ActionResult<IEnumerable<VW_EventRaceGuests>> GetEventRaceGuestsByEventRaceId(int id)
         {
-            return this.Ok(this.eventRaceGuestsManager.VW_AllByEventRaceId(id));
+            //return this.Ok(this.eventRaceGuestsManager.VW_AllByEventRaceId(id));
+            return this.Ok(this.eventRaceGuestsManager.GetEventRaceGuestsByEventRaceId(id));
         }
 
         // GET: api/EventRaceGuests/5

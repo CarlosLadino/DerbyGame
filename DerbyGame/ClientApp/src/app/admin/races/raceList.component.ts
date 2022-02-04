@@ -52,8 +52,8 @@ export class RaceListComponent implements OnInit {
     this.openDialog(id);
   }
 
-  onProgressClick(id: number, numberOfHorses: number) {
-    this.openProgressDialog(id, numberOfHorses);
+  onProgressClick(id: number, numberOfHorses: number, name: string) {
+    this.openProgressDialog(id, numberOfHorses, name);
   }
   onRacesClick(id: number) {
     alert("Select races");
@@ -70,10 +70,10 @@ export class RaceListComponent implements OnInit {
     });
   }
 
-  openProgressDialog(id: number, numberOfHorses: number): void {
+  openProgressDialog(id: number, numberOfHorses: number, name: string): void {
     const dialogRef = this.dialog.open(RaceProgressDialog, {
       width: '600px',
-      data: { id: id, numberOfHorses: numberOfHorses }
+      data: { id: id, numberOfHorses: numberOfHorses, name : name }
     });
 
     dialogRef.afterClosed().subscribe(result => {

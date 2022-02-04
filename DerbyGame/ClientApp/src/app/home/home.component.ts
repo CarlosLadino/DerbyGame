@@ -23,6 +23,9 @@ import { AddRaceToEventDialog } from './addRaceToEvent.dialog';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { RaceWithdrawnHorseService } from '../common/Services/raceWithdrawnHorse.service';
 import { IRaceWithdrawnHorses, RaceWithdrawnHorses } from '../common/Models/raceWithdrawnHorse.model';
+import { RaceProgressService } from '../common/Services/raceProgress.service';
+import { IVWRaceProgress } from '../common/Models/raceProgress.model';
+import { places } from '../common/enumerations';
 
 @Component({
   selector: 'app-home',
@@ -48,12 +51,14 @@ export class HomeComponent implements OnInit {
   @ViewChild('stepper', { static: false })
   private myStepper: MatStepper;
   private tada = new Audio();
+  private videoCurrentTime: number = 0;
 
   constructor(private eventService: EventService,
     private utilityService: UtilityService,
     private eventRaceService: EventRaceService,
     private guestService: GuestService,
     private eventRaceGuestService: EventRaceGuestService,
+    private raceProgressService: RaceProgressService,
     public dialog: MatDialog,
     public raceResultService: RaceResultService,
     public raceWithdrawnHorseService: RaceWithdrawnHorseService) {
@@ -293,18 +298,23 @@ export class HomeComponent implements OnInit {
   }
 
   onTimeUpdate() {
-    if (this.raceInstance.finishLineTime > 0 && this.raceInstance.raceVideoName.length > 0) {
-      if (this.video.nativeElement.currentTime >= this.raceInstance.finishLineTime && this.video.nativeElement.currentTime <= this.raceInstance.finishLineTime + 1) {
-        if (this.video.nativeElement.webkitExitFullscreen) {
-          this.video.nativeElement.webkitExitFullscreen();
+    //Only change values once per second
+    if (this.videoCurrentTime != parseInt(this.video.nativeElement.currentTime)) {
+      this.updateProgress(parseInt(this.video.nativeElement.currentTime));
+      if (this.raceInstance.finishLineTime > 0 && this.raceInstance.raceVideoName.length > 0) {
+        if (this.video.nativeElement.currentTime >= this.raceInstance.finishLineTime && this.video.nativeElement.currentTime <= this.raceInstance.finishLineTime + 1) {
+          if (this.video.nativeElement.webkitExitFullscreen) {
+            this.video.nativeElement.webkitExitFullscreen();
+          }
+          this.setRaceWiners();
         }
-        this.setRaceWiners();
       }
+      this.videoCurrentTime = parseInt(this.video.nativeElement.currentTime);
     }
   }
 
   private generateRoster(eventRaceId: number) {
-    var raceWithdrawnHorses: IRaceWithdrawnHorses[];
+  ///////////////////////////////////////var raceWithdrawnHorses: IRaceWithdrawnHorses[];
     var selectedRace: VwEventRace = this.races.find(x => x.eventRaceId == eventRaceId);
     this.raceInstance.numberOfHorses = selectedRace.numberOfHorses;
     this.raceInstance.raceUrl = selectedRace.raceUrl;
@@ -314,33 +324,42 @@ export class HomeComponent implements OnInit {
     this.video.nativeElement.load();
 
     this.raceInstance.raceId = selectedRace.raceId;
-    
+
+    this.raceProgressService.getRaceProgress(selectedRace.raceId).subscribe((data: IVWRaceProgress[]) => {
+      this.raceInstance.raceProgress = data;
+    });
+
     this.eventRaceGuestService.getEventRaceGuestsByEventRaceId(eventRaceId).subscribe((data: VwEventRaceGuests[]) => {
       if (data.length > 0) {
         this.raceInstance.setEventRaceGuests = data;
-        this.raceInstance.saved = true;
-        this.raceInstance.raceWasLoadedFromDB = true;
-        this.myStepper.selected.completed = true;
+        this.raceInstance.saved = data[0].id > 0;
+        this.raceInstance.raceWasLoadedFromDB = data[0].id > 0;
+        this.myStepper.selected.completed = data[0].id > 0;
+        if (data[0].id > 0) {
+          this.raceInstance.firstPlaceAmount = data.find(r => r.placeId == places.First).wonAmount;
+          this.raceInstance.secondPlaceAmount = data.find(r => r.placeId == places.Second).wonAmount;
+          this.raceInstance.thirdPlaceAmount = data.find(r => r.placeId == places.Third).wonAmount;
+        }
       }
-      else {
-        this.raceWithdrawnHorseService.getRaceWithdrawnHorses(selectedRace.raceId).subscribe((data: IRaceWithdrawnHorses[]) => {
-          raceWithdrawnHorses = data;
-          var eventRacesG: Array<VwEventRaceGuests> = [];
-          for (var index = 0; index < this.raceInstance.numberOfHorses; index++) {
-            var item = new VwEventRaceGuests(selectedRace.eventRaceId, index + 1);
-            eventRacesG.push(item);
-          }
-          this.raceInstance.setEventRaceGuests = eventRacesG;
-          // Block withdrawn horses by assigning them first
-          if (raceWithdrawnHorses.length > 0) {
-            raceWithdrawnHorses.forEach((horse: IRaceWithdrawnHorses) => {
-              this.raceInstance.assignWithdrawnHorseToRoaster(horse.horseNumber, this.utilityService.WithdrawnGuest);              
-            });            
-          }
-          this.raceInstance.saved = false;
-          this.raceInstance.raceWasLoadedFromDB = false;          
-        });        
-      }
+      ////////////////////////////////else {
+        //////////////////////this.raceWithdrawnHorseService.getRaceWithdrawnHorses(selectedRace.raceId).subscribe((data: IRaceWithdrawnHorses[]) => {
+        //////////////////////  raceWithdrawnHorses = data;
+        //////////////////////  var eventRacesG: Array<VwEventRaceGuests> = [];
+        //////////////////////  for (var index = 0; index < this.raceInstance.numberOfHorses; index++) {
+        //////////////////////    var item = new VwEventRaceGuests(selectedRace.eventRaceId, index + 1);
+        //////////////////////    eventRacesG.push(item);
+        //////////////////////  }
+        //////////////////////  this.raceInstance.setEventRaceGuests = eventRacesG;
+        //////////////////////  // Block withdrawn horses by assigning them first
+        //////////////////////  if (raceWithdrawnHorses.length > 0) {
+        //////////////////////    raceWithdrawnHorses.forEach((horse: IRaceWithdrawnHorses) => {
+        //////////////////////      this.raceInstance.assignWithdrawnHorseToRoaster(horse.horseNumber, this.utilityService.WithdrawnGuest);              
+        //////////////////////    });            
+      //////////////////////////////    }
+      //////////////////////////////    this.raceInstance.saved = false;
+      //////////////////////////////    this.raceInstance.raceWasLoadedFromDB = false;          
+      //////////////////////////////  });        
+      //////////////////////////////}
     });
   }
 
@@ -362,6 +381,7 @@ export class HomeComponent implements OnInit {
     this.raceInstance.secondPlaceAmount = 0;
     this.raceInstance.thirdPlaceAmount = 0;
     this.raceInstance.betAmount = 0;
+    this.videoCurrentTime = 0;
     this.raceInstance.saved = false;
     this.raceInstance.eventRaceId = eventRaceId
     this.generateRoster(this.raceInstance.eventRaceId);   
@@ -388,5 +408,25 @@ export class HomeComponent implements OnInit {
     this.eventRaceService.getSelecteRacesByEventId(this.eventId).subscribe((data: VwEventRace[]) => {
       this.races = data;
     });
+  }
+
+  private updateProgress(videoCurrentTime: number) {   
+    let timeMaker = this.raceInstance.raceProgress.find(e => e.timeMarker == videoCurrentTime);
+    if (timeMaker) {
+      this.raceInstance.eventRaceGuests.forEach((item: VwEventRaceGuests) => {
+        if (item.assignedHorseNumber == timeMaker.firstPlace) {
+          item.placeId = 1
+        }
+        else if (item.assignedHorseNumber == timeMaker.secondPlace) {
+          item.placeId = 2
+        }
+        else if (item.assignedHorseNumber == timeMaker.thirdPlace) {
+          item.placeId = 3
+        }
+        else {
+          item.placeId = 0;
+        }
+      });
+    }
   }
 }

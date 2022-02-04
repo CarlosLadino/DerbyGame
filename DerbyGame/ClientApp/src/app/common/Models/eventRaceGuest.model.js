@@ -27,6 +27,7 @@ var VwEventRaceGuests = /** @class */ (function () {
         this.guest2Avatar = 'person.png';
         this.placeId = -1;
         this.wonAmount = 0;
+        this.isProtagonist = false;
     }
     return VwEventRaceGuests;
 }());

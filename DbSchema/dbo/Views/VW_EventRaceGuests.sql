@@ -1,5 +1,10 @@
 ﻿CREATE View [dbo].[VW_EventRaceGuests] AS
-
+With Protagonist(EventRaceId, HorseNumber)AS(
+	select Distinct er.Id, rp.HorseNumber 
+from RaceProgress rp
+Inner Join EventRaces er on rp.RaceId = er.RaceId
+Group By er.Id, HorseNumber  
+) 
 Select
 	erg.Id,
 	erg.EventRaceId,
@@ -11,13 +16,17 @@ Select
 	isnull(p2.AvatarName, 'person.png') As Guest2Avatar,
 	AssignedHorseNumber,
 	isnull(erg.PlaceId,0) as PlaceId,
-	erg.WonAmount
+	erg.WonAmount,
+	CAST(CASE WHEN p.horseNumber is null THEN 0 ELSE 1 END AS BIT) AS IsProtagonist
 from 
 	EventRaceGuests erg
 	inner Join Guests p1
 	on erg.Guest1Id = p1.Id
 	left Join Guests p2
 	on erg.Guest2Id = p2.Id
+	Left Join Protagonist p
+	on erg.EventRaceId = p.EventRaceId
+	and erg.AssignedHorseNumber = p.HorseNumber
 
 
 

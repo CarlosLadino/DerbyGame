@@ -26,7 +26,7 @@ export class RaceProgressDialog implements OnInit {
   }
 
   ngOnInit() {
-    this.dialogTitle = 'Manage Race Progress';
+    this.dialogTitle = this.data.name;
     this.getHorseSelection();
     this.loadGrid();
 

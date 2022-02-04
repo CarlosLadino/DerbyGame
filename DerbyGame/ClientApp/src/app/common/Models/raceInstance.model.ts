@@ -1,6 +1,7 @@
 import { RaceResultService } from "../Services/raceResult.service";
 import { EventRaceGuests, VwEventRaceGuests } from "./eventRaceGuest.model";
 import { IGuests } from "./guest.model";
+import { IVWRaceProgress } from "./raceProgress.model";
 import { RaceResults } from "./raceResult.model";
 
 export interface IRaceInstance {
@@ -18,6 +19,7 @@ export interface IRaceInstance {
     winners: VwEventRaceGuests[];
   raceWasLoadedFromDB: boolean;
   raceResults: RaceResults[];
+  raceProgress: IVWRaceProgress[];
 }
 
 export class RaceInstance implements IRaceInstance {
@@ -37,6 +39,7 @@ export class RaceInstance implements IRaceInstance {
     winners: VwEventRaceGuests[];
   raceWasLoadedFromDB: boolean;
   raceResults: RaceResults[];
+  raceProgress: IVWRaceProgress[];
     constructor() {
         this.eventRaceId = 0;
         this.betAmount = 0;
@@ -54,6 +57,7 @@ export class RaceInstance implements IRaceInstance {
         this.winners = [];
       this.raceWasLoadedFromDB = false;
       this.raceResults = [];
+      this.raceProgress =[];
   }
 
   public set setEventRaceGuests(value: VwEventRaceGuests[]) {

@@ -30,8 +30,10 @@ namespace Data.Models
         public string Guest2Avatar { get; set; }
         public int AssignedHorseNumber { get; set; }
 
-        public int? PlaceId { get; set; }
+        public int PlaceId { get; set; }
 
         public decimal? WonAmount { get; set; }
+
+        public bool IsProtagonist { get; set; }
     }
 }

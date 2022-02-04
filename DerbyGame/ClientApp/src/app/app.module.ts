@@ -24,9 +24,14 @@ import { GuestComponent } from './common/CustomComponents/guest.component';
 import { PlaceComponent } from './common/CustomComponents/place.component';
 import { RaceGuestComponent } from './common/CustomComponents/raceGuest.component';
 import { GuestTotalComponent } from './common/CustomComponents/guesTotal.component';
+import { RaceProgressComponent } from './common/CustomComponents/raceProgress.component';
+import { RaceProgressChipListComponent } from './common/CustomComponents/raceProgressChipList.component';
 import { RaceWithdrawnHorseDialog } from './admin/races/raceWithdrawnHorse.dialog';
 import { RaceProgressDialog } from './admin/races/raceProgress.dialog';
 import { RaceViewerDialog } from './admin/races/raceViewer.dialog';
+
+//Filters
+import { CallbackPipe } from './common/filters';
 import {
     MatFormFieldModule,
     MatButtonModule,
@@ -80,9 +85,12 @@ import { from } from 'rxjs';
     PlaceComponent,
     RaceGuestComponent,
     GuestTotalComponent,
+    RaceProgressComponent,
+    RaceProgressChipListComponent,
     RaceWithdrawnHorseDialog,
     RaceViewerDialog,
-    RaceProgressDialog
+    RaceProgressDialog,
+    CallbackPipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

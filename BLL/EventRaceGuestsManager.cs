@@ -83,6 +83,81 @@ namespace BLL
             return isOk;
         }
 
+        public IEnumerable<VW_EventRaceGuests> GetEventRaceGuestsByEventRaceId(int eventRaceId)
+        {
+            var raceId = this._context.EventRaces.Where(e => e.Id == eventRaceId).FirstOrDefault().RaceId;          
+            List<VW_EventRaceGuests> erg = this.VW_AllByEventRaceId(eventRaceId).ToList();
+            if (raceId > 0 && erg.Count == 0)
+            { 
+                erg = new List<VW_EventRaceGuests>();
+                this.AddHorses(erg, raceId, eventRaceId);
+                this.MarkWithdrawnHorses(erg, raceId);                       
+            }
+            this.MarkProtagonist(erg, raceId);
+            return erg;
+        }
+
+        private void AddHorses(List<VW_EventRaceGuests> erg, int raceId, int eventRaceId)
+        {
+            var numberOfHorses = this._context.Races.Where(r => r.Id == raceId).FirstOrDefault().NumberOfHorses;
+
+            for (int index = 0; index < numberOfHorses; index++)
+            {
+                erg.Add(new VW_EventRaceGuests { EventRaceId = eventRaceId, AssignedHorseNumber = index + 1 });                
+            }
+        }
+        private void MarkWithdrawnHorses(List<VW_EventRaceGuests> erg, int raceId)
+        {
+            var withDrawnHorses = this._context.RaceWithdrawnHorses.Where(w => w.RaceId == raceId).ToList();
+            var scratchedGuest = this._context.Guests.Where(g => g.Id == 7003).FirstOrDefault();
+            if (withDrawnHorses != null && scratchedGuest != null)
+            {
+                withDrawnHorses.ForEach(horse => {
+                    var item = erg.Where(e => e.AssignedHorseNumber == horse.HorseNumber).FirstOrDefault();
+                    if(item != null)
+                    {
+                        item.Guest1Id = scratchedGuest.Id;
+                        item.Guest1Name = scratchedGuest.Name;
+                        item.Guest1Avatar = scratchedGuest.AvatarName;
+                        item.Guest2Id = scratchedGuest.Id;
+                        item.Guest2Name = scratchedGuest.Name;
+                        item.Guest2Avatar = scratchedGuest.AvatarName;
+                    }
+                });
+            }
+        }
+        private void MarkWinnerHorses(List<VW_EventRaceGuests> erg, int raceId)
+        {
+
+            var raceResults = this._context.RaceResults.Where(r => r.RaceId == raceId).ToList();
+            raceResults.ForEach(result => {
+                var item = erg.Where(e => e.AssignedHorseNumber == result.HorseNumber).FirstOrDefault();
+                if (item != null)
+                {
+                    item.PlaceId = result.PlaceId;                    
+                }
+            });
+        }
+        private void MarkProtagonist(IEnumerable<VW_EventRaceGuests> erg,int raceId)
+        {
+            var raceProgress = this._context.RaceProgress.Where(r => r.RaceId == raceId).ToList().GroupBy(h =>h.HorseNumber).Select(grp => grp.First()).ToList();
+
+            // Mark Winners if any as protagonist
+            if (raceProgress.Count == 0)
+            {
+                erg.ToList().ForEach(e => {
+                    e.IsProtagonist = e.PlaceId > 0;
+                });
+            }
+            // Mark Progress
+            raceProgress.ForEach(result => {
+                var item = erg.Where(e => e.AssignedHorseNumber == result.HorseNumber).FirstOrDefault();
+                if (item != null)
+                {
+                    item.IsProtagonist = true;
+                }
+            });
+        }
         ////private bool IsUnique(EventRaceGuests record, ICollection<ValidationResult> errorMessages)
         ////{
         ////    bool recordsFound = false;

@@ -21,6 +21,6 @@ export class RaceProgressService {
     }
 
     public delete(record: IVWRaceProgress) {
-      return this.httpClient.post(`${this.apiController}Save`, record);
+      return this.httpClient.post(`${this.apiController}Delete`, record);
     }
 }
