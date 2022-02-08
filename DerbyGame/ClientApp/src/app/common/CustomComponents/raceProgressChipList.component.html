@@ -1,5 +1,5 @@
 <mat-chip-list aria-label="Guests" [style.display]=" horse.placeId == place ? 'block' : 'none'">
-  <mat-chip color="accent" selected style="width:450px; height:90px;">
+  <mat-chip color="accent" selected style="width: 450px; height: 90px; background-image: url(Content/RaceHorse.svg);">
     <h1>{{horse.assignedHorseNumber}}</h1>&nbsp;&nbsp;&nbsp;
     <img [hidden]="horse.guest2Id != 0" src="/Avatars/{{horse.guest1Avatar}}" style="width:80px;height:80px;border-radius:50%; object-fit:cover;" />
     <span [hidden]="horse.guest2Id != 0">&nbsp;&nbsp;&nbsp;</span>

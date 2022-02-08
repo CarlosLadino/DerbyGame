@@ -44,6 +44,7 @@
     <None Remove="ClientApp\src\app\admin\races\raceWithdrawnHorse.dialog.ts" />
     <None Remove="ClientApp\src\app\common\CustomComponents\ConfirmationDialog\confirm.dialog.ts" />
     <None Remove="ClientApp\src\app\common\CustomComponents\ConfirmationDialog\confirmDialog.model.ts" />
+    <None Remove="ClientApp\src\app\common\CustomComponents\ConfirmationDialog\horseNumber.component.ts" />
     <None Remove="ClientApp\src\app\common\CustomComponents\guest.component.ts" />
     <None Remove="ClientApp\src\app\common\CustomComponents\guesTotal.component.ts" />
     <None Remove="ClientApp\src\app\common\CustomComponents\place.component.ts" />
@@ -115,6 +116,9 @@
     <TypeScriptCompile Include="ClientApp\src\app\admin\races\raceWithdrawnHorse.dialog.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\CustomComponents\ConfirmationDialog\confirm.dialog.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\CustomComponents\ConfirmationDialog\confirmDialog.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\CustomComponents\horseNumber.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\common\CustomComponents\guesTotal.component.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

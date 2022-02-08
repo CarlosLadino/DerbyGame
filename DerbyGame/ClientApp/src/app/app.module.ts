@@ -22,6 +22,8 @@ import { ActivateGuestsDialog } from './home/activateGuests.dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GuestComponent } from './common/CustomComponents/guest.component';
 import { PlaceComponent } from './common/CustomComponents/place.component';
+import { HorseNumberComponent } from './common/CustomComponents/horseNumber.component';
+
 import { RaceGuestComponent } from './common/CustomComponents/raceGuest.component';
 import { GuestTotalComponent } from './common/CustomComponents/guesTotal.component';
 import { RaceProgressComponent } from './common/CustomComponents/raceProgress.component';
@@ -83,6 +85,7 @@ import { from } from 'rxjs';
     AddRaceToEventDialog,
     GuestComponent,
     PlaceComponent,
+    HorseNumberComponent,
     RaceGuestComponent,
     GuestTotalComponent,
     RaceProgressComponent,
