@@ -4,7 +4,7 @@
   <div>
     <mat-form-field>
       <mat-label>Time Marker</mat-label>
-      <input matInput [(ngModel)]="currentRaceProgress.timeMarker" type="number" placeholder="Time" required>
+      <input matInput [(ngModel)]="currentRaceProgress.timeMarker" type="number" placeholder="Time" (focus)="$event.target.select()" required>
     </mat-form-field>
       <mat-form-field>
         <mat-label>First Place</mat-label>

@@ -18,4 +18,5 @@ export interface IVWRaces {
   finishLineTime: number;
   canDelete: boolean;
   scratchedHorses: number;
+  raceProgressNumber: number;
 }

@@ -16,7 +16,7 @@ import { RaceProgressDialog } from './raceProgress.dialog';
 
 export class RaceListComponent implements OnInit {
   public datasource: Array<Races>;
-  public displayedColumns: string[] = ['name', 'numberOfHorses', 'actions', 'videoViewer'];
+  public displayedColumns: string[] = ['name', 'numberOfHorses', 'raceProgressNumber', 'actions', 'videoViewer'];
 
   constructor(private raceService: RaceService, public dialog: MatDialog) {
     this.raceService.getRaces().subscribe((data: Array<IVWRaces>) => {

@@ -25,5 +25,7 @@ namespace Data.Models
         public bool CanDelete { get; set; }
 
         public int ScratchedHorses { get; set; }
+
+        public int RaceProgressNumber { get; set; }
     }
 }
