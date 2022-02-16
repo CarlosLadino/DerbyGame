@@ -43,6 +43,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
@@ -116,6 +117,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
       MatFormFieldModule,
       MatInputModule,
       MatDatepickerModule,
+      MatNativeDateModule,
       MatTooltipModule,
       MatCheckboxModule,
       MatSelectModule,
