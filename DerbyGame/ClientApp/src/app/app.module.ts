@@ -34,27 +34,24 @@ import { RaceViewerDialog } from './admin/races/raceViewer.dialog';
 
 //Filters
 import { CallbackPipe } from './common/filters';
-import {
-    MatFormFieldModule,
-    MatButtonModule,
-    MatTableModule,
-    MatMenuModule,
-    MatIconModule,
-    MatDialogModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatTooltipModule,
-    MatCheckboxModule,
-    MatSelectModule,
-    MatListModule,
-    MatSidenavModule,
-    MatCardModule,
-    MatChipsModule,
-    MatExpansionModule,
-    MatBadgeModule,
-    MatStepperModule
-} from '@angular/material';
+import { MatListModule } from '@angular/material/list';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { GuestEditDialog } from './admin/guests/guestEdit.dialog';
 import { EventRaceSelectDialog } from './admin/events/eventRaceSelect.dialog';
@@ -63,6 +60,7 @@ import { DeactivateGuardService } from './common/Services/deactivateGuardService
 import { ShowWinnersDialog } from './home/showWinners.dialog';
 import { AddRaceToEventDialog} from './home/addRaceToEvent.dialog';
 import { from } from 'rxjs';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -118,7 +116,6 @@ import { from } from 'rxjs';
       MatFormFieldModule,
       MatInputModule,
       MatDatepickerModule,
-      MatNativeDateModule,
       MatTooltipModule,
       MatCheckboxModule,
       MatSelectModule,
@@ -129,7 +126,8 @@ import { from } from 'rxjs';
       MatChipsModule,
       MatExpansionModule,
       MatBadgeModule,
-      MatStepperModule
+      MatStepperModule,
+      NgbModule
   ],
     providers: [
         { provide: APP_INITIALIZER, useFactory: (appUtility: UtilityService) => () => appUtility.loadInitialValues(), deps: [UtilityService], multi: true },

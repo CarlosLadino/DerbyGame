@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
-import { MatSelectionList } from '@angular/material';
-import { Races } from '../Common/Models/race.model';
+import { MatSelectionList } from '@angular/material/list';
+import { Races } from '../common/Models/race.model';
 import { EventRaceService } from '../common/Services/eventRace.service';
 import { VwEventRace } from '../common/Models/eventRace.model';
 
@@ -19,7 +19,7 @@ export class AddRaceToEventDialog implements OnInit, AfterViewInit  {
 
     constructor(private eventRaceService: EventRaceService,
         public dialogRef: MatDialogRef<AddRaceToEventDialog>,
-        @Inject(MAT_DIALOG_DATA) public data) {
+        @Inject(MAT_DIALOG_DATA) public data: any) {
         
     }
 

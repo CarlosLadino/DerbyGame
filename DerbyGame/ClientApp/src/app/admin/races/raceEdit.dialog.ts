@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit} from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Races } from '../../Common/Models/race.model';
-import { RaceService } from '../../Common/Services/race.service';
+import { Races } from '../../common/Models/race.model';
+import { RaceService } from '../../common/Services/race.service';
 import { RaceResultService } from '../../common/Services/raceResult.service';
 import { RaceResults } from '../../common/Models/raceResult.model';
 import { RaceWithdrawnHorseDialog } from './raceWithdrawnHorse.dialog';
@@ -43,7 +43,7 @@ export class RaceEditDialog implements OnInit {
         this.raceService.save(this.race).subscribe((result: Races) => {
             this.places.forEach((place: RaceResults) => {
                 if (isNew) {
-                    place.RaceId = result.id
+                    place.raceId = result.id
                 }
                 this.raceResultService.save(place).subscribe(() => {
                     this.dialogRef.close();

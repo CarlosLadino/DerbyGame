@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { GuestService } from '../../Common/Services/guest.service';
-import { IGuests } from '../../Common/Models/guest.model';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { GuestService } from '../../common/Services/guest.service';
+import { IGuests } from '../../common/Models/guest.model';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { GuestEditDialog } from './guestEdit.dialog';
 import { ConfirmDialog } from '../../common/CustomComponents/ConfirmationDialog/confirm.dialog';
 import { ConfirmDialogModel } from '../../common/CustomComponents/ConfirmationDialog/confirmDialog.model';
@@ -92,7 +93,8 @@ export class GuestListComponent implements OnInit {
         });
     }
 
-    applyFilter(filterValue: string) {
-        this.datasource.filter = filterValue.trim().toLowerCase();
+  applyFilter(event: any) {
+      let filterValue = event.target.value
+      this.datasource.filter = filterValue.trim().toLowerCase();
     }
 }

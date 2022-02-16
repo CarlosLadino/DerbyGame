@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Races } from '../../Common/Models/race.model';
+import { Races } from '../../common/Models/race.model';
 import { IVWRaceProgress, VWRaceProgress } from '../../common/Models/raceProgress.model';
-import { RaceService } from '../../Common/Services/race.service';
+import { RaceService } from '../../common/Services/race.service';
 import { RaceProgressService } from '../../common/Services/raceProgress.service';
 
 @Component({
@@ -10,9 +10,9 @@ import { RaceProgressService } from '../../common/Services/raceProgress.service'
   templateUrl: 'raceProgress.dialog.html',
 })
 export class RaceProgressDialog implements OnInit {
-  public raceProgress: IVWRaceProgress[];
+  public raceProgress: IVWRaceProgress[] = [];
   public horseNumberList: number[] = [];
-  public dialogTitle: string;
+  public dialogTitle: string = '';
   public currentRaceProgress: VWRaceProgress;
   public displayedColumns: string[] = ['timeMarker', 'firstPlace', 'secondPlace', 'thirdPlace', 'actions'];
   constructor(
@@ -49,10 +49,15 @@ export class RaceProgressDialog implements OnInit {
 
   onDeleteClick(id: number) {
     let raceProgressObj = this.raceProgress.find(e => e.id == id);
-    this.raceProgressService.delete(raceProgressObj).subscribe(() => {
-      this.loadGrid();
-    });
+    if (raceProgressObj !== undefined) {
+      this.raceProgressService.delete(raceProgressObj).subscribe(() => {
+        this.loadGrid();
+      });
+    }
+  }
 
+  onTimeMarkerFocus(event: any) {
+    event.target.select();
   }
 
   private getHorseSelection() {

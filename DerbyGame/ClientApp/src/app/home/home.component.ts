@@ -1,15 +1,17 @@
 import { Component, OnInit, ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
 import { EventRaceService } from '../common/Services/eventRace.service';
-import { EventService } from '../Common/Services/event.service';
-import { Events } from '../Common/Models/event.model';
+import { EventService } from '../common/Services/event.service';
+import { Events } from '../common/Models/event.model';
 import { UtilityService } from '../common/Services/utility.service';
-import { Races } from '../Common/Models/race.model';
+import { Races } from '../common/Models/race.model';
 import { RaceInstance } from '../common/Models/raceInstance.model';
 import { VwEventRace } from '../common/Models/eventRace.model';
 import { EventRaceGuests, VwEventRaceGuests } from '../common/Models/eventRaceGuest.model';
-import { MatTableDataSource, MatDialog, MatStepper, MatHorizontalStepper } from '@angular/material';
-import { GuestService } from '../Common/Services/guest.service';
-import { IGuests } from '../Common/Models/guest.model';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { MatStepper, MatHorizontalStepper } from '@angular/material/stepper';
+import { GuestService } from '../common/Services/guest.service';
+import { IGuests } from '../common/Models/guest.model';
 import { ConfirmDialogModel } from '../common/CustomComponents/ConfirmationDialog/confirmDialog.model';
 import { ConfirmDialog } from '../common/CustomComponents/ConfirmationDialog/confirm.dialog';
 import { SelectHorseDialog } from './selectHorse.dialog';
@@ -97,7 +99,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  onRaceSelectionChange(eventRace) {
+  onRaceSelectionChange(eventRace:any) {
     if (!this.raceInstance.raceWasLoadedFromDB && !this.raceInstance.allowToStartNewRace) {
       if (this.raceInstance.getTotalCollected > 0) {
         const message = `Betting is in progress. Are you sure you want to reset this race?`;
@@ -128,10 +130,12 @@ export class HomeComponent implements OnInit {
   onGotoRace() {
     this.setRaceWiners();
     window.open(this.raceInstance.raceUrl, '_blank');
-    this.myStepper.selected.completed = true;
+    if (this.myStepper.selected != undefined) {
+      this.myStepper.selected.completed = true;
+    }    
   }
 
-  onAllowSecondGuest(item) {
+  onAllowSecondGuest(item: any) {
     this.raceInstance.allowSecondGuest = item.checked;
   }
 
@@ -156,25 +160,29 @@ export class HomeComponent implements OnInit {
 
   onSelectHorse() {
     var selectedGuestObj = this.activeGuests.find(guest => guest['id'] === this.selectedGuestId);
-    if (this.raceInstance.allowHorseSelection) {
-      if (this.raceInstance.guestHasBeenAssigned(this.selectedGuestId)) {
-        const message = `Guest has already place a bet. Are you sure you want to continue?`;
+    if (selectedGuestObj != undefined) {
+      if (this.raceInstance.allowHorseSelection) {
+        if (this.raceInstance.guestHasBeenAssigned(this.selectedGuestId)) {
+          const message = `Guest has already place a bet. Are you sure you want to continue?`;
 
-        const dialogData = new ConfirmDialogModel("Double Betting", message);
+          const dialogData = new ConfirmDialogModel("Double Betting", message);
 
-        const dialogRef = this.dialog.open(ConfirmDialog, {
-          maxWidth: "400px",
-          data: dialogData
-        });
+          const dialogRef = this.dialog.open(ConfirmDialog, {
+            maxWidth: "400px",
+            data: dialogData
+          });
 
-        dialogRef.afterClosed().subscribe(dialogResult => {
-          if (dialogResult == true) {
-            this.assignGuestToRoster(selectedGuestObj);           
-          }
-        });
-      }
-      else {
-          this.assignGuestToRoster(selectedGuestObj);        
+          dialogRef.afterClosed().subscribe(dialogResult => {
+            if (dialogResult == true) {
+              if (selectedGuestObj != undefined) {
+                this.assignGuestToRoster(selectedGuestObj);
+              }             
+            }
+          });
+        }
+        else {
+          this.assignGuestToRoster(selectedGuestObj);
+        }
       }
     }
   }
@@ -261,7 +269,7 @@ export class HomeComponent implements OnInit {
           }
         }
         else {
-          erg.placeId = null;
+          erg.placeId = 0;
         }
 
         records.push(erg);
@@ -270,7 +278,9 @@ export class HomeComponent implements OnInit {
 
     this.eventRaceGuestService.saveRace(records).subscribe(() => {
       this.raceInstance.saved = true;
-      this.myStepper.selected.completed = true;
+      if (this.myStepper.selected !== undefined) {
+        this.myStepper.selected.completed = true;
+      }     
       this.myStepper.next();
       this.loadRaces();
     });
@@ -315,52 +325,48 @@ export class HomeComponent implements OnInit {
 
   private generateRoster(eventRaceId: number) {
   ///////////////////////////////////////var raceWithdrawnHorses: IRaceWithdrawnHorses[];
-    var selectedRace: VwEventRace = this.races.find(x => x.eventRaceId == eventRaceId);
-    this.raceInstance.numberOfHorses = selectedRace.numberOfHorses;
-    this.raceInstance.raceUrl = selectedRace.raceUrl;
-    this.raceInstance.raceVideoName = selectedRace.videoName;
-    this.raceInstance.finishLineTime = selectedRace.finishLineTime;
-    this.video.nativeElement.src = selectedRace.videoName ? "Races/" + selectedRace.videoName : "";
-    this.video.nativeElement.load();
+    var selectedRace = this.races.find(x => x.eventRaceId == eventRaceId);
+    if (selectedRace != undefined) {
+      this.raceInstance.numberOfHorses = selectedRace.numberOfHorses;
+      this.raceInstance.raceUrl = selectedRace.raceUrl;
+      this.raceInstance.raceVideoName = selectedRace.videoName;
+      this.raceInstance.finishLineTime = selectedRace.finishLineTime;
+      this.video.nativeElement.src = selectedRace.videoName ? "Races/" + selectedRace.videoName : "";
+      this.video.nativeElement.load();
 
-    this.raceInstance.raceId = selectedRace.raceId;
+      this.raceInstance.raceId = selectedRace.raceId;
 
-    this.raceProgressService.getRaceProgress(selectedRace.raceId).subscribe((data: IVWRaceProgress[]) => {
-      this.raceInstance.raceProgress = data;
-    });
+      this.raceProgressService.getRaceProgress(selectedRace.raceId).subscribe((data: IVWRaceProgress[]) => {
+        this.raceInstance.raceProgress = data;
+      });
 
-    this.eventRaceGuestService.getEventRaceGuestsByEventRaceId(eventRaceId).subscribe((data: VwEventRaceGuests[]) => {
-      if (data.length > 0) {
-        this.raceInstance.setEventRaceGuests = data;
-        this.raceInstance.saved = data[0].id > 0;
-        this.raceInstance.raceWasLoadedFromDB = data[0].id > 0;
-        this.myStepper.selected.completed = data[0].id > 0;
-        if (data[0].id > 0) {
-          this.raceInstance.firstPlaceAmount = data.find(r => r.placeId == places.First).wonAmount;
-          this.raceInstance.secondPlaceAmount = data.find(r => r.placeId == places.Second).wonAmount;
-          this.raceInstance.thirdPlaceAmount = data.find(r => r.placeId == places.Third).wonAmount;
+      this.eventRaceGuestService.getEventRaceGuestsByEventRaceId(eventRaceId).subscribe((data: VwEventRaceGuests[]) => {
+        if (data.length > 0) {
+          this.raceInstance.setEventRaceGuests = data;
+          this.raceInstance.saved = data[0].id > 0;
+          this.raceInstance.raceWasLoadedFromDB = data[0].id > 0;
+          if (this.myStepper.selected != undefined) {
+            this.myStepper.selected.completed = data[0].id > 0;
+            if (data[0].id > 0) {
+              let firstplace = data.find(r => r.placeId == places.First);
+              let secondPlace = data.find(r => r.placeId == places.Second);
+              let thirdPlace = data.find(r => r.placeId == places.Third);
+              if (firstplace !== undefined) {
+                this.raceInstance.firstPlaceAmount = firstplace.wonAmount;
+              }
+              if (secondPlace !== undefined) {
+                this.raceInstance.secondPlaceAmount = secondPlace.wonAmount;
+              }
+              if (thirdPlace !== undefined) {
+                this.raceInstance.thirdPlaceAmount = thirdPlace.wonAmount;
+              }          
+            }
+          }         
         }
-      }
-      ////////////////////////////////else {
-        //////////////////////this.raceWithdrawnHorseService.getRaceWithdrawnHorses(selectedRace.raceId).subscribe((data: IRaceWithdrawnHorses[]) => {
-        //////////////////////  raceWithdrawnHorses = data;
-        //////////////////////  var eventRacesG: Array<VwEventRaceGuests> = [];
-        //////////////////////  for (var index = 0; index < this.raceInstance.numberOfHorses; index++) {
-        //////////////////////    var item = new VwEventRaceGuests(selectedRace.eventRaceId, index + 1);
-        //////////////////////    eventRacesG.push(item);
-        //////////////////////  }
-        //////////////////////  this.raceInstance.setEventRaceGuests = eventRacesG;
-        //////////////////////  // Block withdrawn horses by assigning them first
-        //////////////////////  if (raceWithdrawnHorses.length > 0) {
-        //////////////////////    raceWithdrawnHorses.forEach((horse: IRaceWithdrawnHorses) => {
-        //////////////////////      this.raceInstance.assignWithdrawnHorseToRoaster(horse.horseNumber, this.utilityService.WithdrawnGuest);              
-        //////////////////////    });            
-      //////////////////////////////    }
-      //////////////////////////////    this.raceInstance.saved = false;
-      //////////////////////////////    this.raceInstance.raceWasLoadedFromDB = false;          
-      //////////////////////////////  });        
-      //////////////////////////////}
-    });
+      });
+    }
+    
+   
   }
 
   private assignGuestToRoster(selectedGuestObj: IGuests) {
@@ -376,7 +382,9 @@ export class HomeComponent implements OnInit {
   }
 
   private resetRace(eventRaceId: number) {
-    this.myStepper.selected.completed = false;
+    if (this.myStepper.selected != undefined) {
+      this.myStepper.selected.completed = false;
+    }    
     this.raceInstance.firstPlaceAmount = 0;
     this.raceInstance.secondPlaceAmount = 0;
     this.raceInstance.thirdPlaceAmount = 0;
@@ -398,8 +406,10 @@ export class HomeComponent implements OnInit {
       this.raceInstance.winners = [];
       this.raceResults.forEach((result: RaceResults) => {
         var winners = this.raceInstance.eventRaceGuests.find(e => e.assignedHorseNumber == result['horseNumber']);
-        this.raceInstance.winners.push(winners);
-        winners.placeId = result['placeId'];
+        if (winners != undefined) {
+          this.raceInstance.winners.push(winners);
+          winners.placeId = result['placeId'];
+        }       
       });
     } 
   }
@@ -412,20 +422,22 @@ export class HomeComponent implements OnInit {
 
   private updateProgress(videoCurrentTime: number) {   
     let timeMaker = this.raceInstance.raceProgress.find(e => e.timeMarker == videoCurrentTime);
-    if (timeMaker) {
+    if (timeMaker != undefined) {
       this.raceInstance.eventRaceGuests.forEach((item: VwEventRaceGuests) => {
-        if (item.assignedHorseNumber == timeMaker.firstPlace) {
-          item.placeId = 1
-        }
-        else if (item.assignedHorseNumber == timeMaker.secondPlace) {
-          item.placeId = 2
-        }
-        else if (item.assignedHorseNumber == timeMaker.thirdPlace) {
-          item.placeId = 3
-        }
-        else {
-          item.placeId = 0;
-        }
+        if (timeMaker != undefined) {
+          if (item.assignedHorseNumber == timeMaker.firstPlace) {
+            item.placeId = 1
+          }
+          else if (item.assignedHorseNumber == timeMaker.secondPlace) {
+            item.placeId = 2
+          }
+          else if (item.assignedHorseNumber == timeMaker.thirdPlace) {
+            item.placeId = 3
+          }
+          else {
+            item.placeId = 0;
+          }
+        }  
       });
     }
   }

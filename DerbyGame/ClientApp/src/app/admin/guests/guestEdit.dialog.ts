@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, AfterViewInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { IGuests, IVWGuests } from '../../Common/Models/guest.model';
-import { GuestService } from '../../Common/Services/guest.service';
+import { IGuests, IVWGuests } from '../../common/Models/guest.model';
+import { GuestService } from '../../common/Services/guest.service';
 
 @Component({
     selector: 'guestEditDialog',

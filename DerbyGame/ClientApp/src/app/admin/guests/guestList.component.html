@@ -4,7 +4,7 @@
   <button mat-button mat-icon-button (click)="onEditClick(0)"><mat-icon aria-hidden="false" aria-label="New" color="primary" matTooltip="Create a new Guest">add_circle</mat-icon></button>
 </div>
 <mat-form-field>
-  <input matInput [(ngModel)]="filter" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  <input matInput [(ngModel)]="filter" (keyup)="applyFilter($event)" placeholder="Filter">
 </mat-form-field>
 <table mat-table [dataSource]="datasource" class="mat-elevation-z8">
   <ng-container matColumnDef="id">

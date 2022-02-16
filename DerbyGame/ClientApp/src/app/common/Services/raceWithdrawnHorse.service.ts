@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RaceWithdrawnHorses } from '../Models/raceWithdrawnHorse.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -12,8 +13,8 @@ export class RaceWithdrawnHorseService {
 
     }
 
-    public getRaceWithdrawnHorses(raceId: number) {
-        return this.httpClient.get(`${this.apiController}GetRaceWithdrawnHorses/${raceId}`);
+  public getRaceWithdrawnHorses(raceId: number): Observable<RaceWithdrawnHorses[]> {
+    return this.httpClient.get<RaceWithdrawnHorses[]>(`${this.apiController}GetRaceWithdrawnHorses/${raceId}`);
     }
 
     public getRaceWithdrawnHorse(id: number) {

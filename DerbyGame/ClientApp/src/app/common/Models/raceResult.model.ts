@@ -1,6 +1,6 @@
 export interface RaceResults {
-  Id: number;
-  RaceId: number;
-  PlaceId: number;
-  HorseNumber: number
+  id: number;
+  raceId: number;
+  placeId: number;
+  horseNumber: number
 }

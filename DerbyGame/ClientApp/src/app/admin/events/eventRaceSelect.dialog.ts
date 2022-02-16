@@ -1,12 +1,9 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Events } from '../../Common/Models/event.model';
-import { EventService } from '../../Common/Services/event.service';
-import { RaceService } from '../../Common/Services/race.service';
-import { Races } from '../../Common/Models/race.model';
+import { Events } from '../../common/Models/event.model';
+import { EventService } from '../../common/Services/event.service';
 import { FormControl } from '@angular/forms';
-import { MatSelectionList } from '@angular/material';
-import { strict } from 'assert';
+import { MatSelectionList } from '@angular/material/list';
 import { EventRaceService } from '../../common/Services/eventRace.service';
 import { EventRacesList } from '../../common/Models/helperObjects.model';
 import { VwEventRace } from '../../common/Models/eventRace.model';
@@ -16,15 +13,14 @@ import { VwEventRace } from '../../common/Models/eventRace.model';
     templateUrl: 'eventRaceSelect.dialog.html',
 })
 export class EventRaceSelectDialog implements OnInit {
-    public races: VwEventRace[];
-    public dialogTitle: string;
+    public races: VwEventRace[] = [];
+    public dialogTitle: string = '';
     public selectedRaces = new FormControl();
-    @ViewChild(MatSelectionList, { static: false })
-    private selectionList: MatSelectionList;
+  @ViewChild(MatSelectionList, { static: true })
+  private selectionList: MatSelectionList;
 
     constructor(
         private eventService: EventService,
-        private raceService: RaceService,
         private eventRaceService: EventRaceService,
         public dialogRef: MatDialogRef<EventRaceSelectDialog>,
         @Inject(MAT_DIALOG_DATA) public data: Events) {

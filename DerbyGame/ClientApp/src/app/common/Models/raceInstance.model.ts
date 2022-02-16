@@ -70,18 +70,20 @@ export class RaceInstance implements IRaceInstance {
 
   public assignWiningsToEventRaceGuests() {
     this.raceResults.forEach((result: RaceResults) => {
-      var erg = this.eventRaceGuests.find(e => e.assignedHorseNumber == result.HorseNumber);
-      switch (result.PlaceId) {
-        case 1:
-          erg.wonAmount = this.firstPlaceAmount;
-          break;
-        case 2:
-          erg.wonAmount = this.secondPlaceAmount;
-          break;
-        case 3:
-          erg.wonAmount = this.thirdPlaceAmount;
-          break;
-      }
+      var erg = this.eventRaceGuests.find(e => e.assignedHorseNumber == result.horseNumber);
+      if (erg != undefined) {
+        switch (result.placeId) {
+          case 1:
+            erg.wonAmount = this.firstPlaceAmount;
+            break;
+          case 2:
+            erg.wonAmount = this.secondPlaceAmount;
+            break;
+          case 3:
+            erg.wonAmount = this.thirdPlaceAmount;
+            break;
+        }
+      }      
     });
   }
 
@@ -123,16 +125,18 @@ export class RaceInstance implements IRaceInstance {
 
   public guestHasBeenAssigned(selectedGuestId: number): boolean {
     var guest = this.eventRaceGuests.find(e => e.guest1Id === selectedGuestId || e.guest2Id === selectedGuestId);
-    return guest != null;
+    return guest != undefined && guest != null;
   }
 
   public assignWithdrawnHorseToRoaster(horseNumber: number , guest: IGuests) {
     var horse = this.eventRaceGuests.find(e => e.assignedHorseNumber == horseNumber);
-    horse.guest1Id = horse.guest2Id = guest.id;
-    horse.guest1Name = horse.guest2Name = guest.name;
-    if (guest.avatarName) {
-      horse.guest1Avatar = horse.guest2Avatar = guest.avatarName;
-    }
+    if (horse !== undefined) {
+      horse.guest1Id = horse.guest2Id = guest.id;
+      horse.guest1Name = horse.guest2Name = guest.name;
+      if (guest.avatarName) {
+        horse.guest1Avatar = horse.guest2Avatar = guest.avatarName;
+      }
+    }    
   }
 
   public assignGuestToRoaster(horse: VwEventRaceGuests, guest: IGuests): number {
@@ -159,53 +163,70 @@ export class RaceInstance implements IRaceInstance {
   public deleteGuestFromRoaster(guestNumber: number, guestId: number) {
     if (guestNumber == 1) {
       var eventGuestObj = this.eventRaceGuests.find(e => e.guest1Id == guestId);
-      eventGuestObj.guest1Id = 0;
-      eventGuestObj.guest1Name = '';
-      eventGuestObj.guest1Avatar = '';
+      if (eventGuestObj != undefined) {
+        eventGuestObj.guest1Id = 0;
+        eventGuestObj.guest1Name = '';
+        eventGuestObj.guest1Avatar = '';
+      }     
     }
     else {
       var eventGuestObj = this.eventRaceGuests.find(e => e.guest2Id == guestId);
-      eventGuestObj.guest2Id = 0;
-      eventGuestObj.guest2Name = '';
-      eventGuestObj.guest2Avatar = '';
+      if (eventGuestObj != undefined) {
+        eventGuestObj.guest2Id = 0;
+        eventGuestObj.guest2Name = '';
+        eventGuestObj.guest2Avatar = '';
+      }     
     }
 
     this.calculatePrices();
   }
 
   public getRandomUnassignedHorse(): VwEventRaceGuests {
-    var unassignedHorses: VwEventRaceGuests[]; 
+    var unassignedHorses: VwEventRaceGuests[] = [];
+    var result: VwEventRaceGuests = new VwEventRaceGuests(0, 0);
+
     unassignedHorses = this.eventRaceGuests.filter((item: VwEventRaceGuests) => {
       return item.guest1Id == 0;
     });
 
-    if (unassignedHorses.length > 0) {
-        
-      return this.randomlySelectUnassignedHorse(unassignedHorses);
+    if (unassignedHorses != undefined && unassignedHorses.length > 0) {
+
+      result = this.randomlySelectUnassignedHorse(unassignedHorses);
     }
     else {
       if (this.allowSecondGuest) {
         unassignedHorses = this.eventRaceGuests.filter((item: VwEventRaceGuests) => {
           return item.guest2Id == 0;
         });
-        return this.randomlySelectUnassignedHorse(unassignedHorses);
+        result = this.randomlySelectUnassignedHorse(unassignedHorses);
       }
     }
+
+    return result;
   }
 
   private randomlySelectUnassignedHorse(evenRaceGuests: VwEventRaceGuests[]): VwEventRaceGuests {
     var selectedIndex = Math.floor(Math.random() * (evenRaceGuests.length));
     var selectedHorseObj = evenRaceGuests[selectedIndex];
-    var eventObj = this.eventRaceGuests.find(e => e.assignedHorseNumber === selectedHorseObj.assignedHorseNumber);
+    var eventObj: VwEventRaceGuests = new VwEventRaceGuests(0,0);
+    var eventObjResult = this.eventRaceGuests.find(e => e.assignedHorseNumber === selectedHorseObj.assignedHorseNumber);
+    if (eventObjResult != undefined) {
+      eventObj = eventObjResult;
+    }
     return eventObj;
   }
 
   private calculatePrices() {
-    var tempFirstPlace = this.calculatePercentage(.5);
-    var tempSecondPlace = this.calculatePercentage(.3);
-    var tempThirdPlace = this.calculatePercentage(.2);
-    var initaialAssignedMoney = tempFirstPlace + tempSecondPlace + tempThirdPlace;
-    var delta = this.getTotalCollected - initaialAssignedMoney;
+    var tempFirstPlace: number = 0;
+    var tempSecondPlace: number = 0;
+    var tempThirdPlace: number = 0;
+    var initaialAssignedMoney: number = 0;
+    var delta: number = 0;
+    tempFirstPlace = this.calculatePercentage(.5);
+    tempSecondPlace = this.calculatePercentage(.3);
+    tempThirdPlace = this.calculatePercentage(.2);
+    initaialAssignedMoney = tempFirstPlace + tempSecondPlace + tempThirdPlace;
+    delta = this.getTotalCollected - initaialAssignedMoney;
 
     if (delta > 0) {
       if (this.allowSecondGuest) {
@@ -277,18 +298,21 @@ export class RaceInstance implements IRaceInstance {
   }
 
   private calculatePercentage(percentage: number) {
-    var totalCollected = this.getTotalCollected;
+    var result: number = 0;
+    var totalCollected = this.getTotalCollected == undefined ? 0 : this.getTotalCollected;
     if (totalCollected > 0) {
       if (this.allowSecondGuest) {
         var temp = Math.floor(totalCollected * percentage);
         if (temp % 2 == 1) {
           temp--;
         }
-        return temp;
+        result = temp;
       }
       else {
-        return Math.floor(totalCollected * percentage);
+        result = Math.floor(totalCollected * percentage);
       }
     }
+
+    return result;
   }
 }

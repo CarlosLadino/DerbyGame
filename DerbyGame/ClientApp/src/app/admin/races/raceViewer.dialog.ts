@@ -1,6 +1,6 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Races } from '../../Common/Models/race.model';
+import { Races } from '../../common/Models/race.model';
 
 @Component({
   selector: 'raceViewerDialog',
@@ -14,10 +14,11 @@ export class RaceViewerDialog implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<RaceViewerDialog>,
     @Inject(MAT_DIALOG_DATA) public data: Races) {
+    this.dialogTitle = 'View Race';
   }
 
   ngOnInit() {
-    this.dialogTitle = 'View Race';
+   
    
   }
 

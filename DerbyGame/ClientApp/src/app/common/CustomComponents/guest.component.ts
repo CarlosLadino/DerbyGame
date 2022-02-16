@@ -1,11 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-
-
 @Component({
 
     selector: 'guest-component',
-
     templateUrl: './guest.component.html',
 
 })

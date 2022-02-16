@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { IGuests } from '../Models/guest.model';
+import { IGuests, IVWGuests } from '../Models/guest.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -12,20 +13,20 @@ export class GuestService {
 
     }
 
-    public getGuests() {
-        return this.httpClient.get(`${this.apiController}GetGuests`);
+  public getGuests(): Observable<Array<IGuests>> {
+    return this.httpClient.get<Array<IGuests>>(`${this.apiController}GetGuests`);
     }
 
-    public getActiveGuests() {
-        return this.httpClient.get(`${this.apiController}GetActiveGuests`);
+  public getActiveGuests():Observable<IGuests[]> {
+    return this.httpClient.get<IGuests[]>(`${this.apiController}GetActiveGuests`);
     }
 
-    public getNotActiveGuests() {
-        return this.httpClient.get(`${this.apiController}GetNotActiveGuests`);
+  public getNotActiveGuests(): Observable<IGuests[]> {
+    return this.httpClient.get<IGuests[]>(`${this.apiController}GetNotActiveGuests`);
     }
 
-    public getGuest(id: number) {
-        return this.httpClient.get(`${this.apiController}GetGuest/${id}`);
+  public getGuest(id: number): Observable<IVWGuests> {
+    return this.httpClient.get<IVWGuests>(`${this.apiController}GetGuest/${id}`);
     }
 
     public save(record: IGuests) {

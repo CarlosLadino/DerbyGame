@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { EventService } from '../Common/Services/event.service';
-import { Events } from '../Common/Models/event.model';
+import { EventService } from '../common/Services/event.service';
+import { Events } from '../common/Models/event.model';
 import { RaceViewerDialog } from '../admin/races/raceViewer.dialog';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-nav-menu',

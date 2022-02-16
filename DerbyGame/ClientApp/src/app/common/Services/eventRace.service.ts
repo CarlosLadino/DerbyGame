@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { EventRacesList } from '../Models/helperObjects.model';
-import { EventRaces } from '../Models/eventRace.model';
+import { EventRaces, VwEventRace } from '../Models/eventRace.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -17,16 +18,16 @@ export class EventRaceService {
         return this.httpClient.get(`${this.apiController}GetEventRaces`);
     }
 
-    public getRacesByEventId(id: number) {
-        return this.httpClient.get(`${this.apiController}GetEventRacesByEventId/${id}`);
+  public getRacesByEventId(id: number): Observable<VwEventRace[]> {
+    return this.httpClient.get<VwEventRace[]>(`${this.apiController}GetEventRacesByEventId/${id}`);
     }
 
-    public getNonSelecteRacesByEventId(id: number) {
-        return this.httpClient.get(`${this.apiController}GetNonSelecteRacesByEventId/${id}`);
+  public getNonSelecteRacesByEventId(id: number): Observable<VwEventRace[]> {
+    return this.httpClient.get<VwEventRace[]>(`${this.apiController}GetNonSelecteRacesByEventId/${id}`);
     }
 
-    public getSelecteRacesByEventId(id: number) {
-        return this.httpClient.get(`${this.apiController}GetSelecteRacesByEventId/${id}`);
+  public getSelecteRacesByEventId(id: number): Observable<VwEventRace[]> {
+    return this.httpClient.get<VwEventRace[]>(`${this.apiController}GetSelecteRacesByEventId/${id}`);
     }
     
     public getEvent(id: number) {

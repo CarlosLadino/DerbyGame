@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Races } from '../Models/race.model';
+import { IVWRaces, Races } from '../Models/race.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -12,16 +13,16 @@ export class RaceService {
 
     }
 
-    public getRaces() {
-        return this.httpClient.get(`${this.apiController}GetRaces`);
+  public getRaces(): Observable<Array<IVWRaces>> {
+    return this.httpClient.get<Array<IVWRaces>>(`${this.apiController}GetRaces`);
     }
 
-    public getRace(id: number) {
-        return this.httpClient.get(`${this.apiController}GetRace/${id}`);
+  public getRace(id: number): Observable<Races> {
+    return this.httpClient.get<Races>(`${this.apiController}GetRace/${id}`);
     }
 
-    public save(record: Races) {
-        return this.httpClient.post(`${this.apiController}Save`, record);
+  public save(record: Races): Observable<Races> {
+    return this.httpClient.post<Races>(`${this.apiController}Save`, record);
     }
 
     public delete(id: number) {

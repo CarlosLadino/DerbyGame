@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RaceWithdrawnHorseService } from '../../common/Services/raceWithdrawnHorse.service';
 import { RaceWithdrawnHorses } from '../../common/Models/raceWithdrawnHorse.model';
-import { Races } from '../../Common/Models/race.model';
+import { Races } from '../../common/Models/race.model';
 
 @Component({
   selector: 'raceWithdrawnHorse',

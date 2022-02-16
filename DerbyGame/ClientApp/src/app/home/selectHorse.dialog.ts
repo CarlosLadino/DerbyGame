@@ -14,13 +14,13 @@ export class SelectHorseDialog implements OnInit {
   public guestName: string;
   public guestAvatar: string;
   private currentState: number = 1;
-  private interval;
+  private interval: any;
   private gallop = new Audio();
   private tada = new Audio();
 
   constructor(private renderer: Renderer2,
     public dialogRef: MatDialogRef<SelectHorseDialog>,
-    @Inject(MAT_DIALOG_DATA) public data) {
+    @Inject(MAT_DIALOG_DATA) public data: any) {
     this.gallop.src = "Content/Gallop.wav";
     this.gallop.load();
     //this.gallop.currentTime = 1;

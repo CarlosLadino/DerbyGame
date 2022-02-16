@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~material-design-icons/iconfont/material-icons.css';
+@import '~material-design-icons-iconfont/dist/material-design-icons';
 /* Provide sufficient contrast against white background */
 body {
   background-color: #e7e7e8;
@@ -111,3 +111,6 @@ th {
   /*background-color: #3f51b5;
   color: white;*/
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

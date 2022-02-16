@@ -1,7 +1,7 @@
 export interface EventRaces {
-    Id: number;
-    EventId: number;
-    RaceId: number;
+    id: number;
+    eventId: number;
+    raceId: number;
 }
 
 export interface VwEventRace {

@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import { EventService } from '../../Common/Services/event.service';
+import { EventService } from '../../common/Services/event.service';
 import { VwEventGuestTotals } from '../../common/Models/eventRace.model';
 import { Route, ActivatedRoute } from '@angular/router';
 

@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { GuestService } from '../Common/Services/guest.service';
-import { IGuests } from '../Common/Models/guest.model';
+import { GuestService } from '../common/Services/guest.service';
+import { IGuests } from '../common/Models/guest.model';
 import { FormControl } from '@angular/forms';
-import { MatSelectionList } from '@angular/material';
+import { MatSelectionList } from '@angular/material/list';
 
 @Component({
     selector: 'activateGuestsDialog',
@@ -18,7 +18,7 @@ export class ActivateGuestsDialog implements OnInit, AfterViewInit  {
 
     constructor(private guestService: GuestService,
         public dialogRef: MatDialogRef<ActivateGuestsDialog>,
-        @Inject(MAT_DIALOG_DATA) public data) {
+        @Inject(MAT_DIALOG_DATA) public data:any) {
         
     }
 

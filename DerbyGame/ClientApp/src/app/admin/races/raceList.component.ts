@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { RaceService } from '../../Common/Services/race.service';
-import { IVWRaces, Races } from '../../Common/Models/race.model';
-import { MatDialog } from '@angular/material';
+import { RaceService } from '../../common/Services/race.service';
+import { IVWRaces, Races } from '../../common/Models/race.model';
+import { MatDialog } from '@angular/material/dialog';
 import { RaceEditDialog } from './raceEdit.dialog';
 import { ConfirmDialog } from '../../common/CustomComponents/ConfirmationDialog/confirm.dialog';
 import { ConfirmDialogModel } from '../../common/CustomComponents/ConfirmationDialog/confirmDialog.model';
@@ -15,7 +15,7 @@ import { RaceProgressDialog } from './raceProgress.dialog';
 })
 
 export class RaceListComponent implements OnInit {
-  public datasource: Array<Races>;
+  public datasource: Array<Races> = [];
   public displayedColumns: string[] = ['name', 'numberOfHorses', 'raceProgressNumber', 'actions', 'videoViewer'];
 
   constructor(private raceService: RaceService, public dialog: MatDialog) {
@@ -38,7 +38,7 @@ export class RaceListComponent implements OnInit {
       data: dialogData
     });
 
-    dialogRef.afterClosed().subscribe(dialogResult => {
+    dialogRef.afterClosed().subscribe((dialogResult: any) => {
       if (dialogResult == true) {
         this.raceService.delete(id).subscribe(() => {
           this.loadData();

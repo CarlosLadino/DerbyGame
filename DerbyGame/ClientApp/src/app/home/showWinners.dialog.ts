@@ -1,10 +1,7 @@
 import { Component, Inject, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { GuestService } from '../Common/Services/guest.service';
-import { FormControl } from '@angular/forms';
-import { MatSelectionList } from '@angular/material';
+import { GuestService } from '../common/Services/guest.service';
 import { RaceInstance } from '../common/Models/raceInstance.model';
-import { VwEventRaceGuests } from '../common/Models/eventRaceGuest.model';
 
 @Component({
     selector: 'showWinnersDialog',

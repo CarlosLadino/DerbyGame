@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { EventService } from '../../Common/Services/event.service';
-import { Events, IVWEvents } from '../../Common/Models/event.model';
-import { MatDialog } from '@angular/material';
+import { EventService } from '../../common/Services/event.service';
+import { Events, IVWEvents } from '../../common/Models/event.model';
+import { MatDialog } from '@angular/material/dialog';
 import { EventEditDialog } from './eventEdit.dialog';
 import { ConfirmDialog } from '../../common/CustomComponents/ConfirmationDialog/confirm.dialog';
 import { ConfirmDialogModel } from '../../common/CustomComponents/ConfirmationDialog/confirmDialog.model';
@@ -12,7 +12,7 @@ import { EventRaceSelectDialog } from './eventRaceSelect.dialog';
 })
 
 export class EventListComponent implements OnInit {
-    public datasource: Array<Events>;
+    public datasource: Array<IVWEvents>;
     public displayedColumns: string[] = ['name', 'eventDate', 'actions','races', 'active', 'totals'];
 
     constructor(private eventService: EventService, public dialog: MatDialog) {
@@ -72,8 +72,8 @@ export class EventListComponent implements OnInit {
         });
     }
 
-    loadData(): void {
-        this.eventService.getEvents().subscribe((data: Array<Events>) => {
+  loadData(): void {
+    this.eventService.getEvents().subscribe((data: Array<IVWEvents>) => {
             this.datasource = data;
         });
     }
