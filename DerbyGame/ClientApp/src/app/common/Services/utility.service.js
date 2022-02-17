@@ -34,6 +34,9 @@ var UtilityService = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    UtilityService.prototype.highlightNumber = function (event) {
+        event.target.select();
+    };
     UtilityService = __decorate([
         core_1.Injectable({
             providedIn: 'root',

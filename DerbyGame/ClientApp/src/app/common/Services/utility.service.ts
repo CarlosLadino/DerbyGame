@@ -27,4 +27,8 @@ export class UtilityService {
   public get WithdrawnGuest() {
     return new Guest(7003, "Scratched", true, "Scratched.png", true, true);
   }
+
+  public highlightNumber(event: any) {
+    event.target.select();
+  }
 }

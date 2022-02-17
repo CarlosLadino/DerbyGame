@@ -12,4 +12,6 @@
     CONSTRAINT [FK_EventRaceGuests_Guests1] FOREIGN KEY ([Guest2Id]) REFERENCES [dbo].[Guests] ([Id]),
     CONSTRAINT [FK_EventRaceGuests_Places] FOREIGN KEY ([PlaceId]) REFERENCES [dbo].[Places] ([Id])
 );
+GO
+ALTER TABLE [dbo].[EventRaceGuests] NOCHECK CONSTRAINT [FK_EventRaceGuests_Places]
 

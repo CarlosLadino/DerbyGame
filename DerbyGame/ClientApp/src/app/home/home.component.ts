@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
   private videoCurrentTime: number = 0;
 
   constructor(private eventService: EventService,
-    private utilityService: UtilityService,
+    public utilityService: UtilityService,
     private eventRaceService: EventRaceService,
     private guestService: GuestService,
     private eventRaceGuestService: EventRaceGuestService,
