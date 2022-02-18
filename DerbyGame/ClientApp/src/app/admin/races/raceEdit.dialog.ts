@@ -5,6 +5,7 @@ import { RaceService } from '../../common/Services/race.service';
 import { RaceResultService } from '../../common/Services/raceResult.service';
 import { RaceResults } from '../../common/Models/raceResult.model';
 import { RaceWithdrawnHorseDialog } from './raceWithdrawnHorse.dialog';
+import { UtilityService } from '../../common/Services/utility.service';
 
 @Component({
     selector: 'raceEditDialog',
@@ -14,7 +15,8 @@ export class RaceEditDialog implements OnInit {
     public race: Races;
     public places: RaceResults[];
     public dialogTitle: string;
-    constructor(
+  constructor(
+    public utilityService: UtilityService,
         private raceService: RaceService,
         private raceResultService: RaceResultService,
         public dialogRef: MatDialogRef<RaceEditDialog>,

@@ -8,18 +8,18 @@
     <input matInput type="url" [(ngModel)]="race.url" placeholder="Race Url">
   </mat-form-field>
   <mat-form-field>
-    <input matInput type="number" [(ngModel)]="race.numberOfHorses" placeholder="Number Of Horses">
+    <input matInput type="number" [(ngModel)]="race.numberOfHorses" placeholder="Number Of Horses" (focus)="utilityService.highlightNumber($event)">
   </mat-form-field>
   <mat-form-field>
     <input matInput type="text" [(ngModel)]="race.videoName" placeholder="Video Name">
   </mat-form-field>
   <mat-form-field>
-    <input matInput type="number" [(ngModel)]="race.finishLineTime" placeholder="Finish Line time in seconds">
+    <input matInput type="number" [(ngModel)]="race.finishLineTime" placeholder="Finish Line time in seconds" (focus)="utilityService.highlightNumber($event)">
   </mat-form-field>
 </div>
 <div *ngFor="let place of places">
   <mat-form-field>
-    <input type="number" matInput [(ngModel)]="place.horseNumber" placeholder="Place #{{place.placeId}}">
+    <input type="number" matInput [(ngModel)]="place.horseNumber" placeholder="Place #{{place.placeId}}" (focus)="utilityService.highlightNumber($event)">
   </mat-form-field>
 </div>
 <mat-checkbox [(ngModel)]="race.archived">Archive</mat-checkbox>
