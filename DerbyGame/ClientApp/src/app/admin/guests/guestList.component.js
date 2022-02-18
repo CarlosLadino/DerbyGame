@@ -31,7 +31,8 @@ var GuestListComponent = /** @class */ (function () {
         var dialogData = new confirmDialog_model_1.ConfirmDialogModel("Confirm Delete", message);
         var dialogRef = this.dialog.open(confirm_dialog_1.ConfirmDialog, {
             maxWidth: "400px",
-            data: dialogData
+            data: dialogData,
+            disableClose: true
         });
         dialogRef.afterClosed().subscribe(function (dialogResult) {
             if (dialogResult == true) {
@@ -48,7 +49,8 @@ var GuestListComponent = /** @class */ (function () {
         var _this = this;
         var dialogRef = this.dialog.open(guestEdit_dialog_1.GuestEditDialog, {
             width: '350px',
-            data: { id: id }
+            data: { id: id },
+            disableClose: true
         });
         dialogRef.afterClosed().subscribe(function (result) {
             _this.loadData();
@@ -73,7 +75,8 @@ var GuestListComponent = /** @class */ (function () {
         var dialogData = new confirmDialog_model_1.ConfirmDialogModel("Confirm Reset", message);
         var dialogRef = this.dialog.open(confirm_dialog_1.ConfirmDialog, {
             maxWidth: "400px",
-            data: dialogData
+            data: dialogData,
+            disableClose: true
         });
         dialogRef.afterClosed().subscribe(function (dialogResult) {
             if (dialogResult == true) {
@@ -84,7 +87,8 @@ var GuestListComponent = /** @class */ (function () {
             }
         });
     };
-    GuestListComponent.prototype.applyFilter = function (filterValue) {
+    GuestListComponent.prototype.applyFilter = function (event) {
+        var filterValue = event.target.value;
         this.datasource.filter = filterValue.trim().toLowerCase();
     };
     GuestListComponent = __decorate([

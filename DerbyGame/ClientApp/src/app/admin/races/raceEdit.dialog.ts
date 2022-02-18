@@ -59,7 +59,8 @@ export class RaceEditDialog implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(RaceWithdrawnHorseDialog, {
       width: '600px',
-      data: { id: this.race.id, numberOfHorses: this.race.numberOfHorses }
+      data: { id: this.race.id, numberOfHorses: this.race.numberOfHorses },
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {

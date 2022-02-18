@@ -32,7 +32,8 @@ export class EventListComponent implements OnInit {
 
         const dialogRef = this.dialog.open(ConfirmDialog, {
             maxWidth: "400px",
-            data: dialogData
+          data: dialogData,
+          disableClose: true
         });
 
         dialogRef.afterClosed().subscribe(dialogResult => {
@@ -53,7 +54,8 @@ export class EventListComponent implements OnInit {
     onRacesClick(id: number) {
         const dialogRef = this.dialog.open(EventRaceSelectDialog, {
             width: '500px',
-            data: { id: id }
+          data: { id: id },
+          disableClose: true
         });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -64,7 +66,8 @@ export class EventListComponent implements OnInit {
     openDialog(id: number): void {
         const dialogRef = this.dialog.open(EventEditDialog, {
             width: '350px',
-            data: {id: id}
+          data: { id: id },
+          disableClose: true
         });
 
         dialogRef.afterClosed().subscribe(result => {

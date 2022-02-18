@@ -33,7 +33,8 @@ export class GuestListComponent implements OnInit {
 
         const dialogRef = this.dialog.open(ConfirmDialog, {
             maxWidth: "400px",
-            data: dialogData
+          data: dialogData,
+          disableClose: true
         });
 
         dialogRef.afterClosed().subscribe(dialogResult => {
@@ -52,7 +53,8 @@ export class GuestListComponent implements OnInit {
     openDialog(id: number): void {
         const dialogRef = this.dialog.open(GuestEditDialog, {
             width: '350px',
-            data: { id: id }
+          data: { id: id },
+          disableClose: true
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -80,7 +82,8 @@ export class GuestListComponent implements OnInit {
 
         const dialogRef = this.dialog.open(ConfirmDialog, {
             maxWidth: "400px",
-            data: dialogData
+          data: dialogData,
+          disableClose: true
         });
 
         dialogRef.afterClosed().subscribe(dialogResult => {

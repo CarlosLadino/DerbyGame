@@ -85,7 +85,8 @@ export class HomeComponent implements OnInit {
         const dialogData = new ConfirmDialogModel("Confirm Leaving Race", message);
         const dialogRef = this.dialog.open(ConfirmDialog, {
           maxWidth: "400px",
-          data: dialogData
+          data: dialogData,
+          disableClose: true
         });
 
         return dialogRef.afterClosed()
@@ -108,7 +109,8 @@ export class HomeComponent implements OnInit {
 
         const dialogRef = this.dialog.open(ConfirmDialog, {
           maxWidth: "400px",
-          data: dialogData
+          data: dialogData,
+          disableClose: true
         });
 
         dialogRef.afterClosed().subscribe(dialogResult => {
@@ -146,7 +148,8 @@ export class HomeComponent implements OnInit {
 
     const dialogRef = this.dialog.open(ConfirmDialog, {
       maxWidth: "400px",
-      data: dialogData
+      data: dialogData,
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
@@ -169,7 +172,8 @@ export class HomeComponent implements OnInit {
 
           const dialogRef = this.dialog.open(ConfirmDialog, {
             maxWidth: "400px",
-            data: dialogData
+            data: dialogData,
+            disableClose: true
           });
 
           dialogRef.afterClosed().subscribe(dialogResult => {
@@ -194,7 +198,8 @@ export class HomeComponent implements OnInit {
 
     const dialogRef = this.dialog.open(ConfirmDialog, {
       maxWidth: "400px",
-      data: dialogData
+      data: dialogData,
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
@@ -220,7 +225,8 @@ export class HomeComponent implements OnInit {
   onNewGuests() {
     const dialogRef = this.dialog.open(GuestEditDialog, {
       width: '350px',
-      data: { Id: 0 }
+      data: { Id: 0 },
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -236,7 +242,8 @@ export class HomeComponent implements OnInit {
     setTimeout(() => {
       const dialogRef = this.dialog.open(ShowWinnersDialog, {
         width: '550px',
-        data: this.raceInstance
+        data: this.raceInstance,
+        disableClose: true
       });
 
     }, 2000);
@@ -289,7 +296,8 @@ export class HomeComponent implements OnInit {
   onAddRaceToRoster() {
     const dialogRef = this.dialog.open(AddRaceToEventDialog, {
       width: '350px',
-      data: { id: this.eventId }
+      data: { id: this.eventId },
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -373,7 +381,8 @@ export class HomeComponent implements OnInit {
     var horse = this.raceInstance.getRandomUnassignedHorse();
     const dialogRef = this.dialog.open(SelectHorseDialog, {
       width: '640px',
-      data: { horseNumber: horse.assignedHorseNumber, guestAvatar: selectedGuestObj.avatarName, guestName: selectedGuestObj['name'] }
+      data: { horseNumber: horse.assignedHorseNumber, guestAvatar: selectedGuestObj.avatarName, guestName: selectedGuestObj['name'] },
+      disableClose: true
     });
     
     dialogRef.afterClosed().subscribe(result => {

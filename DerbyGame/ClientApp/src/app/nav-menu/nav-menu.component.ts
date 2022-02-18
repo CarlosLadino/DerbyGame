@@ -34,7 +34,8 @@ export class NavMenuComponent implements OnInit {
   onLogoClick() {
     const dialogRef = this.dialog.open(RaceViewerDialog, {
       width: '1024px',
-      data: { videoName: "DerbyCallToPost.mp4" }
+      data: { videoName: "DerbyCallToPost.mp4" },
+      disableClose: true
     });
   }
 

@@ -35,7 +35,8 @@ export class RaceListComponent implements OnInit {
 
     const dialogRef = this.dialog.open(ConfirmDialog, {
       maxWidth: "400px",
-      data: dialogData
+      data: dialogData,
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe((dialogResult: any) => {
@@ -62,7 +63,8 @@ export class RaceListComponent implements OnInit {
   openDialog(id: number): void {
     const dialogRef = this.dialog.open(RaceEditDialog, {
       width: '600px',
-      data: { id: id }
+      data: { id: id },
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -73,7 +75,8 @@ export class RaceListComponent implements OnInit {
   openProgressDialog(id: number, numberOfHorses: number, name: string): void {
     const dialogRef = this.dialog.open(RaceProgressDialog, {
       width: '600px',
-      data: { id: id, numberOfHorses: numberOfHorses, name : name }
+      data: { id: id, numberOfHorses: numberOfHorses, name: name },
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -84,7 +87,8 @@ export class RaceListComponent implements OnInit {
   onViewClick(videoName: string) {
     const dialogRef = this.dialog.open(RaceViewerDialog, {
       width: '1024px',
-      data: { videoName: videoName }
+      data: { videoName: videoName },
+      disableClose: true
     });
   }
 
