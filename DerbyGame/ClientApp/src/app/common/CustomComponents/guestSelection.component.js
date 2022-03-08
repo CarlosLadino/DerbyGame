@@ -45,7 +45,9 @@ var GuestSelectionComponent = /** @class */ (function () {
             var name = '';
             if (dialogResult != undefined) {
                 id = dialogResult.id;
-                avatarName = dialogResult.avatarName;
+                if (dialogResult.avatarName !== null) {
+                    avatarName = dialogResult.avatarName;
+                }
                 name = dialogResult.name;
             }
             _this.selectedGuestId = id;
