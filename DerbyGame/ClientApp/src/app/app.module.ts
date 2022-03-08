@@ -19,8 +19,10 @@ import { ConfirmDialog } from './common/CustomComponents/ConfirmationDialog/conf
 import { RaceEditDialog } from './admin/races/raceEdit.dialog';
 import { SelectHorseDialog } from './home/selectHorse.dialog';
 import { ActivateGuestsDialog } from './home/activateGuests.dialog';
+import { SelectGuestDialog } from './home/selectGuest.dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GuestComponent } from './common/CustomComponents/guest.component';
+import { GuestSelectionComponent } from './common/CustomComponents/guestSelection.component';
 import { PlaceComponent } from './common/CustomComponents/place.component';
 import { HorseNumberComponent } from './common/CustomComponents/horseNumber.component';
 
@@ -80,9 +82,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     EventRaceSelectDialog,
     SelectHorseDialog,
     ActivateGuestsDialog,
+    SelectGuestDialog,
     ShowWinnersDialog,
     AddRaceToEventDialog,
     GuestComponent,
+    GuestSelectionComponent,
     PlaceComponent,
     HorseNumberComponent,
     RaceGuestComponent,
@@ -143,6 +147,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
       EventRaceSelectDialog,
       SelectHorseDialog,
       ActivateGuestsDialog,
+      SelectGuestDialog,
       ShowWinnersDialog,
       AddRaceToEventDialog,
       RaceWithdrawnHorseDialog,

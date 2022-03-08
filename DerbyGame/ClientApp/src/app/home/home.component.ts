@@ -28,6 +28,8 @@ import { IRaceWithdrawnHorses, RaceWithdrawnHorses } from '../common/Models/race
 import { RaceProgressService } from '../common/Services/raceProgress.service';
 import { IVWRaceProgress } from '../common/Models/raceProgress.model';
 import { places } from '../common/enumerations';
+import { SelectGuestDialog } from './selectGuest.dialog';
+import { RaceInstanceService } from '../common/Services/raceInstance.service';
 
 @Component({
   selector: 'app-home',
@@ -41,7 +43,6 @@ export class HomeComponent implements OnInit {
   public races: VwEventRace[];
   public raceInstance: RaceInstance = new RaceInstance();
   public eventRaceGuests: VwEventRaceGuests[];
-  public activeGuests: IGuests[];
   public selectedGuestId: number = 0;
   public selectedEventRaceId: number = 0;
   public horsesAreAvailable: boolean = true;
@@ -56,6 +57,7 @@ export class HomeComponent implements OnInit {
   private videoCurrentTime: number = 0;
 
   constructor(private eventService: EventService,
+    private raceInstanceService: RaceInstanceService,
     public utilityService: UtilityService,
     private eventRaceService: EventRaceService,
     private guestService: GuestService,
@@ -71,10 +73,6 @@ export class HomeComponent implements OnInit {
     this.eventService.getActive().subscribe((event: Events) => {
       this.eventId = event.id;
       this.loadRaces();
-    });
-
-    this.guestService.getActiveGuests().subscribe((guests: IGuests[]) => {
-      this.activeGuests = guests;
     });
   }
 
@@ -162,8 +160,8 @@ export class HomeComponent implements OnInit {
   }
 
   onSelectHorse() {
-    var selectedGuestObj = this.activeGuests.find(guest => guest['id'] === this.selectedGuestId);
-    if (selectedGuestObj != undefined) {
+    var selectedGuestObj = this.raceInstanceService.getActiveGuest(this.selectedGuestId);
+    if (selectedGuestObj.id > 0) {
       if (this.raceInstance.allowHorseSelection) {
         if (this.raceInstance.guestHasBeenAssigned(this.selectedGuestId)) {
           const message = `Guest has already place a bet. Are you sure you want to continue?`;
@@ -191,6 +189,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
+ 
+
   onRemoveGuest(guestNumber: number, guestId: number) {
     const message = `Are you sure you want to Remove the Guest from the Roster?`;
 
@@ -216,9 +216,7 @@ export class HomeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.guestService.getActiveGuests().subscribe((guests: IGuests[]) => {
-        this.activeGuests = guests;
-      });
+      this.raceInstanceService.getActiveGuests(true);
     });
   }
 
@@ -230,9 +228,7 @@ export class HomeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.guestService.getActiveGuests().subscribe((guests: IGuests[]) => {
-        this.activeGuests = guests;
-      });
+      this.raceInstanceService.getActiveGuests(true);
     });
   }
 

@@ -45,15 +45,8 @@
                 <mat-panel-title>
                   Guest Information
                 </mat-panel-title>
-              </mat-expansion-panel-header>
-              <mat-form-field>
-                <mat-label>Select a Guest</mat-label>
-                <mat-select name="guest" [(value)]="selectedGuestId">
-                  <mat-option *ngFor="let guest of activeGuests" [value]="guest.id">
-                    {{guest.name}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+              </mat-expansion-panel-header>           
+              <guest-selection-component [(selectedGuestId)]="selectedGuestId" [size]="'Large'"></guest-selection-component>
               <br />
               <button mat-raised-button color="primary" (click)="onSelectHorse()" [disabled]="selectedGuestId == 0 || !raceInstance.allowHorseSelection">Select a Horse</button>
               <button mat-button mat-icon-button (click)="onActivateGuests()" class="pull-right"><mat-icon aria-hidden="false" aria-label="New" color="accent" matTooltip="Quick Active Guest">playlist_add_check</mat-icon></button>
