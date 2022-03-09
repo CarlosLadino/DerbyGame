@@ -136,7 +136,27 @@ export class HomeComponent implements OnInit {
   }
 
   onAllowSecondGuest(item: any) {
-    this.raceInstance.allowSecondGuest = item.checked;
+    const message = `The game can only split winnings in whole dollars. An even bet amount is recommended, or manually assign the extra dollar is there is a leftover one.`;
+    const dialogData = new ConfirmDialogModel("Confirm Allow Second Bet", message);
+
+    if (item.checked) {
+      const dialogRef = this.dialog.open(ConfirmDialog, {
+        maxWidth: "400px",
+        data: dialogData,
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(dialogResult => {
+        if (dialogResult == true) {
+          this.raceInstance.allowSecondGuest = item.checked;
+        } else {
+          item.checked = false;
+        }
+      });
+    } else {
+      this.raceInstance.allowSecondGuest = item.checked;
+    }
+    
   }
 
   onReset() {

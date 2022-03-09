@@ -26,7 +26,7 @@
                   </mat-form-field>
                 </div>
                 <div class="col-6">
-                  <mat-checkbox color="accent" [(ngModel)]="raceInstance.allowSecondGuest" (change)="onAllowSecondGuest($event)">Allow Second Bet</mat-checkbox>
+                  <mat-checkbox color="accent" [(ngModel)]="raceInstance.allowSecondGuest" matTooltip="The game can only split winnings in whole dollars. An even bet amount is recommended, or manually assign the extra dollar is there is a leftover one.">Allow Second Bet (Even bet preffered)</mat-checkbox>
                   <div><button mat-raised-button color="warn" (click)="onReset()">Reset Race</button></div>
                 </div>
                 <div class="col-2">
@@ -58,7 +58,7 @@
             <mat-expansion-panel expanded>
               <mat-expansion-panel-header>
                 <mat-panel-title>
-                  Betting Information
+                  <h4>Bet Amount: $&nbsp;{{raceInstance.betAmount}}.00</h4>
                 </mat-panel-title>
               </mat-expansion-panel-header>
               <div class="row">
