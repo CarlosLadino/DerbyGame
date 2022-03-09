@@ -135,30 +135,6 @@ export class HomeComponent implements OnInit {
     }    
   }
 
-  onAllowSecondGuest(item: any) {
-    const message = `The game can only split winnings in whole dollars. An even bet amount is recommended, or manually assign the extra dollar is there is a leftover one.`;
-    const dialogData = new ConfirmDialogModel("Confirm Allow Second Bet", message);
-
-    if (item.checked) {
-      const dialogRef = this.dialog.open(ConfirmDialog, {
-        maxWidth: "400px",
-        data: dialogData,
-        disableClose: true
-      });
-
-      dialogRef.afterClosed().subscribe(dialogResult => {
-        if (dialogResult == true) {
-          this.raceInstance.allowSecondGuest = item.checked;
-        } else {
-          item.checked = false;
-        }
-      });
-    } else {
-      this.raceInstance.allowSecondGuest = item.checked;
-    }
-    
-  }
-
   onReset() {
     const message = `Are you sure you want to reset this race?`;
 
@@ -209,8 +185,6 @@ export class HomeComponent implements OnInit {
     }
   }
 
- 
-
   onRemoveGuest(guestNumber: number, guestId: number) {
     const message = `Are you sure you want to Remove the Guest from the Roster?`;
 
@@ -252,19 +226,19 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  onShowWinners() {
-    this.setRaceWiners();
+  //onShowWinners() {
+  //  this.setRaceWiners();
 
-    setTimeout(() => {
-      const dialogRef = this.dialog.open(ShowWinnersDialog, {
-        width: '550px',
-        data: this.raceInstance,
-        disableClose: true
-      });
+  //  setTimeout(() => {
+  //    const dialogRef = this.dialog.open(ShowWinnersDialog, {
+  //      width: '550px',
+  //      data: this.raceInstance,
+  //      disableClose: true
+  //    });
 
-    }, 2000);
+  //  }, 2000);
 
-  }
+  //}
 
   onLockRace() {
     var records: EventRaceGuests[] = [];
