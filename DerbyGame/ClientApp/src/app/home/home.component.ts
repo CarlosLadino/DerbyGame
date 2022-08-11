@@ -30,6 +30,8 @@ import { IVWRaceProgress } from '../common/Models/raceProgress.model';
 import { places } from '../common/enumerations';
 import { SelectGuestDialog } from './selectGuest.dialog';
 import { RaceInstanceService } from '../common/Services/raceInstance.service';
+import { Observable, timer } from 'rxjs';
+import { PreRaceRosterComponent } from '../common/CustomComponents/preRaceRoster.component';
 
 @Component({
   selector: 'app-home',
@@ -53,8 +55,12 @@ export class HomeComponent implements OnInit {
   public video: ElementRef;
   @ViewChild('stepper', { static: false })
   private myStepper: MatStepper;
+  @ViewChild(PreRaceRosterComponent, { static: false })
+  private preRaceRoster: PreRaceRosterComponent;
+
   private tada = new Audio();
   private videoCurrentTime: number = 0;
+  public showingRoster: boolean = false;
 
   constructor(private eventService: EventService,
     private raceInstanceService: RaceInstanceService,
@@ -127,12 +133,13 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  onGotoRace() {
-    this.setRaceWiners();
-    window.open(this.raceInstance.raceUrl, '_blank');
-    if (this.myStepper.selected != undefined) {
-      this.myStepper.selected.completed = true;
-    }    
+  onShowRoaster() {
+    this.preRaceRoster.onStartDisplay();
+    this.showingRoster = true
+  }
+
+  onPreRosterDisplayDone() {
+    this.showingRoster = false;
   }
 
   onReset() {

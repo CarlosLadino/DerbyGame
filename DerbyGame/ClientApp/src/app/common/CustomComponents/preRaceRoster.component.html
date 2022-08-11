@@ -1,0 +1,13 @@
+<mat-chip-list aria-label="Guests" >
+  <mat-chip color="accent" selected style="width: 100%; height: 600px; background-image: url(Content/RaceHorse.svg);">
+    <span style="font-size:400px;">{{horse.assignedHorseNumber}}</span>&nbsp;&nbsp;&nbsp;
+    <img [hidden]="horse.guest2Id != 0" src="/Avatars/{{horse.guest1Avatar}}" style="width:300px;height:300px;border-radius:50%; object-fit:cover;" />
+    <span style="font-size:130px;" [hidden]="horse.guest2Id != 0">&nbsp;&nbsp;&nbsp;</span>
+    <span style="font-size:130px;" [hidden]="horse.guest2Id != 0">{{horse.guest1Name}}</span>
+    <img [hidden]="horse.guest2Id == 0" src="/Avatars/{{horse.guest1Avatar}}" style="width:300px;height:300px;border-radius:50%; object-fit:cover;" />
+    <img [hidden]="horse.guest2Id == 0" src="/Avatars/{{horse.guest2Avatar}}" style="width:300px;height:300px;border-radius:50%; object-fit:cover;" />
+    <span style="font-size:130px;" [hidden]="horse.guest2Id == 0">&nbsp;&nbsp;&nbsp;</span>
+    <span style="font-size:130px;" [hidden]="horse.guest2Id == 0">{{horse.guest1Name}}<span style="display: block;">{{horse.guest2Name}}</span></span>
+  </mat-chip>
+</mat-chip-list>
+

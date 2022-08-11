@@ -33,6 +33,7 @@ import { RaceProgressChipListComponent } from './common/CustomComponents/racePro
 import { RaceWithdrawnHorseDialog } from './admin/races/raceWithdrawnHorse.dialog';
 import { RaceProgressDialog } from './admin/races/raceProgress.dialog';
 import { RaceViewerDialog } from './admin/races/raceViewer.dialog';
+import { PreRaceRosterComponent } from './common/CustomComponents/preRaceRoster.component';
 
 //Filters
 import { CallbackPipe } from './common/filters';
@@ -93,6 +94,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     GuestTotalComponent,
     RaceProgressComponent,
     RaceProgressChipListComponent,
+    PreRaceRosterComponent,
     RaceWithdrawnHorseDialog,
     RaceViewerDialog,
     RaceProgressDialog,

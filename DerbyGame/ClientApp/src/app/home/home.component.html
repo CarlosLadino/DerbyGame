@@ -141,17 +141,20 @@
   </mat-step>
   <mat-step label="Race" state="race">
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-3">
+      <div class="row" [hidden]="showingRoster">
+        <div class="col-3" >
           <race-progress-component [raceInstance]="raceInstance"></race-progress-component>         
         </div>
         <div class="col-9">
           <video width="1124" height="633" controls="controls" preload="auto" #video (ended)="onVideoEnded()" (timeupdate)="onTimeUpdate()">
             <source type="video/mp4" />
           </video>
-          <!--<br />
-          <button mat-raised-button color="primary" (click)="onGotoRace()">Run Race on YouTube</button>-->
+          <br />
+          <button mat-raised-button color="primary" (click)="onShowRoaster()">Show Roaster</button>
         </div>
+      </div>
+      <div class="row" [hidden]="!showingRoster">
+        <pre-race-roster-component [raceInstance]="raceInstance" (done)="onPreRosterDisplayDone()"></pre-race-roster-component>
       </div>
     </div>
   </mat-step>

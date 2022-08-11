@@ -50,6 +50,7 @@
     <None Remove="ClientApp\src\app\common\CustomComponents\guesTotal.component.ts" />
     <None Remove="ClientApp\src\app\common\CustomComponents\guestSelection.component.ts" />
     <None Remove="ClientApp\src\app\common\CustomComponents\place.component.ts" />
+    <None Remove="ClientApp\src\app\common\CustomComponents\preRaceRoster.component.ts" />
     <None Remove="ClientApp\src\app\common\CustomComponents\raceGuest.component.ts" />
     <None Remove="ClientApp\src\app\common\CustomComponents\raceProgress.component.ts" />
     <None Remove="ClientApp\src\app\common\CustomComponents\raceProgressChipList.component.ts" />
@@ -134,6 +135,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\common\CustomComponents\guest.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\CustomComponents\preRaceRoster.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\common\CustomComponents\raceProgressChipList.component.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
