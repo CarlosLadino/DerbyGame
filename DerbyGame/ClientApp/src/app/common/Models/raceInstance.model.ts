@@ -128,7 +128,7 @@ export class RaceInstance implements IRaceInstance {
     return guest != undefined && guest != null;
   }
 
-  public assignWithdrawnHorseToRoaster(horseNumber: number , guest: IGuests) {
+  public assignWithdrawnHorseToRoster(horseNumber: number , guest: IGuests) {
     var horse = this.eventRaceGuests.find(e => e.assignedHorseNumber == horseNumber);
     if (horse !== undefined) {
       horse.guest1Id = horse.guest2Id = guest.id;
@@ -139,7 +139,7 @@ export class RaceInstance implements IRaceInstance {
     }    
   }
 
-  public assignGuestToRoaster(horse: VwEventRaceGuests, guest: IGuests): number {
+  public assignGuestToRoster(horse: VwEventRaceGuests, guest: IGuests): number {
     if (horse.guest1Id == 0) {
       horse.guest1Id = guest.id;
       horse.guest1Name = guest.name;
@@ -160,7 +160,7 @@ export class RaceInstance implements IRaceInstance {
     return horse.assignedHorseNumber;
   }
 
-  public deleteGuestFromRoaster(guestNumber: number, guestId: number) {
+  public deleteGuestFromRoster(guestNumber: number, guestId: number) {
     if (guestNumber == 1) {
       var eventGuestObj = this.eventRaceGuests.find(e => e.guest1Id == guestId);
       if (eventGuestObj != undefined) {

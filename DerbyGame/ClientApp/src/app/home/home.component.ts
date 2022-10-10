@@ -133,7 +133,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  onShowRoaster() {
+  onShowRoster() {
     this.preRaceRoster.onStartDisplay();
     this.showingRoster = true
   }
@@ -205,7 +205,7 @@ export class HomeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult == true) {
-        this.raceInstance.deleteGuestFromRoaster(guestNumber, guestId);    
+        this.raceInstance.deleteGuestFromRoster(guestNumber, guestId);    
       }
     });
   }
@@ -383,7 +383,7 @@ export class HomeComponent implements OnInit {
     });
     
     dialogRef.afterClosed().subscribe(result => {
-      this.raceInstance.assignGuestToRoaster(horse, selectedGuestObj);
+      this.raceInstance.assignGuestToRoster(horse, selectedGuestObj);
     });
   }
 
