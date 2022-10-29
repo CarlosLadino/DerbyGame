@@ -26,8 +26,9 @@ export class PreRaceRosterComponent {
       if (n == this.raceInstance.eventRaceGuests.length) {
         this.showRosterTimer.unsubscribe();
         this.done.emit();
-      }
-      this.horse = this.raceInstance.eventRaceGuests[n];
+      } else {
+        this.horse = this.raceInstance.eventRaceGuests[n];
+      }  
     });
   }
 }

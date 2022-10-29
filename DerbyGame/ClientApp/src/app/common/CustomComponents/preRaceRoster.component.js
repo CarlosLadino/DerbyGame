@@ -24,7 +24,9 @@ var PreRaceRosterComponent = /** @class */ (function () {
                 _this.showRosterTimer.unsubscribe();
                 _this.done.emit();
             }
-            _this.horse = _this.raceInstance.eventRaceGuests[n];
+            else {
+                _this.horse = _this.raceInstance.eventRaceGuests[n];
+            }
         });
     };
     __decorate([
