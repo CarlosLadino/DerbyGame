@@ -59,6 +59,7 @@ export class HomeComponent implements OnInit {
   private preRaceRoster: PreRaceRosterComponent;
 
   private tada = new Audio();
+  private crowdCheer = new Audio();
   private videoCurrentTime: number = 0;
   public showingRoster: boolean = false;
 
@@ -73,6 +74,8 @@ export class HomeComponent implements OnInit {
     public raceResultService: RaceResultService,
     public raceWithdrawnHorseService: RaceWithdrawnHorseService) {
     this.tada.src = "Content/tada.wav";
+    this.crowdCheer.src = "Content/crowdcheer.wav";
+    this.crowdCheer.loop = true;
   }
 
   ngOnInit() {
@@ -135,11 +138,14 @@ export class HomeComponent implements OnInit {
 
   onShowRoster() {
     this.preRaceRoster.onStartDisplay();
-    this.showingRoster = true
+    this.showingRoster = true;
+    this.crowdCheer.play();
   }
 
   onPreRosterDisplayDone() {
     this.showingRoster = false;
+    this.crowdCheer.pause();
+    this.crowdCheer.currentTime = 0;
   }
 
   onReset() {

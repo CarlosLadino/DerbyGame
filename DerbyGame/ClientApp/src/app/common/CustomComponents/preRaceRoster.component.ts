@@ -23,7 +23,7 @@ export class PreRaceRosterComponent {
 
   public onStartDisplay() {
     this.showRosterTimer = timer(0, 2000).subscribe((n: any) => {
-      if (n == this.raceInstance.eventRaceGuests.length - 1) {
+      if (n == this.raceInstance.eventRaceGuests.length) {
         this.showRosterTimer.unsubscribe();
         this.done.emit();
       }

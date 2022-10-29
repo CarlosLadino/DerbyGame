@@ -20,7 +20,7 @@ var PreRaceRosterComponent = /** @class */ (function () {
     PreRaceRosterComponent.prototype.onStartDisplay = function () {
         var _this = this;
         this.showRosterTimer = rxjs_1.timer(0, 2000).subscribe(function (n) {
-            if (n == _this.raceInstance.eventRaceGuests.length - 1) {
+            if (n == _this.raceInstance.eventRaceGuests.length) {
                 _this.showRosterTimer.unsubscribe();
                 _this.done.emit();
             }
